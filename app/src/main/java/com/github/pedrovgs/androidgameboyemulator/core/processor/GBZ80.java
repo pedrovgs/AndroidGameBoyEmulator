@@ -30,6 +30,7 @@ public class GBZ80 {
   private int registerA;
   private int registerB;
   private int registerC;
+  private int registerD;
   private int registerE;
   private int registerH;
   private int registerL;
@@ -81,6 +82,14 @@ public class GBZ80 {
 
   public void setRegisterC(int registerC) {
     this.registerC = registerC;
+  }
+
+  public int getRegisterD() {
+    return registerD;
+  }
+
+  public void setRegisterD(int registerD) {
+    this.registerD = registerD;
   }
 
   public int getRegisterE() {
