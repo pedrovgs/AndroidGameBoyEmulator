@@ -18,7 +18,6 @@ allprojects {
     source 'src'
     include '**/*.java'
     exclude '**/gen/**'
-
     classpath = files()
   }
 }
