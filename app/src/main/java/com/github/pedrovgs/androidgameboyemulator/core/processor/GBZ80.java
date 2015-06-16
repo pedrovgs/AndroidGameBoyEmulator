@@ -31,8 +31,7 @@ public class GBZ80 {
   private int registerL;
   private int registerF;
 
-  private int lastInstructionClockM;
-  private int lastInstructionClockT;
+  private int lastInstructionExecutionTime;
 
   public GBZ80() {
     this.clock = new Clock();
@@ -47,7 +46,7 @@ public class GBZ80 {
   }
 
   public void updateClock() {
-    clock.incrementClockM(lastInstructionClockM, lastInstructionClockT);
+    clock.incrementClockM(lastInstructionExecutionTime);
   }
 
   public int getProgramCounter() {
@@ -110,11 +109,7 @@ public class GBZ80 {
     this.registerF = registerF;
   }
 
-  public void setLastInstructionClockM(int lastInstructionClockM) {
-    this.lastInstructionClockM = lastInstructionClockM;
-  }
-
-  public void setLastInstructionClockT(int lastInstructionClockT) {
-    this.lastInstructionClockT = lastInstructionClockT;
+  public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
+    this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
 }

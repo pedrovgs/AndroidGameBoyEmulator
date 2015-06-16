@@ -17,11 +17,9 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 class Clock {
 
-  private int clockM;
-  private int clockT;
+  private int totalCpuExecutionTime;
 
-  public void incrementClockM(int clockM, int clockT) {
-    this.clockM = clockM;
-    this.clockT = clockT;
+  public void incrementClockM(int totalCpuExecutionTime) {
+    this.totalCpuExecutionTime = totalCpuExecutionTime;
   }
 }
