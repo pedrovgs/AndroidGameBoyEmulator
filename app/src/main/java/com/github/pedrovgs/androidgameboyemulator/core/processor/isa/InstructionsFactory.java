@@ -17,7 +17,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public class InstructionFactory {
+public class InstructionsFactory {
 
   public Instruction getInstructionFromRawValue(int rawInstruction, GBZ80 z80) {
     return new LoadBIntoB(z80);

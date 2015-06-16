@@ -16,13 +16,13 @@
 package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionFactory;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionsFactory;
 
 public class GBZ80 {
   private static final int MASK_16_BITS = 65535;
 
   private final Clock clock;
-  private final InstructionFactory instructionFactory;
+  private final InstructionsFactory instructionsFactory;
 
   private int programCounter;
   private int stackPointer;
@@ -39,11 +39,11 @@ public class GBZ80 {
 
   public GBZ80() {
     this.clock = new Clock();
-    this.instructionFactory = new InstructionFactory();
+    this.instructionsFactory = new InstructionsFactory();
   }
 
   public void execute(int rawInstruction) {
-    Instruction instruction = instructionFactory.getInstructionFromRawValue(rawInstruction, this);
+    Instruction instruction = instructionsFactory.getInstructionFromRawValue(rawInstruction, this);
     instruction.execute();
   }
 
