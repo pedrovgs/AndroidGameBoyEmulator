@@ -15,14 +15,21 @@
  */
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public abstract class Instruction {
 
   protected final GBZ80 z80;
+  protected final MMU mmu;
 
   Instruction(GBZ80 z80) {
+    this(z80, null);
+  }
+
+  Instruction(GBZ80 z80, MMU mmu) {
     this.z80 = z80;
+    this.mmu = mmu;
   }
 
   public abstract void execute();

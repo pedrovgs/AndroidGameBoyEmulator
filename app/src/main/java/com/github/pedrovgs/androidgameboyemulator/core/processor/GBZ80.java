@@ -15,6 +15,7 @@
  */
 package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionsFactory;
 
@@ -43,8 +44,9 @@ public class GBZ80 {
     this.instructionsFactory = new InstructionsFactory();
   }
 
-  public void execute(int rawInstruction) {
-    Instruction instruction = instructionsFactory.getInstructionFromRawValue(rawInstruction, this);
+  public void execute(int rawInstruction, MMU mmu) {
+    Instruction instruction =
+        instructionsFactory.getInstructionFromRawValue(rawInstruction, this, mmu);
     instruction.execute();
   }
 

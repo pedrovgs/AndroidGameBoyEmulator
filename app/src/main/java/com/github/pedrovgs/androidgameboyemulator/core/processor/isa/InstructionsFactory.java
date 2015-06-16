@@ -15,11 +15,12 @@
  */
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public class InstructionsFactory {
 
-  public Instruction getInstructionFromRawValue(int rawInstruction, GBZ80 z80) {
+  public Instruction getInstructionFromRawValue(int rawInstruction, GBZ80 z80, MMU mmu) {
     return new LoadBIntoB(z80);
   }
 }
