@@ -2,9 +2,9 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public class LoadBIntoB extends Instruction {
+class LoadBIntoB extends Instruction {
 
-  public LoadBIntoB(GBZ80 z80) {
+  LoadBIntoB(GBZ80 z80) {
     super(z80);
   }
 

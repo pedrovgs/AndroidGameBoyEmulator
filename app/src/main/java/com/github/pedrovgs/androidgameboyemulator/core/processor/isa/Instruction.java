@@ -21,7 +21,7 @@ public abstract class Instruction {
 
   protected final GBZ80 z80;
 
-  public Instruction(GBZ80 z80) {
+  Instruction(GBZ80 z80) {
     this.z80 = z80;
   }
 

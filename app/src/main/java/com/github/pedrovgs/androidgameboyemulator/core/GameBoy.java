@@ -31,8 +31,8 @@ public class GameBoy {
   public void startEmulation() {
     while (true) {
       int programCounter = z80.getProgramCounter();
-      int instruction = mmu.readByte(programCounter);
-      z80.execute(instruction);
+      int rawInstruction = mmu.readByte(programCounter);
+      z80.execute(rawInstruction);
       z80.updateProgramCounter();
       z80.updateClock();
     }
