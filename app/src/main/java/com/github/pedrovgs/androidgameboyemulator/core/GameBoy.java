@@ -33,7 +33,7 @@ public class GameBoy {
       int programCounter = z80.getProgramCounter();
       int rawInstruction = mmu.readByte(programCounter);
       z80.execute(rawInstruction, mmu);
-      z80.updateProgramCounter();
+      z80.maskProgramCounter();
       z80.updateClock();
     }
   }

@@ -50,8 +50,12 @@ public class GBZ80 {
     instruction.execute();
   }
 
-  public void updateProgramCounter() {
+  public void maskProgramCounter() {
     this.programCounter &= MASK_16_BITS;
+  }
+
+  public void incrementProgramCounter(){
+    this.programCounter++;
   }
 
   public void updateClock() {
