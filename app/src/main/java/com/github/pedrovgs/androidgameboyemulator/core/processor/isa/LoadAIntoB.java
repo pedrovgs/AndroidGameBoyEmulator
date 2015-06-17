@@ -11,6 +11,6 @@ class LoadAIntoB extends Instruction {
   @Override public void execute() {
     int registerA = z80.getRegisterA();
     z80.setRegisterB(registerA);
-    setLastExecutionTime();
+    setLastExecutionTime(1);
   }
 }

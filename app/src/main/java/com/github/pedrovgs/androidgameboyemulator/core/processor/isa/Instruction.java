@@ -34,7 +34,7 @@ public abstract class Instruction {
 
   public abstract void execute();
 
-  protected void setLastExecutionTime() {
+  protected void setLastExecutionTime(int duration) {
     z80.setLastInstructionExecutionTime(1);
   }
 }
