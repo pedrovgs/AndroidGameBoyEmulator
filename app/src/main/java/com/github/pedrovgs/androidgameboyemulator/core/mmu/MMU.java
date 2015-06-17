@@ -17,7 +17,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public class MMU {
 
-  public int readByte(int programCounter) {
+  public int readByte(int address) {
     return 0;
   }
 
