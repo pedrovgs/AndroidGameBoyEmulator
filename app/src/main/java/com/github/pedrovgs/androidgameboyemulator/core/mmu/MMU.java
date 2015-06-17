@@ -16,7 +16,12 @@
 package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public class MMU {
-  public byte readByte(int programCounter) {
+
+  public int readByte(int programCounter) {
     return 0;
+  }
+
+  public void writeByte(int address, int registerValue) {
+
   }
 }
