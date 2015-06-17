@@ -134,6 +134,14 @@ public class GBZ80 {
     this.registerF = registerF;
   }
 
+  public int getStackPointer() {
+    return stackPointer;
+  }
+
+  public void setStackPointer(int stackPointer) {
+    this.stackPointer = stackPointer;
+  }
+
   public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
