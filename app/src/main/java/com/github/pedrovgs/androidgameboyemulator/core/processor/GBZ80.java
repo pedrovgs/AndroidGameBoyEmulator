@@ -54,8 +54,12 @@ public class GBZ80 {
     this.programCounter &= MASK_16_BITS;
   }
 
-  public void incrementProgramCounter(){
+  public void incrementProgramCounter() {
     this.programCounter++;
+  }
+
+  public void incrementProgramCounterTwice() {
+    this.programCounter = programCounter + 2;
   }
 
   public void updateClock() {

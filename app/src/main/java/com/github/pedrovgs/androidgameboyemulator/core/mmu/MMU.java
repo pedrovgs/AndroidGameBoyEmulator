@@ -24,4 +24,8 @@ public class MMU {
   public void writeByte(int address, int registerValue) {
 
   }
+
+  public int readWord(int programCounter) {
+    return 0;
+  }
 }
