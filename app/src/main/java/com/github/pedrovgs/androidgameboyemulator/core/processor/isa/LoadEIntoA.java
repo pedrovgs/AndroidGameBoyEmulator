@@ -9,8 +9,8 @@ class LoadEIntoA extends Instruction {
   }
 
   @Override public void execute() {
-    int registerD = z80.getRegisterD();
-    z80.setRegisterA(registerD);
+    int registerE = z80.getRegisterE();
+    z80.setRegisterA(registerE);
     setLastExecutionTime(1);
   }
 }
