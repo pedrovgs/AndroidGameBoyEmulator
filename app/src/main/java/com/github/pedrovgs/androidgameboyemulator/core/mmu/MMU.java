@@ -21,11 +21,15 @@ public class MMU {
     return 0;
   }
 
-  public void writeByte(int address, int registerValue) {
+  public int readWord(int programCounter) {
+    return 0;
+  }
+
+  public void writeByte(int address, int value) {
 
   }
 
-  public int readWord(int programCounter) {
-    return 0;
+  public void writeWord(int address, int value) {
+
   }
 }
