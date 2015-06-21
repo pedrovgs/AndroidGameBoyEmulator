@@ -28,6 +28,18 @@ public class BGZ80Test {
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void shouldNotAccept16BitRegistersToSetA8BitRegisterValue() {
+    GBZ80 z80 = new GBZ80();
+    z80.set8BitRegisterValue(Register.AF, ANY_8BIT_VALUE);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void shouldNotAccept16BitRegistersToGetA8BitRegisterValue() {
+    GBZ80 z80 = new GBZ80();
+    z80.get8BitRegisterValue(Register.AF);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept8BitRegistersToSetA16BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
     z80.set16BitRegisterValue(Register.B, ANY_16BIT_VALUE);

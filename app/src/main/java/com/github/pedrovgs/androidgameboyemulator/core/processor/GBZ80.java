@@ -44,10 +44,14 @@ public class GBZ80 {
   }
 
   public byte get8BitRegisterValue(Register register) {
+    validate8BitRegister(register);
+
     return registers[register.getRegisterIndex()];
   }
 
   public void set8BitRegisterValue(Register register, byte value) {
+    validate8BitRegister(register);
+
     registers[register.getRegisterIndex()] = value;
   }
 
@@ -89,6 +93,15 @@ public class GBZ80 {
 
   public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
+  }
+
+  private void validate8BitRegister(Register register) {
+    int registerOrdinal = register.ordinal();
+    int first16BitRegister = registers.length;
+    if (registerOrdinal >= first16BitRegister) {
+      throw new IllegalArgumentException(
+          "You can't access to a 8 bit register with the register key: " + register);
+    }
   }
 
   private void validate16BitRegister(Register register) {
