@@ -19,46 +19,25 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
 
 public class GBZ80 {
-  private static final int MASK_16_BITS = 65535;
 
   private final Clock clock;
   private final InstructionsPool instructionsPool;
 
+  private byte[] registers;
   private int programCounter;
   private int stackPointer;
-
-  private int registerA;
-  private int registerB;
-  private int registerC;
-  private int registerD;
-  private int registerE;
-  private int registerH;
-  private int registerL;
-  private int registerF;
-
   private int lastInstructionExecutionTime;
 
   public GBZ80() {
     this.clock = new Clock();
     this.instructionsPool = new InstructionsPool();
+    this.registers = new byte[8];
   }
 
   public void execute(int rawInstruction, MMU mmu) {
     Instruction instruction =
         instructionsPool.getInstructionFromRawValue(rawInstruction, this, mmu);
     instruction.execute();
-  }
-
-  public void maskProgramCounter() {
-    this.programCounter &= MASK_16_BITS;
-  }
-
-  public void incrementProgramCounter() {
-    this.programCounter++;
-  }
-
-  public void incrementProgramCounterTwice() {
-    this.programCounter = programCounter + 2;
   }
 
   public void updateClock() {
@@ -69,79 +48,42 @@ public class GBZ80 {
     return programCounter;
   }
 
-  public int getRegisterA() {
-    return registerA;
-  }
-
-  public void setRegisterA(int registerA) {
-    this.registerA = registerA;
-  }
-
-  public int getRegisterB() {
-    return registerB;
-  }
-
-  public void setRegisterB(int registerB) {
-    this.registerB = registerB;
-  }
-
-  public int getRegisterC() {
-    return registerC;
-  }
-
-  public void setRegisterC(int registerC) {
-    this.registerC = registerC;
-  }
-
-  public int getRegisterD() {
-    return registerD;
-  }
-
-  public void setRegisterD(int registerD) {
-    this.registerD = registerD;
-  }
-
-  public int getRegisterE() {
-    return registerE;
-  }
-
-  public void setRegisterE(int registerE) {
-    this.registerE = registerE;
-  }
-
-  public int getRegisterH() {
-    return registerH;
-  }
-
-  public void setRegisterH(int registerH) {
-    this.registerH = registerH;
-  }
-
-  public int getRegisterL() {
-    return registerL;
-  }
-
-  public void setRegisterL(int registerL) {
-    this.registerL = registerL;
-  }
-
-  public int getRegisterF() {
-    return registerF;
-  }
-
-  public void setRegisterF(int registerF) {
-    this.registerF = registerF;
-  }
-
-  public int getStackPointer() {
-    return stackPointer;
-  }
-
-  public void setStackPointer(int stackPointer) {
-    this.stackPointer = stackPointer;
-  }
-
   public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
+  }
+
+  public byte get8BitRegisterValue(Register register) {
+    return registers[register.getRegisterIndex()];
+  }
+
+  public void set8BitRegisterValue(Register register, byte value) {
+    registers[register.getRegisterIndex()] = value;
+  }
+
+  public int get16BitRegisterValue(Register register) {
+    validate16BitRegister(register);
+
+    int registerIndex = register.getRegisterIndex();
+    int firstPart = registers[registerIndex] << 8 & 0xff00;
+    int secondPart = registers[registerIndex + 1] & 0x00ff;
+    return firstPart + secondPart;
+  }
+
+  public void set16BitRegisterValue(Register register, int value) {
+    validate16BitRegister(register);
+
+    byte firstRegisterValue = (byte) (value & 0xff00);
+    byte secondRegisterValue = (byte) (value & 0x00ff);
+    registers[register.getRegisterIndex()] = firstRegisterValue;
+    registers[register.getRegisterIndex() + 1] = secondRegisterValue;
+  }
+
+  private void validate16BitRegister(Register register) {
+    int registerOrdinal = register.ordinal();
+    int last8BitRegisterOrdinal = registers.length - 1;
+    if (registerOrdinal <= last8BitRegisterOrdinal) {
+      throw new IllegalArgumentException(
+          "You can't access to a 16 bit register with the register key: " + register);
+    }
   }
 }
