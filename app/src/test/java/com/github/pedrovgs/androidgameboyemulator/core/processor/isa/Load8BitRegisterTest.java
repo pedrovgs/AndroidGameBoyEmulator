@@ -10,6 +10,10 @@ import static junit.framework.Assert.assertEquals;
 public class Load8BitRegisterTest {
 
   private static final byte ANY_REGISTER_VALUE = 3;
+  private static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
+  private static final Register ANY_8BIT_SOURCE_REGISTER = Register.B;
+  private static final Register ANY_16BIT_DESTINY_REGISTER = Register.HL;
+  private static final Register ANY_16BIT_SOURCE_REGISTER = Register.HL;
 
   private GBZ80 z80;
 
@@ -19,32 +23,36 @@ public class Load8BitRegisterTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsSource() {
-    Instruction load8BitRegister = new Load8BitRegister(z80, Register.A, Register.HL);
+    Instruction load8BitRegister =
+        new Load8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_16BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsDestiny() {
-    Instruction load8BitRegister = new Load8BitRegister(z80, Register.HL, Register.B);
+    Instruction load8BitRegister =
+        new Load8BitRegister(z80, ANY_16BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
   }
 
   @Test public void shouldLoadSourceRegisterIntoDestinyRegister() {
-    z80.set8BitRegisterValue(Register.B, ANY_REGISTER_VALUE);
-    Instruction load8BitRegister = new Load8BitRegister(z80, Register.A, Register.B);
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_REGISTER_VALUE);
+    Instruction load8BitRegister =
+        new Load8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
-    assertEquals(ANY_REGISTER_VALUE, z80.get8BitRegisterValue(Register.A));
+    assertEquals(ANY_REGISTER_VALUE, z80.get8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER));
   }
 
-  @Test public void shouldUseOneCycleAsExecutionTime(){
-    Instruction load8BitRegister = new Load8BitRegister(z80, Register.A, Register.B);
+  @Test public void shouldUseOneCycleAsExecutionTime() {
+    Instruction load8BitRegister =
+        new Load8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
-    assertEquals(1,z80.getLastInstructionExecutionTime());
+    assertEquals(1, z80.getLastInstructionExecutionTime());
   }
 }

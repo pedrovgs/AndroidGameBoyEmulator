@@ -6,6 +6,8 @@ import static junit.framework.Assert.assertEquals;
 
 public class BGZ80Test {
 
+  private static final Register ANY_8BIT_REGISTER = Register.A;
+  public static final Register ANY_16BIT_REGISTER = Register.HL;
   private static final byte ANY_8BIT_VALUE = 8;
   private static final int ANY_16BIT_VALUE = 16;
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
@@ -14,7 +16,7 @@ public class BGZ80Test {
   @Test public void shouldUpdate8BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
 
-    z80.set8BitRegisterValue(Register.A, ANY_8BIT_VALUE);
+    z80.set8BitRegisterValue(ANY_8BIT_REGISTER, ANY_8BIT_VALUE);
 
     assertEquals(ANY_8BIT_VALUE, z80.get8BitRegisterValue(Register.A));
   }
@@ -22,7 +24,7 @@ public class BGZ80Test {
   @Test public void shouldUpdate16BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
 
-    z80.set16BitRegisterValue(Register.HL, ANY_16BIT_VALUE);
+    z80.set16BitRegisterValue(ANY_16BIT_REGISTER, ANY_16BIT_VALUE);
 
     assertEquals(ANY_16BIT_VALUE, z80.get16BitRegisterValue(Register.HL));
   }
@@ -30,25 +32,25 @@ public class BGZ80Test {
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersToSetA8BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
-    z80.set8BitRegisterValue(Register.AF, ANY_8BIT_VALUE);
+    z80.set8BitRegisterValue(ANY_16BIT_REGISTER, ANY_8BIT_VALUE);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersToGetA8BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
-    z80.get8BitRegisterValue(Register.AF);
+    z80.get8BitRegisterValue(ANY_16BIT_REGISTER);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept8BitRegistersToSetA16BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
-    z80.set16BitRegisterValue(Register.B, ANY_16BIT_VALUE);
+    z80.set16BitRegisterValue(ANY_8BIT_REGISTER, ANY_16BIT_VALUE);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept8BitRegistersToGetA16BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
-    z80.get16BitRegisterValue(Register.C);
+    z80.get16BitRegisterValue(ANY_8BIT_REGISTER);
   }
 
   @Test public void shouldInitializeProgramCounterToTheInitialPCValue() {
