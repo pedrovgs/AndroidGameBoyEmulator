@@ -17,5 +17,6 @@ public class Load8BitRegister extends Instruction {
   @Override public void execute() {
     byte registerValue = z80.get8BitRegisterValue(sourceRegister);
     z80.set8BitRegisterValue(destinyRegister, registerValue);
+    z80.setLastInstructionExecutionTime(1);
   }
 }

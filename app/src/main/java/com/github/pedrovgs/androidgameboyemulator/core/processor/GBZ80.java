@@ -95,6 +95,10 @@ public class GBZ80 {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
 
+  public int getLastInstructionExecutionTime() {
+    return lastInstructionExecutionTime;
+  }
+
   private void validate8BitRegister(Register register) {
     int registerOrdinal = register.ordinal();
     int first16BitRegister = registers.length;
