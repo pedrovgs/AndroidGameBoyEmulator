@@ -20,6 +20,13 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction
 
 public class GBZ80 {
 
+  public static final int ZERO_FLAG_Z = 0x80;
+  public static final int SUBSTRACT_FLAG_N = 0x40;
+  public static final int HALF_CARRY_FLAG_H = 0x20;
+  public static final int CARRY_FLAG_C = 0x10;
+  private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
+  private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
+
   private final Clock clock;
   private final InstructionsPool instructionsPool;
 
@@ -32,24 +39,8 @@ public class GBZ80 {
     this.clock = new Clock();
     this.instructionsPool = new InstructionsPool();
     this.registers = new byte[8];
-  }
-
-  public void execute(int rawInstruction, MMU mmu) {
-    Instruction instruction =
-        instructionsPool.getInstructionFromRawValue(rawInstruction, this, mmu);
-    instruction.execute();
-  }
-
-  public void updateClock() {
-    clock.incrementClockM(lastInstructionExecutionTime);
-  }
-
-  public int getProgramCounter() {
-    return programCounter;
-  }
-
-  public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
-    this.lastInstructionExecutionTime = lastInstructionExecutionTime;
+    this.programCounter = INITIAL_PROGRAM_COUNTER_VALUE;
+    this.stackPointer = INITIAL_STACK_POINTER_VALUE;
   }
 
   public byte get8BitRegisterValue(Register register) {
@@ -76,6 +67,28 @@ public class GBZ80 {
     byte secondRegisterValue = (byte) (value & 0x00ff);
     registers[register.getRegisterIndex()] = firstRegisterValue;
     registers[register.getRegisterIndex() + 1] = secondRegisterValue;
+  }
+
+  public void execute(int rawInstruction, MMU mmu) {
+    Instruction instruction =
+        instructionsPool.getInstructionFromRawValue(rawInstruction, this, mmu);
+    instruction.execute();
+  }
+
+  public void updateClock() {
+    clock.incrementClockM(lastInstructionExecutionTime);
+  }
+
+  public int getProgramCounter() {
+    return programCounter;
+  }
+
+  public int getStackPointer() {
+    return stackPointer;
+  }
+
+  public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
+    this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
 
   private void validate16BitRegister(Register register) {
