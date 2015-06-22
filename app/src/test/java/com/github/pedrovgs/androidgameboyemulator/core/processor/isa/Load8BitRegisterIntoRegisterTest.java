@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class Load8BitRegisterTest {
+public class Load8BitRegisterIntoRegisterTest {
 
   private static final byte ANY_REGISTER_VALUE = 3;
   private static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
@@ -24,7 +24,7 @@ public class Load8BitRegisterTest {
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsSource() {
     Instruction load8BitRegister =
-        new Load8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_16BIT_SOURCE_REGISTER);
+        new Load8BitRegisterIntoRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_16BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
   }
@@ -32,7 +32,7 @@ public class Load8BitRegisterTest {
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsDestiny() {
     Instruction load8BitRegister =
-        new Load8BitRegister(z80, ANY_16BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
+        new Load8BitRegisterIntoRegister(z80, ANY_16BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
   }
@@ -40,7 +40,7 @@ public class Load8BitRegisterTest {
   @Test public void shouldLoadSourceRegisterIntoDestinyRegister() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_REGISTER_VALUE);
     Instruction load8BitRegister =
-        new Load8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
+        new Load8BitRegisterIntoRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
@@ -49,7 +49,7 @@ public class Load8BitRegisterTest {
 
   @Test public void shouldUseOneCycleAsExecutionTime() {
     Instruction load8BitRegister =
-        new Load8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
+        new Load8BitRegisterIntoRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
