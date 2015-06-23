@@ -4,11 +4,11 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitRegisterAddresIntoHLAddress extends Instruction {
+public class Load8BitRegisterAddressIntoHLAddress extends Instruction {
 
   private final Register sourceRegister;
 
-  Load8BitRegisterAddresIntoHLAddress(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  Load8BitRegisterAddressIntoHLAddress(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }
