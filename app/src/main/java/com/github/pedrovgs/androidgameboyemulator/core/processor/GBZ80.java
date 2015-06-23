@@ -87,6 +87,10 @@ public class GBZ80 {
     return programCounter;
   }
 
+  public void incrementProgramCounter() {
+    this.programCounter++;
+  }
+
   public int getStackPointer() {
     return stackPointer;
   }

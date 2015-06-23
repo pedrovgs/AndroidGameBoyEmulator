@@ -17,7 +17,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public class MMU {
 
-  public int readByte(int address) {
+  public byte readByte(int address) {
     return 0;
   }
 
@@ -25,7 +25,7 @@ public class MMU {
     return 0;
   }
 
-  public void writeByte(int address, int value) {
+  public void writeByte(int address, byte value) {
 
   }
 
