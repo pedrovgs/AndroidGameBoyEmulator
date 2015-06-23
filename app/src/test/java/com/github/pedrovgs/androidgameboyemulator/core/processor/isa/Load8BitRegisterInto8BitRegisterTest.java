@@ -1,30 +1,17 @@
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
-import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
-import org.junit.Before;
+import com.github.pedrovgs.androidgameboyemulator.InstructionTest;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class Load8BitRegisterInto8BitRegisterTest {
-
-  private static final byte ANY_REGISTER_VALUE = 3;
-  private static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
-  private static final Register ANY_8BIT_SOURCE_REGISTER = Register.B;
-  private static final Register ANY_16BIT_DESTINY_REGISTER = Register.HL;
-  private static final Register ANY_16BIT_SOURCE_REGISTER = Register.HL;
-
-  private GBZ80 z80;
-
-  @Before public void setUp() {
-    this.z80 = new GBZ80();
-  }
+public class Load8BitRegisterInto8BitRegisterTest extends InstructionTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsSource() {
     Instruction load8BitRegister =
-        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_16BIT_SOURCE_REGISTER);
+        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER,
+            ANY_16BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
   }
@@ -32,7 +19,8 @@ public class Load8BitRegisterInto8BitRegisterTest {
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsDestiny() {
     Instruction load8BitRegister =
-        new Load8BitRegisterInto8BitRegister(z80, ANY_16BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
+        new Load8BitRegisterInto8BitRegister(z80, ANY_16BIT_DESTINY_REGISTER,
+            ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
   }
@@ -40,7 +28,8 @@ public class Load8BitRegisterInto8BitRegisterTest {
   @Test public void shouldLoadSourceRegisterIntoDestinyRegister() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_REGISTER_VALUE);
     Instruction load8BitRegister =
-        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
+        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER,
+            ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
@@ -49,7 +38,8 @@ public class Load8BitRegisterInto8BitRegisterTest {
 
   @Test public void shouldUseOneCycleAsExecutionTime() {
     Instruction load8BitRegister =
-        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER, ANY_8BIT_SOURCE_REGISTER);
+        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER,
+            ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
