@@ -15,6 +15,7 @@ public class InstructionTest extends UnitTest {
   protected static final byte ANY_8BIT_REGISTER_VALUE = (byte) 0xFF;
   protected static final Register ANY_16BIT_DESTINY_REGISTER = Register.HL;
   protected static final Register ANY_16BIT_SOURCE_REGISTER = Register.HL;
+  protected static final int ANY_16BIT_REGISTER_VALUE = 23;
 
   protected GBZ80 z80;
   @Mock protected MMU mmu;
