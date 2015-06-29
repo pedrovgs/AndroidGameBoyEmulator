@@ -5,7 +5,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +19,8 @@ public class Load8BitRegisterAddressIntoHLAddressTest extends InstructionTest {
   }
 
   @Test public void shouldStoreTheContentOfTheSourceRegisterIntoTheMemoryPointedByHLRegister() {
-    when(mmu.readByte(anyInt())).thenReturn(ANY_MEMORY_BYTE_VALUE);
+    z80.set16BitRegisterValue(Register.HL, ANY_16BIT_REGISTER_VALUE);
+    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     int hlRegisterValue = z80.get16BitRegisterValue(Register.HL);
     Instruction instruction =
         new Load8BitRegisterAddressIntoHLAddress(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
