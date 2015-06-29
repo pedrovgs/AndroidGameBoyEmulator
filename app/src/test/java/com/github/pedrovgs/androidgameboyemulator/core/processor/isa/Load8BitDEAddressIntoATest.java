@@ -5,13 +5,13 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 public class Load8BitDEAddressIntoATest extends InstructionTest {
 
   @Test public void shouldLoadTheByteOfMemoryPointedByDERegisterIntoTheRegisterA() {
-    when(mmu.readByte(anyInt())).thenReturn(ANY_MEMORY_BYTE_VALUE);
+    z80.set16BitRegisterValue(Register.DE, ANY_16BIT_REGISTER_VALUE);
+    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction = new Load8BitDEAddressIntoA(z80, mmu);
 
     instruction.execute();

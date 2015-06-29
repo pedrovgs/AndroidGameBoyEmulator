@@ -9,7 +9,6 @@ import org.mockito.Mock;
 public class InstructionTest extends UnitTest {
 
   protected static final byte ANY_MEMORY_BYTE_VALUE = 11;
-  protected static final byte ANY_REGISTER_VALUE = 3;
   protected static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
   protected static final Register ANY_8BIT_SOURCE_REGISTER = Register.B;
   protected static final byte ANY_8BIT_REGISTER_VALUE = (byte) 0xFF;

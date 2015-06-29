@@ -26,14 +26,14 @@ public class Load8BitRegisterInto8BitRegisterTest extends InstructionTest {
   }
 
   @Test public void shouldLoadSourceRegisterIntoDestinyRegister() {
-    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_REGISTER_VALUE);
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_8BIT_REGISTER_VALUE);
     Instruction load8BitRegister =
         new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER,
             ANY_8BIT_SOURCE_REGISTER);
 
     load8BitRegister.execute();
 
-    assertEquals(ANY_REGISTER_VALUE, z80.get8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER));
+    assertEquals(ANY_8BIT_REGISTER_VALUE, z80.get8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER));
   }
 
   @Test public void shouldUseOneCycleAsExecutionTime() {
