@@ -105,6 +105,10 @@ public class GBZ80 {
     return stackPointer;
   }
 
+  public void setStackPointer(int stackPointer) {
+    this.stackPointer = stackPointer;
+  }
+
   public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
