@@ -21,9 +21,9 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitPortRegisterOfCAddresIntoA extends Instruction {
+public class Load8BitPortRegisterOfCAddressIntoA extends Instruction {
 
-  Load8BitPortRegisterOfCAddresIntoA(GBZ80 z80, MMU mmu) {
+  Load8BitPortRegisterOfCAddressIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

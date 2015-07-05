@@ -30,7 +30,7 @@ public class Load8BitPortRegisterOfCAddresIntoATest extends InstructionTest {
     when(z80.get8BitRegisterValue(Register.C)).thenReturn(ANY_8BIT_REGISTER_VALUE);
     int address = 0XFF00 + (ANY_8BIT_REGISTER_VALUE & 0Xff);
     when(mmu.readByte(address)).thenReturn(ANY_MEMORY_BYTE_VALUE);
-    Instruction instruction = new Load8BitPortRegisterOfCAddresIntoA(z80, mmu);
+    Instruction instruction = new Load8BitPortRegisterOfCAddressIntoA(z80, mmu);
 
     instruction.execute();
 
@@ -38,7 +38,7 @@ public class Load8BitPortRegisterOfCAddresIntoATest extends InstructionTest {
   }
 
   @Test public void shouldUseTwoCyclesAsLastExecutionTime() {
-    Instruction instruction = new Load8BitPortRegisterOfCAddresIntoA(z80, mmu);
+    Instruction instruction = new Load8BitPortRegisterOfCAddressIntoA(z80, mmu);
 
     instruction.execute();
 
