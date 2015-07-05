@@ -21,7 +21,7 @@ public class MMU {
     return 0;
   }
 
-  public int readWord(int programCounter) {
+  public int readWord(int address) {
     return 0;
   }
 

@@ -93,6 +93,10 @@ public class GBZ80 {
     this.programCounter++;
   }
 
+  public void incrementProgramCounterTwice() {
+    this.programCounter = programCounter + 2;
+  }
+
   public void setProgramCounter(int programCounter) {
     this.programCounter = programCounter;
   }

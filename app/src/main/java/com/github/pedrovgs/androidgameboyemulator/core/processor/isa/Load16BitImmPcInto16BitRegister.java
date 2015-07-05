@@ -15,29 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.github.pedrovgs.androidgameboyemulator;
+package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
-import org.junit.Before;
-import org.mockito.Mock;
 
-public class InstructionTest extends UnitTest {
+public class Load16BitImmPcInto16BitRegister extends Instruction {
 
-  protected static final byte ANY_MEMORY_BYTE_VALUE = 11;
-  protected static final int ANY_MEMORY_WORD_VALUE = 22;
-  protected static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
-  protected static final Register ANY_8BIT_SOURCE_REGISTER = Register.B;
-  protected static final byte ANY_8BIT_REGISTER_VALUE = (byte) 0x2F;
-  protected static final Register ANY_16BIT_DESTINY_REGISTER = Register.HL;
-  protected static final Register ANY_16BIT_SOURCE_REGISTER = Register.HL;
-  protected static final int ANY_16BIT_REGISTER_VALUE = 23;
+  private final Register destinyRegister;
 
-  protected GBZ80 z80;
-  @Mock protected MMU mmu;
+  Load16BitImmPcInto16BitRegister(GBZ80 z80, MMU mmu, Register destinyRegister) {
+    super(z80, mmu);
+    this.destinyRegister = destinyRegister;
+  }
 
-  @Before public void setUpGBZ80Processor() {
-    this.z80 = new GBZ80();
+  @Override public void execute() {
+    int programCounter = z80.getProgramCounter();
+    int value = mmu.readWord(programCounter);
+    z80.set16BitRegisterValue(destinyRegister, value);
+    z80.incrementProgramCounterTwice();
+    z80.setLastInstructionExecutionTime(3);
   }
 }

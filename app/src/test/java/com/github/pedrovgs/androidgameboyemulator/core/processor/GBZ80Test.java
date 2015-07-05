@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class BGZ80Test {
+public class GBZ80Test {
 
   private static final Register ANY_8BIT_REGISTER = Register.A;
   public static final Register ANY_16BIT_REGISTER = Register.HL;
@@ -84,5 +84,23 @@ public class BGZ80Test {
     int programCounter = z80.getStackPointer();
 
     assertEquals(INITIAL_STACK_POINTER_VALUE, programCounter);
+  }
+
+  @Test public void shouldIncrementProgramCounter() {
+    GBZ80 z80 = new GBZ80();
+    z80.setProgramCounter(ANY_16BIT_VALUE);
+
+    z80.incrementProgramCounter();
+
+    assertEquals(ANY_16BIT_VALUE + 1, z80.getProgramCounter());
+  }
+
+  @Test public void shouldIncrementProgramCounterTwice() {
+    GBZ80 z80 = new GBZ80();
+    z80.setProgramCounter(ANY_16BIT_VALUE);
+
+    z80.incrementProgramCounterTwice();
+
+    assertEquals(ANY_16BIT_VALUE + 2, z80.getProgramCounter());
   }
 }
