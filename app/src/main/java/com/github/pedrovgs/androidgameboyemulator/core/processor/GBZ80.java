@@ -66,6 +66,7 @@ public class GBZ80 {
     return firstPart + secondPart;
   }
 
+  //TODO: this method is not working as should
   public void set16BitRegisterValue(Register register, int value) {
     validate16BitRegister(register);
 
