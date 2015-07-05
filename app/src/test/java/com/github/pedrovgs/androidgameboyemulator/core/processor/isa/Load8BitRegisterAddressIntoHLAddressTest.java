@@ -37,14 +37,14 @@ public class Load8BitRegisterAddressIntoHLAddressTest extends InstructionTest {
 
   @Test public void shouldStoreTheContentOfTheSourceRegisterIntoTheMemoryPointedByHLRegister() {
     z80.set16BitRegisterValue(Register.HL, ANY_16BIT_REGISTER_VALUE);
-    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
-    int hlRegisterValue = z80.get16BitRegisterValue(Register.HL);
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_8BIT_REGISTER_VALUE);
+    when(mmu.readByte(ANY_8BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction =
         new Load8BitRegisterAddressIntoHLAddress(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
-    verify(mmu).writeByte(hlRegisterValue, ANY_MEMORY_BYTE_VALUE);
+    verify(mmu).writeByte(ANY_16BIT_REGISTER_VALUE, ANY_MEMORY_BYTE_VALUE);
   }
 
   @Test public void shouldUseTwoCyclesAsExecutionTime() {
