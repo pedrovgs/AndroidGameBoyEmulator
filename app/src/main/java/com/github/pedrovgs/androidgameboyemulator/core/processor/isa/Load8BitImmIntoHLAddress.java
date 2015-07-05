@@ -28,7 +28,7 @@ public class Load8BitImmIntoHLAddress extends Instruction {
   }
 
   @Override public void execute() {
-    byte value = mmu.readByte(z80.getProgramCounter() + 1);
+    byte value = mmu.readByte(z80.getProgramCounter());
     int address = z80.get16BitRegisterValue(Register.HL);
     mmu.writeByte(address, value);
     z80.incrementProgramCounter();

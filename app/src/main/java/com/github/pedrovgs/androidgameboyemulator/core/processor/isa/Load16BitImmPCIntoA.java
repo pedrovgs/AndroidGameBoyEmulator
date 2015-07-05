@@ -28,7 +28,7 @@ public class Load16BitImmPCIntoA extends Instruction {
   }
 
   @Override public void execute() {
-    int programCounter = z80.getProgramCounter() + 1;
+    int programCounter = z80.getProgramCounter();
     byte value = mmu.readByte(programCounter);
     z80.set8BitRegisterValue(Register.A, value);
     z80.incrementProgramCounter();

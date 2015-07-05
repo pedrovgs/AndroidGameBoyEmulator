@@ -46,7 +46,7 @@ public class Load8BitPortAddressImmPCIntoATest extends InstructionTest {
 
   @Test public void shouldLoad8BitMemoryValuePointedByThePortAddressOfPCIntoA() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
-    int pcPortAddress = (z80.getProgramCounter() + 1 & 0xFF) + 0xFF00;
+    int pcPortAddress = (z80.getProgramCounter() & 0xFF) + 0xFF00;
     when(mmu.readByte(pcPortAddress)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction = new Load8BitPortAddressImmPCIntoA(z80, mmu);
 

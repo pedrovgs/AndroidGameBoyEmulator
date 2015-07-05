@@ -31,7 +31,7 @@ public class Load8BitImmPCInto8BitRegister extends Instruction {
   }
 
   @Override public void execute() {
-    int address = z80.getProgramCounter() + 1;
+    int address = z80.getProgramCounter();
     byte registerValue = mmu.readByte(address);
     z80.set8BitRegisterValue(destinyRegister, registerValue);
     z80.incrementProgramCounter();

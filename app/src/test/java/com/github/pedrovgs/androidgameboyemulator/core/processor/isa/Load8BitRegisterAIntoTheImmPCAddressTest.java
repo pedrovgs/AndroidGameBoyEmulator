@@ -50,6 +50,6 @@ public class Load8BitRegisterAIntoTheImmPCAddressTest extends InstructionTest {
 
     instruction.execute();
 
-    verify(mmu).writeByte(ANY_16BIT_REGISTER_VALUE + 1, ANY_8BIT_REGISTER_VALUE);
+    verify(mmu).writeByte(ANY_16BIT_REGISTER_VALUE, ANY_8BIT_REGISTER_VALUE);
   }
 }

@@ -30,7 +30,7 @@ public class Load8BitImmIntoHLAddressTest extends InstructionTest {
 
   @Test public void shouldStoreProgramCounterAddressMemoryValueIntoHlAddress() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
-    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE + 1)).thenReturn(ANY_MEMORY_BYTE_VALUE);
+    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction = new Load8BitImmIntoHLAddress(z80, mmu);
 
     instruction.execute();

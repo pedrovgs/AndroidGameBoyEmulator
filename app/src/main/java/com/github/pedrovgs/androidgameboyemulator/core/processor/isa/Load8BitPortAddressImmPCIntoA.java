@@ -28,7 +28,7 @@ public class Load8BitPortAddressImmPCIntoA extends Instruction {
   }
 
   @Override public void execute() {
-    int address = (z80.getProgramCounter() + 1 & 0XFF) + 0xFF00;
+    int address = (z80.getProgramCounter() & 0XFF) + 0xFF00;
     byte memoryValue = mmu.readByte(address);
     z80.set8BitRegisterValue(Register.A, memoryValue);
     z80.incrementProgramCounter();

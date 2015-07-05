@@ -45,7 +45,7 @@ public class Load16BitAddressImmPCIntoATest extends InstructionTest {
 
   @Test public void shouldLoad16BitPortAddressPointedByTheProgramCounterIntoTheRegisterA() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
-    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE + 1)).thenReturn(ANY_MEMORY_BYTE_VALUE);
+    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction = new Load16BitImmPCIntoA(z80, mmu);
 
     instruction.execute();
