@@ -30,7 +30,7 @@ public class Load8BitDEAddressIntoA extends Instruction {
   @Override public void execute() {
     int address = z80.get16BitRegisterValue(Register.DE);
     byte memoryValue = mmu.readByte(address);
-    z80.set8BitRegisterValue(Register.A,memoryValue);
+    z80.set8BitRegisterValue(Register.A, memoryValue);
     z80.setLastInstructionExecutionTime(2);
   }
 }
