@@ -15,30 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.github.pedrovgs.androidgameboyemulator;
+package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
-import org.junit.Before;
-import org.mockito.Mock;
 
-public class InstructionTest extends UnitTest {
+public class Push16BitRegister extends Instruction {
 
-  protected static final byte ANY_MEMORY_BYTE_VALUE = 11;
-  protected static final int ANY_MEMORY_WORD_VALUE = 22;
-  protected static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
-  protected static final Register ANY_8BIT_SOURCE_REGISTER = Register.B;
-  protected static final byte ANY_8BIT_REGISTER_VALUE = (byte) 0x2F;
-  protected static final Register ANY_16BIT_DESTINY_REGISTER = Register.HL;
-  protected static final Register ANY_16BIT_SOURCE_REGISTER = Register.HL;
-  protected static final int ANY_16BIT_REGISTER_VALUE = 23;
-  protected static final int ANY_STACK_POINTER_VALUE = 44;
+  private final Register sourceRegister;
 
-  protected GBZ80 z80;
-  @Mock protected MMU mmu;
+  Push16BitRegister(GBZ80 z80, MMU mmu, Register sourceRegister) {
+    super(z80, mmu);
+    this.sourceRegister = sourceRegister;
+  }
 
-  @Before public void setUpGBZ80Processor() {
-    this.z80 = new GBZ80();
+  @Override public void execute() {
+    int value = z80.get16BitRegisterValue(sourceRegister);
+    z80.decrementStackPointer();
+    byte firstPart = (byte) ((value >> 8) & 0xFF);
+    mmu.writeByte(z80.getStackPointer(), firstPart);
+    z80.decrementStackPointer();
+    byte secondPart = (byte) (value & 0xFF);
+    mmu.writeByte(z80.getStackPointer(), secondPart);
+    z80.setLastInstructionExecutionTime(4);
   }
 }

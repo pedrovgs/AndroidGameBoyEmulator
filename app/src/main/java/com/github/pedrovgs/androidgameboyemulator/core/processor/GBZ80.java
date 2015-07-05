@@ -134,4 +134,8 @@ public class GBZ80 {
           "You can't access to a 16 bit register with the register key: " + register);
     }
   }
+
+  public void decrementStackPointer() {
+    this.stackPointer--;
+  }
 }
