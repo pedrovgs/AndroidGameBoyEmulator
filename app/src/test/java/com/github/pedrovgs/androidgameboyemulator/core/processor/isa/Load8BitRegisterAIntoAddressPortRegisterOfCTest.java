@@ -29,7 +29,7 @@ public class Load8BitRegisterAIntoAddressPortRegisterOfCTest extends Instruction
   @Test public void shouldLoadTheContentOfAIntoThePortAddressPointedByTheRegisterC() {
     z80.set8BitRegisterValue(Register.A, ANY_8BIT_REGISTER_VALUE);
     z80.set8BitRegisterValue(Register.C, ANY_8BIT_REGISTER_VALUE);
-    Instruction instruction = new Load8BitRegisterAIntoAdressPortRegisterOfC(z80, mmu);
+    Instruction instruction = new Load8BitRegisterAIntoAddressPortRegisterOfC(z80, mmu);
 
     instruction.execute();
 
@@ -38,7 +38,7 @@ public class Load8BitRegisterAIntoAddressPortRegisterOfCTest extends Instruction
   }
 
   @Test public void shouldUseTwoCyclesAsLastExecutionTime() {
-    Instruction instruction = new Load8BitRegisterAIntoAdressPortRegisterOfC(z80, mmu);
+    Instruction instruction = new Load8BitRegisterAIntoAddressPortRegisterOfC(z80, mmu);
 
     instruction.execute();
 
