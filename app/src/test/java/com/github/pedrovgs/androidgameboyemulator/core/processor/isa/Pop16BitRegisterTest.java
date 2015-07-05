@@ -49,8 +49,6 @@ public class Pop16BitRegisterTest extends InstructionTest {
     assertEquals(ANY_STACK_POINTER_VALUE + 2, z80.getStackPointer());
   }
 
-  //This test fails because the set16BitRegisterValue is not working as should. Debug and you'll see
-  // how the value arrives properly to the class but the method set16Bit breaks the final result
   @Test public void shouldPopTheContentOfTheMemoryPointedByTheStackPointerIntoTheDestinyRegister() {
     z80.setStackPointer(ANY_STACK_POINTER_VALUE);
     when(mmu.readByte(ANY_STACK_POINTER_VALUE)).thenReturn((byte) 0xF1);

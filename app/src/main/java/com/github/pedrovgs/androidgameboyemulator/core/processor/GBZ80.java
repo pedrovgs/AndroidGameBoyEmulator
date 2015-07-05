@@ -66,12 +66,11 @@ public class GBZ80 {
     return firstPart + secondPart;
   }
 
-  //TODO: this method is not working as should
   public void set16BitRegisterValue(Register register, int value) {
     validate16BitRegister(register);
 
-    byte firstRegisterValue = (byte) (value & 0xFF00);
-    byte secondRegisterValue = (byte) (value & 0x00FF);
+    byte firstRegisterValue = (byte) (value >> 8 & 0xFF);
+    byte secondRegisterValue = (byte) (value & 0xFF);
     registers[register.getRegisterIndex()] = firstRegisterValue;
     registers[register.getRegisterIndex() + 1] = secondRegisterValue;
   }
