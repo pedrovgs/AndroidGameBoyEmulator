@@ -24,11 +24,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class Load8BitPortRegisterOfCAddresIntoATest extends InstructionTest {
+public class Load8BitPortRegisterOfCAddressIntoATest extends InstructionTest {
 
   @Test public void shouldLoad8BitPortRegisterOfCAddressIntoA() {
-    when(z80.get8BitRegisterValue(Register.C)).thenReturn(ANY_8BIT_REGISTER_VALUE);
-    int address = 0XFF00 + (ANY_8BIT_REGISTER_VALUE & 0Xff);
+    z80.set8BitRegisterValue(Register.C, ANY_8BIT_REGISTER_VALUE);
+    int address = (ANY_8BIT_REGISTER_VALUE & 0xFF) + 0XFF00;
     when(mmu.readByte(address)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction = new Load8BitPortRegisterOfCAddressIntoA(z80, mmu);
 
