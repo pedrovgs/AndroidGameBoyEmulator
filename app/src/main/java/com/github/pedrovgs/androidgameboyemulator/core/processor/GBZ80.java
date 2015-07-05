@@ -61,16 +61,16 @@ public class GBZ80 {
     validate16BitRegister(register);
 
     int registerIndex = register.getRegisterIndex();
-    int firstPart = registers[registerIndex] << 8 & 0xff00;
-    int secondPart = registers[registerIndex + 1] & 0x00ff;
+    int firstPart = registers[registerIndex] << 8 & 0xFF00;
+    int secondPart = registers[registerIndex + 1] & 0x00FF;
     return firstPart + secondPart;
   }
 
   public void set16BitRegisterValue(Register register, int value) {
     validate16BitRegister(register);
 
-    byte firstRegisterValue = (byte) (value & 0xff00);
-    byte secondRegisterValue = (byte) (value & 0x00ff);
+    byte firstRegisterValue = (byte) (value & 0xFF00);
+    byte secondRegisterValue = (byte) (value & 0x00FF);
     registers[register.getRegisterIndex()] = firstRegisterValue;
     registers[register.getRegisterIndex() + 1] = secondRegisterValue;
   }
@@ -109,6 +109,14 @@ public class GBZ80 {
     this.stackPointer = stackPointer;
   }
 
+  public void decrementStackPointer() {
+    this.stackPointer--;
+  }
+
+  public void incrementStackPointer() {
+    this.stackPointer++;
+  }
+
   public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
@@ -133,9 +141,5 @@ public class GBZ80 {
       throw new IllegalArgumentException(
           "You can't access to a 16 bit register with the register key: " + register);
     }
-  }
-
-  public void decrementStackPointer() {
-    this.stackPointer--;
   }
 }
