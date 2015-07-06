@@ -26,6 +26,7 @@ public class GBZ80 {
   public static final int SUBSTRACT_FLAG_N = 0x40;
   public static final int HALF_CARRY_FLAG_H = 0x20;
   public static final int CARRY_FLAG_C = 0x10;
+
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
   private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
 
@@ -35,6 +36,7 @@ public class GBZ80 {
   private byte[] registers;
   private int programCounter;
   private int stackPointer;
+  private int flag;
   private int lastInstructionExecutionTime;
 
   public GBZ80() {
@@ -119,6 +121,10 @@ public class GBZ80 {
 
   public void setLastInstructionExecutionTime(int lastInstructionExecutionTime) {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
+  }
+
+  public void clearFlag() {
+    set8BitRegisterValue(Register.F, (byte) 0);
   }
 
   public int getLastInstructionExecutionTime() {
