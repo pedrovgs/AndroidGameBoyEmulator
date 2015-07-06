@@ -20,6 +20,8 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GBZ80Test {
 
@@ -102,5 +104,77 @@ public class GBZ80Test {
     z80.incrementProgramCounterTwice();
 
     assertEquals(ANY_16BIT_VALUE + 2, z80.getProgramCounter());
+  }
+
+  @Test public void shouldEnableFlagZ() {
+    GBZ80 z80 = new GBZ80();
+    z80.disableFlagZ();
+
+    z80.enableFlagZ();
+
+    assertTrue(z80.isFlagZEnabled());
+  }
+
+  @Test public void shouldDisableFlagZ() {
+    GBZ80 z80 = new GBZ80();
+    z80.enableFlagZ();
+
+    z80.disableFlagZ();
+
+    assertFalse(z80.isFlagZEnabled());
+  }
+
+  @Test public void shouldEnableFlagN() {
+    GBZ80 z80 = new GBZ80();
+    z80.disableFlagN();
+
+    z80.enableFlagN();
+
+    assertTrue(z80.isFlagNEnabled());
+  }
+
+  @Test public void shouldDisableFlagN() {
+    GBZ80 z80 = new GBZ80();
+    z80.enableFlagN();
+
+    z80.disableFlagN();
+
+    assertFalse(z80.isFlagNEnabled());
+  }
+
+  @Test public void shouldEnableFlagH() {
+    GBZ80 z80 = new GBZ80();
+    z80.disableFlagH();
+
+    z80.enableFlagH();
+
+    assertTrue(z80.isFlagHEnabled());
+  }
+
+  @Test public void shouldDisableFlagH() {
+    GBZ80 z80 = new GBZ80();
+    z80.enableFlagH();
+
+    z80.disableFlagH();
+
+    assertFalse(z80.isFlagHEnabled());
+  }
+
+  @Test public void shouldEnableFlagCY() {
+    GBZ80 z80 = new GBZ80();
+    z80.disableFlagCY();
+
+    z80.enableFlagCY();
+
+    assertTrue(z80.isFlagCYEnabled());
+  }
+
+  @Test public void shouldDisableFlagCY() {
+    GBZ80 z80 = new GBZ80();
+    z80.enableFlagCY();
+
+    z80.disableFlagCY();
+
+    assertFalse(z80.isFlagCYEnabled());
   }
 }

@@ -40,12 +40,12 @@ public class Load8BitImmPCPlusSPIntoHL extends Instruction {
     z80.disableFlagN();
     if ((check & 0x100) == 0x100) {
       z80.enableFlagCY();
-    }else{
+    } else {
       z80.disableFlagCY();
     }
     if ((check & 0x10) == 0x10) {
       z80.enableFlagH();
-    }else{
+    } else {
       z80.disableFlagH();
     }
     z80.setLastInstructionExecutionTime(3);

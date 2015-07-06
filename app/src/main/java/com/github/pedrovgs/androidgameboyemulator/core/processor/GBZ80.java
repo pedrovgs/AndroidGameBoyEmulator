@@ -146,9 +146,21 @@ public class GBZ80 {
     set8BitRegisterValue(Register.F, registerF);
   }
 
+  public void enableFlagZ() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF |= 0x80;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public void enableFlagN() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF |= 0x40;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
   public void enableFlagCY() {
     byte registerF = get8BitRegisterValue(Register.F);
-    registerF &= 0x10;
+    registerF |= 0x10;
     set8BitRegisterValue(Register.F, registerF);
   }
 
@@ -165,7 +177,7 @@ public class GBZ80 {
 
   public boolean isFlagNEnabled() {
     byte flagF = get8BitRegisterValue(Register.F);
-    return (flagF & 0xBF) == 0xBF;
+    return (flagF & 0x40) == 0x40;
   }
 
   public boolean isFlagCYEnabled() {
