@@ -22,11 +22,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction
 
 public class GBZ80 {
 
-  public static final int ZERO_FLAG_Z = 0x80;
-  public static final int SUBSTRACT_FLAG_N = 0x40;
-  public static final int HALF_CARRY_FLAG_H = 0x20;
-  public static final int CARRY_FLAG_C = 0x10;
-
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
   private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
 
@@ -123,12 +118,64 @@ public class GBZ80 {
     this.lastInstructionExecutionTime = lastInstructionExecutionTime;
   }
 
-  public void clearFlag() {
-    set8BitRegisterValue(Register.F, (byte) 0);
-  }
-
   public int getLastInstructionExecutionTime() {
     return lastInstructionExecutionTime;
+  }
+
+  public void disableFlagZ() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF &= 0x7F;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public void disableFlagN() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF &= 0xBF;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public void disableFlagCY() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF &= 0xEF;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public void disableFlagH() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF &= 0xDF;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public void enableFlagCY() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF &= 0x10;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public void enableFlagH() {
+    byte registerF = get8BitRegisterValue(Register.F);
+    registerF |= 0x20;
+    set8BitRegisterValue(Register.F, registerF);
+  }
+
+  public boolean isFlagZEnabled() {
+    byte flagF = get8BitRegisterValue(Register.F);
+    return (flagF & 0x80) == 0x80;
+  }
+
+  public boolean isFlagNEnabled() {
+    byte flagF = get8BitRegisterValue(Register.F);
+    return (flagF & 0xBF) == 0xBF;
+  }
+
+  public boolean isFlagCYEnabled() {
+    byte flagF = get8BitRegisterValue(Register.F);
+    return (flagF & 0x10) == 0x10;
+  }
+
+  public boolean isFlagHEnabled() {
+    byte flagF = get8BitRegisterValue(Register.F);
+    return (flagF & 0x20) == 0x20;
   }
 
   private void validate8BitRegister(Register register) {

@@ -54,4 +54,20 @@ public class Load8BitImmPCPlusSPIntoHLTest extends InstructionTest {
     int expectedValue = ANY_STACK_POINTER_VALUE + ANY_MEMORY_BYTE_VALUE;
     assertEquals(expectedValue, z80.get16BitRegisterValue(Register.HL));
   }
+
+  @Test public void shouldSetZFlagToZero() {
+    Instruction instruction = new Load8BitImmPCPlusSPIntoHL(z80, mmu);
+
+    instruction.execute();
+
+    assertEquals(false, z80.isFlagZEnabled());
+  }
+
+  @Test public void shouldSetFlagNToZero() {
+    Instruction instruction = new Load8BitImmPCPlusSPIntoHL(z80, mmu);
+
+    instruction.execute();
+
+    assertEquals(false, z80.isFlagNEnabled());
+  }
 }

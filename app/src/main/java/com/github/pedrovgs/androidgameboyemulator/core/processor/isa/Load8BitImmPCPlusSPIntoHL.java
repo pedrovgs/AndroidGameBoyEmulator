@@ -36,15 +36,18 @@ public class Load8BitImmPCPlusSPIntoHL extends Instruction {
     z80.set16BitRegisterValue(Register.HL, registerValue);
 
     int check = stackPointer ^ (memoryValue) ^ ((stackPointer + memoryValue) & 0xFFFF);
-    z80.clearFlag();
-    byte flag = z80.get8BitRegisterValue(Register.F);
+    z80.disableFlagZ();
+    z80.disableFlagN();
     if ((check & 0x100) == 0x100) {
-      flag |= GBZ80.CARRY_FLAG_C;
+      z80.enableFlagCY();
+    }else{
+      z80.disableFlagCY();
     }
     if ((check & 0x10) == 0x10) {
-      flag |= GBZ80.HALF_CARRY_FLAG_H;
+      z80.enableFlagH();
+    }else{
+      z80.disableFlagH();
     }
-    z80.set8BitRegisterValue(Register.F, flag);
     z80.setLastInstructionExecutionTime(3);
   }
 }
