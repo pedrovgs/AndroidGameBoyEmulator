@@ -18,7 +18,7 @@ public class Adc8BitImmPCPlusAIntoATest extends InstructionTest {
     assertEquals(2, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldLoadTheContentOfTheSourceRegisterPlusCarryIntoA() {
+  @Test public void shouldLoadTheContentOfTheImmPCAddressPlusCarryPlusAIntoA() {
     z80.enableFlagCY();
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
     when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn((byte) 0);
