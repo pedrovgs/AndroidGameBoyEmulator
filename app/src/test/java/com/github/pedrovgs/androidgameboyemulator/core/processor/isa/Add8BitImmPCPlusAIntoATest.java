@@ -26,14 +26,6 @@ import static org.mockito.Mockito.when;
 
 public class Add8BitImmPCPlusAIntoATest extends InstructionTest {
 
-  @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction = new Add8BitImmPCPlusAIntoA(z80, mmu);
-
-    instruction.execute();
-
-    assertEquals(2, z80.getLastInstructionExecutionTime());
-  }
-
   @Test public void shouldSumTheContentOfTheMemoryPointedToTheRegisterAAndLoadItIntoA() {
     z80.set8BitRegisterValue(Register.A, ANY_8BIT_REGISTER_VALUE);
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
@@ -44,5 +36,13 @@ public class Add8BitImmPCPlusAIntoATest extends InstructionTest {
 
     byte expectedValue = ANY_MEMORY_BYTE_VALUE + ANY_8BIT_REGISTER_VALUE;
     assertEquals(expectedValue, z80.get8BitRegisterValue(Register.A));
+  }
+
+  @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
+    Instruction instruction = new Add8BitImmPCPlusAIntoA(z80, mmu);
+
+    instruction.execute();
+
+    assertEquals(2, z80.getLastInstructionExecutionTime());
   }
 }
