@@ -21,9 +21,9 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class And8BitHlAddressToAIntoA extends And8Bit {
+public class And8BitHLAddressToAIntoA extends And8Bit {
 
-  public And8BitHlAddressToAIntoA(GBZ80 z80, MMU mmu) {
+  public And8BitHLAddressToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
