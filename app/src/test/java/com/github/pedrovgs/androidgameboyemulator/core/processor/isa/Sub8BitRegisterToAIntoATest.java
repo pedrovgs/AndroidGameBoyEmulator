@@ -18,8 +18,58 @@
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.InstructionTest;
-import junit.framework.TestCase;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Sub8BitRegisterToAIntoATest extends InstructionTest {
 
+  @Test public void shouldUseOneAsLastInstructionExecutionTime() {
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+
+    instruction.execute();
+
+    assertEquals(1, z80.getLastInstructionExecutionTime());
+  }
+
+  @Test public void shouldSubTheContentOfTheMemoryAddressPointedByThePCAndStoreTheResultIntoA() {
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
+    z80.set8BitRegisterValue(Register.A, (byte) (ANY_MEMORY_BYTE_VALUE + 1));
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+
+    instruction.execute();
+
+    assertEquals(1, z80.get8BitRegisterValue(Register.A));
+  }
+
+  @Test public void shouldEnableFlagZIfResultIsZero() {
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
+    z80.set8BitRegisterValue(Register.A, ANY_MEMORY_BYTE_VALUE);
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+
+    instruction.execute();
+
+    assertTrue(z80.isFlagZEnabled());
+  }
+
+  @Test public void shouldDisableFlagZIfResultIsNotZero() {
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
+    z80.set8BitRegisterValue(Register.A, (byte) (ANY_MEMORY_BYTE_VALUE + 1));
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+
+    instruction.execute();
+
+    assertFalse(z80.isFlagZEnabled());
+  }
+
+  @Test public void shouldEnableFlagN() {
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+
+    instruction.execute();
+
+    assertTrue(z80.isFlagNEnabled());
+  }
 }
