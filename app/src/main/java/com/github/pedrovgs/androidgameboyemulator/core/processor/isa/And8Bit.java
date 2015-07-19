@@ -32,6 +32,8 @@ public abstract class And8Bit extends Instruction {
     byte registerAValue = z80.get8BitRegisterValue(Register.A);
     byte result = (byte) (registerAValue & value);
     z80.set8BitRegisterValue(Register.A, result);
+    z80.setLastInstructionExecutionTime(getLastInstructionExecutionTime());
+
     z80.resetFlagF();
     z80.enableFlagH();
     if (result == 0) {
@@ -42,4 +44,6 @@ public abstract class And8Bit extends Instruction {
   }
 
   protected abstract byte getByte();
+
+  protected abstract int getLastInstructionExecutionTime();
 }
