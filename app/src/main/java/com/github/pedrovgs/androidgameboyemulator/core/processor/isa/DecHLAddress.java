@@ -36,6 +36,7 @@ public class DecHLAddress extends Instruction {
 
     boolean wasCEnabled = z80.isFlagCYEnabled();
     z80.resetFlagF();
+    z80.enableFlagN();
     if (wasCEnabled) {
       z80.enableFlagCY();
     } else {
@@ -43,8 +44,7 @@ public class DecHLAddress extends Instruction {
     }
     if (result == 0) {
       z80.enableFlagZ();
-      z80.enableFlagH();
-    } else if ((result & 0xF) == 0) {
+    } else if ((result & 0xF) == 0xF) {
       z80.enableFlagH();
     }
   }
