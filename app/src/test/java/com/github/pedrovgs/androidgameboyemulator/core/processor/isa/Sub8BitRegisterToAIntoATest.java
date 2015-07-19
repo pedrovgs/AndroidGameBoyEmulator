@@ -35,7 +35,7 @@ public class Sub8BitRegisterToAIntoATest extends InstructionTest {
     assertEquals(1, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldSubTheContentOfTheMemoryAddressPointedByThePCAndStoreTheResultIntoA() {
+  @Test public void shouldSubTheContentOfTheSourceRegisterAndStoreTheResultIntoA() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
     z80.set8BitRegisterValue(Register.A, (byte) (ANY_MEMORY_BYTE_VALUE + 1));
     Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);

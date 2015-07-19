@@ -36,7 +36,7 @@ public class Sub8BitAddressHLToAIntoATest extends InstructionTest {
     assertEquals(2, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldSubTheContentOfTheMemoryAddressPointedByThePCAndStoreTheResultIntoA() {
+  @Test public void shouldSubTheContentOfTheMemoryAddressPointedByTheHLRegisterAndStoreTheResultIntoA() {
     z80.set16BitRegisterValue(Register.HL, ANY_16BIT_REGISTER_VALUE);
     when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     z80.set8BitRegisterValue(Register.A, (byte) (ANY_MEMORY_BYTE_VALUE + 1));
