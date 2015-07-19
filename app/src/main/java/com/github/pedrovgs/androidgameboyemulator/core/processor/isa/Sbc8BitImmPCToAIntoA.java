@@ -34,7 +34,7 @@ public class Sbc8BitImmPCToAIntoA extends Instruction {
     int carry = z80.isFlagCYEnabled() ? 1 : 0;
     byte result = (byte) (registerAValue - memoryValue - carry);
     z80.set8BitRegisterValue(Register.A, result);
-    z80.setLastInstructionExecutionTime(1);
+    z80.setLastInstructionExecutionTime(2);
 
     z80.set8BitRegisterValue(Register.F, (byte) 0);
     registerAValue = z80.get8BitRegisterValue(Register.A);
