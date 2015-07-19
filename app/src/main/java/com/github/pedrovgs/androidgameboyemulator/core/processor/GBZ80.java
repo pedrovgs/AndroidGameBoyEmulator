@@ -121,6 +121,10 @@ public class GBZ80 {
     return lastInstructionExecutionTime;
   }
 
+  public void resetFlagF() {
+    set8BitRegisterValue(Register.F, (byte) 0);
+  }
+
   public void disableFlagZ() {
     byte registerF = get8BitRegisterValue(Register.F);
     registerF &= 0x7F;
