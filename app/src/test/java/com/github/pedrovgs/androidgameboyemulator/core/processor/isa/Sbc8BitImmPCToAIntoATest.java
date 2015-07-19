@@ -37,8 +37,8 @@ public class Sbc8BitImmPCToAIntoATest extends InstructionTest {
   @Test
   public void shouldSubtractTheMemoryValuePointedByThePCPlusCYFlagPlusAAndStoreTheResultIntoA() {
     z80.enableFlagCY();
-    z80.setProgramCounter(ANY_8BIT_REGISTER_VALUE);
-    when(mmu.readByte(ANY_8BIT_REGISTER_VALUE)).thenReturn((byte) 1);
+    z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
+    when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn((byte) 1);
     z80.set8BitRegisterValue(Register.A, (byte) 3);
     Instruction instruction = new Sbc8BitImmPCToAIntoA(z80, mmu);
 
