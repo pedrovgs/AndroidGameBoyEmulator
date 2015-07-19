@@ -21,34 +21,20 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Cp8Bit extends Instruction {
+public class Cp8BitRegisterWithA extends Cp8Bit {
 
-  public Cp8Bit(GBZ80 z80, MMU mmu) {
+  private final Register sourceRegister;
+
+  public Cp8BitRegisterWithA(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
+    this.sourceRegister = sourceRegister;
   }
 
-  @Override public void execute() {
-    byte sourceValue = getValue();
-    byte registerAValue = z80.get8BitRegisterValue(Register.A);
-    boolean result = registerAValue == sourceValue;
-    int lastInstructionExecutionTime = getLastInstructionExecutionTime();
-    z80.setLastInstructionExecutionTime(lastInstructionExecutionTime);
-    z80.resetFlagF();
-    z80.enableFlagN();
-    if (result) {
-      z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
-    }
-    if ((registerAValue & 0xF) < (sourceValue & 0xF)) {
-      z80.enableFlagH();
-    }
-    if ((registerAValue & 0xff) < (sourceValue & 0xff)) {
-      z80.enableFlagCY();
-    }
+  @Override protected int getLastInstructionExecutionTime() {
+    return 1;
   }
 
-  protected abstract int getLastInstructionExecutionTime();
-
-  protected abstract byte getValue();
+  @Override protected byte getValue() {
+    return z80.get8BitRegisterValue(sourceRegister);
+  }
 }
