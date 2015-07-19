@@ -33,7 +33,7 @@ public class Sub8BitImmPCToAIntoA extends Instruction {
     byte registerAValue = z80.get8BitRegisterValue(Register.A);
     byte result = (byte) (registerAValue - memoryValue);
     z80.set8BitRegisterValue(Register.A, result);
-    z80.setLastInstructionExecutionTime(1);
+    z80.setLastInstructionExecutionTime(2);
 
     if (result == 0) {
       z80.enableFlagZ();

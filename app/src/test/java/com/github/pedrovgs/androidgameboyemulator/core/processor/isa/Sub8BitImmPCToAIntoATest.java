@@ -33,7 +33,7 @@ public class Sub8BitImmPCToAIntoATest extends InstructionTest {
 
     instruction.execute();
 
-    assertEquals(1, z80.getLastInstructionExecutionTime());
+    assertEquals(2, z80.getLastInstructionExecutionTime());
   }
 
   @Test public void shouldSubTheContentOfTheMemoryAddressPointedByThePCAndStoreTheResultIntoA() {
