@@ -31,7 +31,6 @@ public class GBZ80 {
   private byte[] registers;
   private int programCounter;
   private int stackPointer;
-  private int flag;
   private int lastInstructionExecutionTime;
 
   public GBZ80() {
