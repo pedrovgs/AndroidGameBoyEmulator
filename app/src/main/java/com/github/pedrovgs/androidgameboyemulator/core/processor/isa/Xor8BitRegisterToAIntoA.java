@@ -21,11 +21,11 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Xor8BitRegisterIntoA extends Xor8Bit {
+public class Xor8BitRegisterToAIntoA extends Xor8Bit {
 
   private final Register sourceRegister;
 
-  public Xor8BitRegisterIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  public Xor8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

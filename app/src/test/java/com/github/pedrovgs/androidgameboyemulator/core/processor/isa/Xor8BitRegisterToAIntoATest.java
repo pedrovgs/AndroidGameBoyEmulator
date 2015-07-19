@@ -25,10 +25,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class Xor8BitRegisterIntoATest extends InstructionTest {
+public class Xor8BitRegisterToAIntoATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new Xor8BitRegisterIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Xor8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -38,7 +38,7 @@ public class Xor8BitRegisterIntoATest extends InstructionTest {
   @Test public void shouldEnableFlagZIfResultIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 0);
     z80.set8BitRegisterValue(Register.A, (byte) 0);
-    Instruction instruction = new Xor8BitRegisterIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Xor8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -48,7 +48,7 @@ public class Xor8BitRegisterIntoATest extends InstructionTest {
   @Test public void shouldDisableFlagZIfResultIsNotZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 1);
     z80.set8BitRegisterValue(Register.A, (byte) 0);
-    Instruction instruction = new Xor8BitRegisterIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Xor8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -58,7 +58,7 @@ public class Xor8BitRegisterIntoATest extends InstructionTest {
   @Test public void shouldXorRegisterValueToAAndStoreTheResultIntoRegisterA() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 2);
     z80.set8BitRegisterValue(Register.A, (byte) 3);
-    Instruction instruction = new Xor8BitRegisterIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Xor8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
