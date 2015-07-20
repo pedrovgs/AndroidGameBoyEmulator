@@ -30,8 +30,8 @@ public class InstructionTest extends UnitTest {
   protected static final Register ANY_8BIT_DESTINY_REGISTER = Register.E;
   protected static final Register ANY_8BIT_SOURCE_REGISTER = Register.B;
   protected static final byte ANY_8BIT_REGISTER_VALUE = (byte) 0x2F;
-  protected static final Register ANY_16BIT_DESTINY_REGISTER = Register.HL;
-  protected static final Register ANY_16BIT_SOURCE_REGISTER = Register.HL;
+  protected static final Register ANY_16BIT_DESTINY_REGISTER = Register.AF;
+  protected static final Register ANY_16BIT_SOURCE_REGISTER = Register.AF;
   protected static final int ANY_16BIT_REGISTER_VALUE = 23;
   protected static final int ANY_STACK_POINTER_VALUE = 44;
 
