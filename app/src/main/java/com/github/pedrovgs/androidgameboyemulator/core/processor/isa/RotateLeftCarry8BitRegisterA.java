@@ -28,7 +28,7 @@ public class RotateLeftCarry8BitRegisterA extends Instruction {
 
   @Override public void execute() {
     byte registerAValue = z80.get8BitRegisterValue(Register.A);
-    boolean eightBit = (registerAValue & 0x80) == 1;
+    boolean eightBit = (registerAValue & 0x80) == 0x80;
     registerAValue = (byte) (registerAValue << 1);
     if (eightBit) {
       z80.enableFlagCY();
@@ -36,6 +36,7 @@ public class RotateLeftCarry8BitRegisterA extends Instruction {
     } else {
       z80.disableFlagCY();
     }
+    z80.set8BitRegisterValue(Register.A, registerAValue);
     z80.disableFlagH();
     z80.disableFlagN();
     z80.disableFlagZ();
