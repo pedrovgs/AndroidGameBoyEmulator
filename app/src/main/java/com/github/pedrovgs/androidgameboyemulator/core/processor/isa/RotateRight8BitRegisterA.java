@@ -31,8 +31,8 @@ public class RotateRight8BitRegisterA extends RotateRight8Bit {
     return z80.get8BitRegisterValue(Register.A);
   }
 
-  @Override protected void storeValue(byte registerAValue) {
-    z80.set8BitRegisterValue(Register.A, registerAValue);
+  @Override protected void storeValue(byte value) {
+    z80.set8BitRegisterValue(Register.A, value);
   }
 
   @Override protected void setLastInstructionExecutionTime() {
