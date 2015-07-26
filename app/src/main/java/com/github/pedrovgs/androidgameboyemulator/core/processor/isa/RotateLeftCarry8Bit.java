@@ -20,9 +20,9 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public abstract class Rotate8BitLeftCarry extends Instruction {
+public abstract class RotateLeftCarry8Bit extends Instruction {
 
-  public Rotate8BitLeftCarry(GBZ80 z80, MMU mmu) {
+  public RotateLeftCarry8Bit(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
