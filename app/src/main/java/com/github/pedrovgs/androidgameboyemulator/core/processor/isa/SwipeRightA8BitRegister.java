@@ -19,41 +19,26 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class SwipeRight8BitA extends Instruction {
+public class SwipeRightA8BitRegister extends SwipeRightA8Bit {
 
-  public SwipeRight8BitA(GBZ80 z80, MMU mmu) {
+  private final Register register;
+
+  public SwipeRightA8BitRegister(GBZ80 z80, MMU mmu, Register register) {
     super(z80, mmu);
+    this.register = register;
   }
 
-  @Override public void execute() {
-    byte value = loadValue();
-    boolean shouldEnableFlagCY = (value & 0x1) == 0x1;
-    byte previousSeventhBitValue = (byte) (value & 0x80);
-    value >>= 1;
-    value |= previousSeventhBitValue;
-    boolean wasFlagZEnabled = z80.isFlagZEnabled();
-    storeValue(value);
-    z80.resetFlagF();
-    z80.disableFlagH();
-    z80.disableFlagN();
-    if (shouldEnableFlagCY) {
-      z80.enableFlagCY();
-    }
-    if (wasFlagZEnabled) {
-      z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
-    }
-    if (value == 0) {
-      z80.enableFlagZ();
-    }
-    setLastInstructionExecutionTime();
+  @Override protected byte loadValue() {
+    return z80.get8BitRegisterValue(register);
   }
 
-  protected abstract byte loadValue();
+  @Override protected void storeValue(byte value) {
+    z80.set8BitRegisterValue(register, value);
+  }
 
-  protected abstract void storeValue(byte value);
-
-  protected abstract void setLastInstructionExecutionTime();
+  @Override protected void setLastInstructionExecutionTime() {
+    z80.setLastInstructionExecutionTime(2);
+  }
 }
