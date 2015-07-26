@@ -45,7 +45,7 @@ public abstract class RotateRightCarry8Bit extends Instruction {
 
   protected abstract byte loadValue();
 
-  protected abstract void storeValue(byte registerAValue);
+  protected abstract void storeValue(byte value);
 
   protected abstract void setLastInstructionExecutionTime();
 }
