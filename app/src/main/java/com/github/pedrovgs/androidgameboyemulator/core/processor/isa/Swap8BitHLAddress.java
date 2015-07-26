@@ -19,27 +19,25 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Swap8Bit extends Instruction {
+public class Swap8BitHLAddress extends Swap8Bit {
 
-  public Swap8Bit(GBZ80 z80, MMU mmu) {
+  public Swap8BitHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
-  @Override public void execute() {
-    byte value = loadValue();
-    z80.resetFlagF();
-    value = (byte) ((value << 4 & 0xF0) | (value >> 4 & 0xF));
-    if (value == 0) {
-      z80.enableFlagZ();
-    }
-    storeValue(value);
-    setLastInstructionExecutionTime();
+  @Override protected byte loadValue() {
+    int address = z80.get16BitRegisterValue(Register.HL);
+    return mmu.readByte(address);
   }
 
-  protected abstract byte loadValue();
+  @Override protected void storeValue(byte value) {
+    int address = z80.get16BitRegisterValue(Register.HL);
+    mmu.writeByte(address, value);
+  }
 
-  protected abstract void storeValue(byte value);
-
-  protected abstract void setLastInstructionExecutionTime();
+  @Override protected void setLastInstructionExecutionTime() {
+    z80.setLastInstructionExecutionTime(4);
+  }
 }
