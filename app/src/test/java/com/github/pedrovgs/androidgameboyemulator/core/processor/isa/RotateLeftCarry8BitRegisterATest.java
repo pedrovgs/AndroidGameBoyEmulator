@@ -60,7 +60,7 @@ public class RotateLeftCarry8BitRegisterATest extends InstructionTest {
 
     instruction.execute();
 
-    assertEquals((byte)0xFD, z80.get8BitRegisterValue(Register.A));
+    assertEquals((byte) 0xFD, z80.get8BitRegisterValue(Register.A));
   }
 
   @Test public void shouldEnableFlagCYIfTheShiftHasCarry() {
