@@ -30,8 +30,8 @@ public abstract class SwipeRightL8Bit extends Instruction {
     byte value = loadValue();
     boolean shouldEnableFlagCY = (value & 0x1) == 0x1;
     value >>= 1;
-    boolean wasFlagZEnabled = z80.isFlagZEnabled();
     storeValue(value);
+    boolean wasFlagZEnabled = z80.isFlagZEnabled();
     z80.resetFlagF();
     z80.disableFlagH();
     z80.disableFlagN();
