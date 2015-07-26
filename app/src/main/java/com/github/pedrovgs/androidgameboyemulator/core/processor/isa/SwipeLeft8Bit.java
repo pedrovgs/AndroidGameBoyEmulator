@@ -28,10 +28,14 @@ public abstract class SwipeLeft8Bit extends Instruction {
 
   @Override public void execute() {
     byte value = getValue();
+    boolean shouldEnableCY = (value & 0x80) == 0x80;
     value <<= 1;
     storeValue(value);
     boolean wasZEnabled = z80.isFlagZEnabled();
     z80.resetFlagF();
+    if (shouldEnableCY) {
+      z80.enableFlagCY();
+    }
     if (wasZEnabled) {
       z80.enableFlagZ();
     } else {
