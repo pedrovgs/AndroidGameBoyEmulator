@@ -40,10 +40,12 @@ public abstract class Rotate8BitLeftCarry extends Instruction {
     z80.disableFlagH();
     z80.disableFlagN();
     z80.disableFlagZ();
-    z80.setLastInstructionExecutionTime(1);
+    setLastInstructionExecutionTime();
   }
+
+  protected abstract byte loadByte();
 
   protected abstract void storeResult(byte value);
 
-  protected abstract byte loadByte();
+  protected abstract void setLastInstructionExecutionTime();
 }

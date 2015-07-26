@@ -17,29 +17,25 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class RotateLeftCarry8BitRegisterA extends Instruction {
+public class RotateLeftCarry8BitRegisterA extends Rotate8BitLeftCarry {
 
-  public RotateLeftCarry8BitRegisterA(GBZ80 z80) {
-    super(z80);
+  public RotateLeftCarry8BitRegisterA(GBZ80 z80, MMU mmu) {
+    super(z80, mmu);
   }
 
-  @Override public void execute() {
-    byte registerAValue = z80.get8BitRegisterValue(Register.A);
-    boolean eightBit = (registerAValue & 0x80) == 0x80;
-    registerAValue = (byte) (registerAValue << 1);
-    if (eightBit) {
-      z80.enableFlagCY();
-      registerAValue += 1;
-    } else {
-      z80.disableFlagCY();
-    }
-    z80.set8BitRegisterValue(Register.A, registerAValue);
-    z80.disableFlagH();
-    z80.disableFlagN();
-    z80.disableFlagZ();
+  @Override protected byte loadByte() {
+    return z80.get8BitRegisterValue(Register.A);
+  }
+
+  @Override protected void storeResult(byte value) {
+    z80.set8BitRegisterValue(Register.A, value);
+  }
+
+  @Override protected void setLastInstructionExecutionTime() {
     z80.setLastInstructionExecutionTime(1);
   }
 }
