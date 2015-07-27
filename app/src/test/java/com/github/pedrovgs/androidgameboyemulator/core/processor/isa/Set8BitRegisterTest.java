@@ -40,4 +40,14 @@ public class Set8BitRegisterTest extends InstructionTest {
 
     assertEquals(2, z80.get8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER));
   }
+
+  @Test
+  public void shouldSetToOneTheBitIndicatedInTheRegisterPassedAsArgumentAndRespectTheOtherBits() {
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 1);
+    Instruction instruction = new Set8BitRegister(z80, mmu, 1, ANY_8BIT_SOURCE_REGISTER);
+
+    instruction.execute();
+
+    assertEquals(3, z80.get8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER));
+  }
 }
