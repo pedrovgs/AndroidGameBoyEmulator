@@ -28,5 +28,6 @@ public class Reti extends Instruction {
   @Override public void execute() {
     z80.setProgramCounter(popTwice());
     z80.enableInterruptMasterFlag();
+    z80.setLastInstructionExecutionTime(4);
   }
 }
