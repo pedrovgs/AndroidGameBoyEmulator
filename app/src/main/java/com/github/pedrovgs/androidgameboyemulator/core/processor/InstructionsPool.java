@@ -19,6 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitImmPCInto8BitRegister;
 
 public class InstructionsPool {
 
@@ -28,9 +29,24 @@ public class InstructionsPool {
   public InstructionsPool(GBZ80 z80, MMU mmu) {
     normalInstructions = new Instruction[256];
     extendedInstructions = new Instruction[256];
+    generateNormalInstructions(z80, mmu);
+    generateExtendedInstructions(z80, mmu);
   }
 
   public Instruction get(int rawInstruction) {
     return null;
+  }
+
+  private void generateNormalInstructions(GBZ80 z80, MMU mmu) {
+
+  }
+
+  private void generateExtendedInstructions(GBZ80 z80, MMU mmu) {
+    normalInstructions[0x06] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.B);
+    normalInstructions[0x0E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.C);
+    normalInstructions[0x16] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.D);
+    normalInstructions[0x1E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.E);
+    normalInstructions[0x26] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.H);
+    normalInstructions[0x2E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.L);
   }
 }
