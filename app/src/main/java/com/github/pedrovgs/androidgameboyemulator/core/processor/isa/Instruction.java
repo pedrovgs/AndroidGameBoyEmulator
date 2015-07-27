@@ -47,6 +47,14 @@ public abstract class Instruction {
     push((byte) (data & 0xff));
   }
 
+  protected int popTwice() {
+    int memoryValue = mmu.readByte(z80.getStackPointer()) & 0xff;
+    z80.setStackPointer((z80.getStackPointer() + 1) & 0xffff);
+    memoryValue |= ((mmu.readByte(z80.getStackPointer()) & 0xff) << 8);
+    z80.setStackPointer((z80.getStackPointer() + 1) & 0xffff);
+    return memoryValue;
+  }
+
   private void push(byte value) {
     z80.setStackPointer((z80.getStackPointer() - 1) & 0xffff);
     mmu.writeByte(z80.getStackPointer(), value);
