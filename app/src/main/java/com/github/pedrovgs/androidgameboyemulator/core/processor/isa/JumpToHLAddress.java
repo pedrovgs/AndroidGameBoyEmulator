@@ -21,27 +21,16 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class JumpR extends Instruction {
+public class JumpToHLAddress extends Instruction {
 
-  private final int condition;
-  private final int flag;
-
-  public JumpR(GBZ80 z80, MMU mmu, int condition, int flag) {
+  public JumpToHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
-    this.condition = condition;
-    this.flag = flag;
   }
 
   @Override public void execute() {
-    int programCounter = z80.getProgramCounter();
-    byte value = mmu.readByte(programCounter);
-    z80.incrementProgramCounter();
-    if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
-      z80.setProgramCounter(value);
-      if (flag != JUMP && condition != JUMP) {
-        z80.setLastInstructionExecutionTime(3);
-      }
-    }
-    z80.setLastInstructionExecutionTime(2);
+    int address = z80.get16BitRegisterValue(Register.HL);
+    int value = mmu.readWord(address);
+    z80.setProgramCounter(value);
+    z80.setLastInstructionExecutionTime(1);
   }
 }
