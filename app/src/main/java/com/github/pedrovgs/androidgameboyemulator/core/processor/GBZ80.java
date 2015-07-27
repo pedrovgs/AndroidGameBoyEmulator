@@ -33,6 +33,8 @@ public class GBZ80 {
   private int stackPointer;
   private int lastInstructionExecutionTime;
 
+  private boolean interruptMasterFlag;
+
   public GBZ80() {
     this.clock = new Clock();
     this.instructionsPool = new InstructionsPool();
@@ -191,6 +193,14 @@ public class GBZ80 {
   public boolean isFlagHEnabled() {
     byte flagF = get8BitRegisterValue(Register.F);
     return (flagF & 0x20) == 0x20;
+  }
+
+  public void enableInterruptMasterFlag() {
+    this.interruptMasterFlag = true;
+  }
+
+  public void disableInterruptMasterFlag() {
+    this.interruptMasterFlag = false;
   }
 
   private void validate8BitRegister(Register register) {
