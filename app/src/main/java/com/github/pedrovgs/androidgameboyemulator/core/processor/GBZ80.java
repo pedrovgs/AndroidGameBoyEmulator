@@ -50,6 +50,15 @@ public class GBZ80 {
     set16BitRegisterValue(Register.HL, INITIAL_HL_REGISTER_VALUE);
   }
 
+  public void clearRegisters() {
+    this.programCounter = 0;
+    this.stackPointer = 0;
+    set16BitRegisterValue(Register.AF, 0);
+    set16BitRegisterValue(Register.BC, 0);
+    set16BitRegisterValue(Register.DE, 0);
+    set16BitRegisterValue(Register.HL, 0);
+  }
+
   public byte get8BitRegisterValue(Register register) {
     validate8BitRegister(register);
 
