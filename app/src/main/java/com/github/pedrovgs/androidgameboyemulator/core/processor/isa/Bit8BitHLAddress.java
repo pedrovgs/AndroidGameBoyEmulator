@@ -17,20 +17,22 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
-import com.github.pedrovgs.androidgameboyemulator.InstructionTest;
-import org.junit.Test;
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-import static org.junit.Assert.assertEquals;
+public class Bit8BitHLAddress extends Bit8Bit {
 
-public class Bit8BitRegisterTest extends InstructionTest {
+  public Bit8BitHLAddress(GBZ80 z80, MMU mmu, int bit) {
+    super(z80, mmu, bit);
+  }
 
-  @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction =
-        new Bit8BitRegister(z80, mmu, ANY_BIT_VALUE, ANY_8BIT_SOURCE_REGISTER);
+  @Override protected byte loadValue() {
+    int address = z80.get8BitRegisterValue(Register.HL);
+    return mmu.readByte(address);
+  }
 
-    instruction.execute();
-
-    assertEquals(2, z80.getLastInstructionExecutionTime());
+  @Override protected void setLastInstructionExecutionTime() {
+    z80.setLastInstructionExecutionTime(3);
   }
 }
-
