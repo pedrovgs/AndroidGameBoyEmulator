@@ -35,7 +35,10 @@ public abstract class Bit8Bit extends Instruction {
     if ((n >> bit & 1) == 0) {
       z80.enableFlagZ();
     }
+    setLastInstructionExecutionTime();
   }
 
   protected abstract byte loadValue();
+
+  protected abstract void setLastInstructionExecutionTime();
 }

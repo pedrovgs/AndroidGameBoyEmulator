@@ -33,4 +33,8 @@ public class Bit8BitRegister extends Bit8Bit {
   @Override protected byte loadValue() {
     return z80.get8BitRegisterValue(sourceRegister);
   }
+
+  @Override protected void setLastInstructionExecutionTime() {
+    z80.setLastInstructionExecutionTime(2);
+  }
 }
