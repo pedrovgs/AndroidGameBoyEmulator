@@ -19,26 +19,30 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Instruction {
+public class Jump extends Instruction {
 
-  protected static final int JUMP = 0;
+  private final int flag;
+  private final int condition;
 
-  protected final GBZ80 z80;
-  protected final MMU mmu;
-
-  Instruction(GBZ80 z80) {
-    this(z80, null);
+  public Jump(GBZ80 z80, MMU mmu, int flag, int condition) {
+    super(z80, mmu);
+    this.flag = flag;
+    this.condition = condition;
   }
 
-  Instruction(GBZ80 z80, MMU mmu) {
-    this.z80 = z80;
-    this.mmu = mmu;
-  }
-
-  public abstract void execute();
-
-  protected void setLastExecutionTime(int duration) {
-    z80.setLastInstructionExecutionTime(1);
+  @Override public void execute() {
+    int programCounter = z80.getProgramCounter();
+    int n = mmu.readWord(programCounter);
+    z80.incrementProgramCounterTwice();
+    if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
+      z80.setProgramCounter(n);
+      if (flag != JUMP && condition != JUMP) {
+        z80.setLastInstructionExecutionTime(4);
+      }
+    } else {
+      z80.setLastInstructionExecutionTime(3);
+    }
   }
 }
