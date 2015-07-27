@@ -32,5 +32,6 @@ public class Rst extends Instruction {
     int programCounter = z80.getProgramCounter();
     pushTwice(programCounter);
     z80.setProgramCounter(pc);
+    z80.setLastInstructionExecutionTime(4);
   }
 }
