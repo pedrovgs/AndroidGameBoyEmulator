@@ -17,9 +17,6 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
-import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
-
 public class GBZ80 {
 
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
@@ -30,7 +27,6 @@ public class GBZ80 {
   private static final int INITIAL_HL_REGISTER_VALUE = 0x014D;
 
   private final Clock clock;
-  private final InstructionsPool instructionsPool;
 
   private byte[] registers;
   private int programCounter;
@@ -41,7 +37,6 @@ public class GBZ80 {
 
   public GBZ80() {
     this.clock = new Clock();
-    this.instructionsPool = new InstructionsPool();
     reset();
   }
 
@@ -83,12 +78,6 @@ public class GBZ80 {
     byte secondRegisterValue = (byte) (value & 0xFF);
     registers[register.getRegisterIndex()] = firstRegisterValue;
     registers[register.getRegisterIndex() + 1] = secondRegisterValue;
-  }
-
-  public void execute(int rawInstruction, MMU mmu) {
-    Instruction instruction =
-        instructionsPool.getInstructionFromRawValue(rawInstruction, this, mmu);
-    instruction.execute();
   }
 
   public void updateClock() {

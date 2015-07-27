@@ -21,7 +21,16 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
 
 public class InstructionsPool {
-  public Instruction getInstructionFromRawValue(int rawInstruction, GBZ80 gbz80, MMU mmu) {
+
+  private final Instruction[] normalInstructions;
+  private final Instruction[] extendedInstructions;
+
+  public InstructionsPool(GBZ80 z80, MMU mmu) {
+    normalInstructions = new Instruction[256];
+    extendedInstructions = new Instruction[256];
+  }
+
+  public Instruction get(int rawInstruction) {
     return null;
   }
 }
