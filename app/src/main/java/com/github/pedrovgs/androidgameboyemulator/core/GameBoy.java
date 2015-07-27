@@ -30,6 +30,11 @@ public class GameBoy {
     this.mmu = mmu;
   }
 
+  public void reset(){
+    z80.reset();
+    mmu.reset();
+  }
+
   public void startEmulation() {
     while (true) {
       int programCounter = z80.getProgramCounter();

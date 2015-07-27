@@ -32,4 +32,38 @@ public class MMU {
   public void writeWord(int address, int value) {
 
   }
+
+  public void reset() {
+    writeByte(0xFF05, (byte) 0x00);
+    writeByte(0xFF06, (byte) 0x00);
+    writeByte(0xFF07, (byte) 0x00);
+    writeByte(0xFF10, (byte) 0x80);
+    writeByte(0xFF11, (byte) 0xBF);
+    writeByte(0xFF12, (byte) 0xF3);
+    writeByte(0xFF14, (byte) 0xBF);
+    writeByte(0xFF16, (byte) 0x3F);
+    writeByte(0xFF17, (byte) 0x00);
+    writeByte(0xFF19, (byte) 0xBF);
+    writeByte(0xFF1A, (byte) 0x7F);
+    writeByte(0xFF1B, (byte) 0xFF);
+    writeByte(0xFF1C, (byte) 0x9F);
+    writeByte(0xFF1E, (byte) 0xBF);
+    writeByte(0xFF20, (byte) 0xFF);
+    writeByte(0xFF21, (byte) 0x00);
+    writeByte(0xFF22, (byte) 0x00);
+    writeByte(0xFF23, (byte) 0xBF);
+    writeByte(0xFF24, (byte) 0x77);
+    writeByte(0xFF25, (byte) 0xF3);
+    writeByte(0xFF26, (byte) 0xF1);
+    writeByte(0xFF40, (byte) 0x91);
+    writeByte(0xFF43, (byte) 0x00);
+    writeByte(0xFF42, (byte) 0x00);
+    writeByte(0xFF45, (byte) 0x00);
+    writeByte(0xFF47, (byte) 0xFC);
+    writeByte(0xFF48, (byte) 0xFF);
+    writeByte(0xFF49, (byte) 0xFF);
+    writeByte(0xFF4A, (byte) 0x00);
+    writeByte(0xFF4B, (byte) 0x00);
+    writeByte(0xFFFF, (byte) 0x00);
+  }
 }

@@ -24,6 +24,10 @@ public class GBZ80 {
 
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
   private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
+  private static final int INITIAL_AF_REGISTER_VALUE = 0x01B0;
+  private static final int INITIAL_BC_REGISTER_VALUE = 0x0013;
+  private static final int INITIAL_DE_REGISTER_VALUE = 0x00D8;
+  private static final int INITIAL_HL_REGISTER_VALUE = 0x014D;
 
   private final Clock clock;
   private final InstructionsPool instructionsPool;
@@ -38,9 +42,17 @@ public class GBZ80 {
   public GBZ80() {
     this.clock = new Clock();
     this.instructionsPool = new InstructionsPool();
+    reset();
+  }
+
+  public void reset() {
     this.registers = new byte[8];
     this.programCounter = INITIAL_PROGRAM_COUNTER_VALUE;
     this.stackPointer = INITIAL_STACK_POINTER_VALUE;
+    set16BitRegisterValue(Register.AF, INITIAL_AF_REGISTER_VALUE);
+    set16BitRegisterValue(Register.BC, INITIAL_BC_REGISTER_VALUE);
+    set16BitRegisterValue(Register.DE, INITIAL_DE_REGISTER_VALUE);
+    set16BitRegisterValue(Register.HL, INITIAL_HL_REGISTER_VALUE);
   }
 
   public byte get8BitRegisterValue(Register register) {
