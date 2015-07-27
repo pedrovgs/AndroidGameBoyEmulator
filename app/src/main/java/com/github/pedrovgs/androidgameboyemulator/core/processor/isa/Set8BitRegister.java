@@ -19,26 +19,26 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Set8Bit extends Instruction {
+public class Set8BitRegister extends Set8Bit {
 
-  private final int bit;
+  private final Register register;
 
-  public Set8Bit(GBZ80 z80, MMU mmu, int bit) {
-    super(z80, mmu);
-    this.bit = bit;
+  public Set8BitRegister(GBZ80 z80, MMU mmu, int bit, Register register) {
+    super(z80, mmu, bit);
+    this.register = register;
   }
 
-  @Override public void execute() {
-    byte value = getValue();
-    value |= (1 << bit);
-    storeValue(value);
-    setLastInstructionExecutionTime();
+  @Override protected byte getValue() {
+    return z80.get8BitRegisterValue(register);
   }
 
-  protected abstract byte getValue();
+  @Override protected void storeValue(byte value) {
+    z80.set8BitRegisterValue(register, value);
+  }
 
-  protected abstract void setLastInstructionExecutionTime();
-
-  protected abstract void storeValue(byte value);
+  @Override protected void setLastInstructionExecutionTime() {
+    z80.setLastInstructionExecutionTime(2);
+  }
 }
