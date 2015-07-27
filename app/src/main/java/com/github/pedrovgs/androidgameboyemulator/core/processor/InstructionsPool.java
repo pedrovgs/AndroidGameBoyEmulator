@@ -19,7 +19,9 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitHLAddressInto8BitRegsiter;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitImmPCInto8BitRegister;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitRegisterInto8BitRegister;
 
 public class InstructionsPool {
 
@@ -48,5 +50,13 @@ public class InstructionsPool {
     normalInstructions[0x1E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.E);
     normalInstructions[0x26] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.H);
     normalInstructions[0x2E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.L);
+    normalInstructions[0x7F] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.A);
+    normalInstructions[0x78] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.B);
+    normalInstructions[0x79] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.C);
+    normalInstructions[0x7A] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.D);
+    normalInstructions[0x7B] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.E);
+    normalInstructions[0x7C] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.H);
+    normalInstructions[0x7D] = new Load8BitRegisterInto8BitRegister(z80, Register.A, Register.L);
+    normalInstructions[0x7E] = new Load8BitHLAddressInto8BitRegsiter(z80, mmu, Register.A);
   }
 }

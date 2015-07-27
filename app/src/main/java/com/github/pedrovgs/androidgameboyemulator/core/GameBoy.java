@@ -31,7 +31,7 @@ public class GameBoy {
   public GameBoy(GBZ80 z80, MMU mmu) {
     this.z80 = z80;
     this.mmu = mmu;
-    instructionsPool = new InstructionsPool();
+    instructionsPool = new InstructionsPool(z80, mmu);
   }
 
   public void reset() {
