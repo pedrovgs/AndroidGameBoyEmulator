@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Res8BitHLAddress extends Res8Bit {
 
-  public Res8BitHLAddress(GBZ80 z80, MMU mmu, int bit) {
+  Res8BitHLAddress(GBZ80 z80, MMU mmu, int bit) {
     super(z80, mmu, bit);
   }
 

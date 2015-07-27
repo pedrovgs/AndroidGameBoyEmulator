@@ -24,7 +24,7 @@ public class Inc16BitRegister extends Instruction {
 
   private final Register destinyRegister;
 
-  public Inc16BitRegister(GBZ80 z80, Register destinyRegister) {
+  Inc16BitRegister(GBZ80 z80, Register destinyRegister) {
     super(z80);
     this.destinyRegister = destinyRegister;
   }

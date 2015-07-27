@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Add8BitImmPCPlusAIntoA extends Instruction {
 
-  public Add8BitImmPCPlusAIntoA(GBZ80 z80, MMU mmu) {
+  Add8BitImmPCPlusAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

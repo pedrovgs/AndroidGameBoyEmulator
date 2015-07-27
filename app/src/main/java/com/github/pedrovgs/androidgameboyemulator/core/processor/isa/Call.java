@@ -26,7 +26,7 @@ public class Call extends Instruction {
   private final int flag;
   private final int condition;
 
-  public Call(GBZ80 z80, MMU mmu, int flag, int condition) {
+  Call(GBZ80 z80, MMU mmu, int flag, int condition) {
     super(z80, mmu);
     this.flag = flag;
     this.condition = condition;

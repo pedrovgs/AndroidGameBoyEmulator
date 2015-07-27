@@ -25,7 +25,7 @@ public class SwipeRightA8BitRegister extends SwipeRightA8Bit {
 
   private final Register register;
 
-  public SwipeRightA8BitRegister(GBZ80 z80, MMU mmu, Register register) {
+  SwipeRightA8BitRegister(GBZ80 z80, MMU mmu, Register register) {
     super(z80, mmu);
     this.register = register;
   }

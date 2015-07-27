@@ -25,7 +25,7 @@ public class And8BitRegisterToAIntoA extends And8Bit {
 
   private final Register sourceRegister;
 
-  public And8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  And8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

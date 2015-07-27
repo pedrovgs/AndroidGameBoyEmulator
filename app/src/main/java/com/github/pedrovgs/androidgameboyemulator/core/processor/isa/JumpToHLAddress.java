@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class JumpToHLAddress extends Instruction {
 
-  public JumpToHLAddress(GBZ80 z80, MMU mmu) {
+  JumpToHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

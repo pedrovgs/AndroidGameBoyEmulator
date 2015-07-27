@@ -25,7 +25,7 @@ public class Load8BitImmPCInto8BitRegister extends Instruction {
 
   private final Register destinyRegister;
 
-  public Load8BitImmPCInto8BitRegister(GBZ80 z80, MMU mmu, Register destinyRegister) {
+  Load8BitImmPCInto8BitRegister(GBZ80 z80, MMU mmu, Register destinyRegister) {
     super(z80, mmu);
     this.destinyRegister = destinyRegister;
   }

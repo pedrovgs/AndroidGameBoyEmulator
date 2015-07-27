@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public class Reti extends Instruction {
 
-  public Reti(GBZ80 z80) {
+  Reti(GBZ80 z80) {
     super(z80);
   }
 

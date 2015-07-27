@@ -25,7 +25,7 @@ public class RotateRightCarry8BitRegister extends RotateRightCarry8Bit {
 
   private final Register register;
 
-  public RotateRightCarry8BitRegister(GBZ80 z80, MMU mmu, Register register) {
+  RotateRightCarry8BitRegister(GBZ80 z80, MMU mmu, Register register) {
     super(z80, mmu);
     this.register = register;
   }

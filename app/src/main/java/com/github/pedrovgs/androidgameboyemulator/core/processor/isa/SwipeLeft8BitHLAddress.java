@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class SwipeLeft8BitHLAddress extends SwipeLeft8Bit {
 
-  public SwipeLeft8BitHLAddress(GBZ80 z80, MMU mmu) {
+  SwipeLeft8BitHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

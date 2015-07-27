@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Xor8BitHLAddressToAIntoA extends Xor8Bit {
 
-  public Xor8BitHLAddressToAIntoA(GBZ80 z80, MMU mmu) {
+  Xor8BitHLAddressToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

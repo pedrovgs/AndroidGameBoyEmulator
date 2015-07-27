@@ -22,7 +22,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public abstract class SwipeLeft8Bit extends Instruction {
 
-  public SwipeLeft8Bit(GBZ80 z80, MMU mmu) {
+  SwipeLeft8Bit(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Load8BitImmPCPlusSPIntoHL extends Instruction {
 
-  public Load8BitImmPCPlusSPIntoHL(GBZ80 z80, MMU mmu) {
+  Load8BitImmPCPlusSPIntoHL(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

@@ -22,7 +22,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public class LoadSPIntoImmPC extends Instruction {
 
-  public LoadSPIntoImmPC(GBZ80 z80, MMU mmu) {
+  LoadSPIntoImmPC(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Sub8BitAddressHLToAIntoA extends Instruction {
 
-  public Sub8BitAddressHLToAIntoA(GBZ80 z80, MMU mmu) {
+  Sub8BitAddressHLToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

@@ -22,7 +22,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public class Add16BitRegisterSPPlus8BitImmPCIntoSP extends Instruction {
 
-  public Add16BitRegisterSPPlus8BitImmPCIntoSP(GBZ80 z80, MMU mmu) {
+  Add16BitRegisterSPPlus8BitImmPCIntoSP(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

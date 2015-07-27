@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class IncHLAddress extends Instruction {
 
-  public IncHLAddress(GBZ80 z80, MMU mmu) {
+  IncHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

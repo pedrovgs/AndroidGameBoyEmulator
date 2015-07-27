@@ -25,8 +25,7 @@ public class Load8BitRegisterInto8BitRegister extends Instruction {
   private final Register sourceRegister;
   private final Register destinyRegister;
 
-  public Load8BitRegisterInto8BitRegister(GBZ80 z80, Register destinyRegister,
-      Register sourceRegister) {
+  Load8BitRegisterInto8BitRegister(GBZ80 z80, Register destinyRegister, Register sourceRegister) {
     super(z80);
     this.destinyRegister = destinyRegister;
     this.sourceRegister = sourceRegister;

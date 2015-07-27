@@ -22,7 +22,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public class And8BitImmPCToAIntoA extends And8Bit {
 
-  public And8BitImmPCToAIntoA(GBZ80 z80, MMU mmu) {
+  And8BitImmPCToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

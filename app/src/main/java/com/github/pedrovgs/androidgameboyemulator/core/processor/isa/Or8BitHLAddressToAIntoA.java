@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Or8BitHLAddressToAIntoA extends Or8Bit {
 
-  public Or8BitHLAddressToAIntoA(GBZ80 z80, MMU mmu) {
+  Or8BitHLAddressToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

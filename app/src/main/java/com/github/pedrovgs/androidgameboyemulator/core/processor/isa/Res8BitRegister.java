@@ -25,7 +25,7 @@ public class Res8BitRegister extends Res8Bit {
 
   private final Register register;
 
-  public Res8BitRegister(GBZ80 z80, MMU mmu, int bit, Register register) {
+  Res8BitRegister(GBZ80 z80, MMU mmu, int bit, Register register) {
     super(z80, mmu, bit);
     this.register = register;
   }

@@ -25,7 +25,7 @@ public class Bit8BitRegister extends Bit8Bit {
 
   private final Register sourceRegister;
 
-  public Bit8BitRegister(GBZ80 z80, MMU mmu, int bit, Register sourceRegister) {
+  Bit8BitRegister(GBZ80 z80, MMU mmu, int bit, Register sourceRegister) {
     super(z80, mmu, bit);
     this.sourceRegister = sourceRegister;
   }

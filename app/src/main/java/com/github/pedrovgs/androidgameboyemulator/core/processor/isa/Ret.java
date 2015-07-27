@@ -25,7 +25,7 @@ public class Ret extends Instruction {
   private final int flag;
   private final int condition;
 
-  public Ret(GBZ80 z80, int flag, int condition) {
+  Ret(GBZ80 z80, int flag, int condition) {
     super(z80);
     this.flag = flag;
     this.condition = condition;

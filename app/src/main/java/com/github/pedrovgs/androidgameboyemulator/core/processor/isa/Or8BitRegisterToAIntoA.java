@@ -25,7 +25,7 @@ public class Or8BitRegisterToAIntoA extends Or8Bit {
 
   private final Register sourceRegister;
 
-  public Or8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  Or8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

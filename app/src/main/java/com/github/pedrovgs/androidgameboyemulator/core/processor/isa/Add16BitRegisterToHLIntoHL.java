@@ -25,7 +25,7 @@ public class Add16BitRegisterToHLIntoHL extends Instruction {
 
   private final Register sourceRegister;
 
-  public Add16BitRegisterToHLIntoHL(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  Add16BitRegisterToHLIntoHL(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class RotateRight8BitHLAddress extends RotateRight8Bit {
 
-  public RotateRight8BitHLAddress(GBZ80 z80, MMU mmu) {
+  RotateRight8BitHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

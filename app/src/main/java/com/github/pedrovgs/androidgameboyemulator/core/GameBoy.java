@@ -19,7 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.InstructionsPool;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionsPool;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
 
 public class GameBoy {

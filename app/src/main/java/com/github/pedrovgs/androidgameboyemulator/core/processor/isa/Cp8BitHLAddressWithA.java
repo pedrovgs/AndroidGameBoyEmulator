@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Cp8BitHLAddressWithA extends Cp8Bit {
 
-  public Cp8BitHLAddressWithA(GBZ80 z80, MMU mmu) {
+  Cp8BitHLAddressWithA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

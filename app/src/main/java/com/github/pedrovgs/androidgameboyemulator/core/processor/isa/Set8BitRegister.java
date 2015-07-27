@@ -25,7 +25,7 @@ public class Set8BitRegister extends Set8Bit {
 
   private final Register register;
 
-  public Set8BitRegister(GBZ80 z80, MMU mmu, int bit, Register register) {
+  Set8BitRegister(GBZ80 z80, MMU mmu, int bit, Register register) {
     super(z80, mmu, bit);
     this.register = register;
   }

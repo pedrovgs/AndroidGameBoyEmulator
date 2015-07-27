@@ -25,7 +25,7 @@ public class Xor8BitRegisterToAIntoA extends Xor8Bit {
 
   private final Register sourceRegister;
 
-  public Xor8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  Xor8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

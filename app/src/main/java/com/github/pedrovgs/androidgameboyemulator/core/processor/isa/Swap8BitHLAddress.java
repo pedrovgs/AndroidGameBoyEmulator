@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Swap8BitHLAddress extends Swap8Bit {
 
-  public Swap8BitHLAddress(GBZ80 z80, MMU mmu) {
+  Swap8BitHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

@@ -22,7 +22,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public abstract class RotateRight8Bit extends Instruction {
 
-  public RotateRight8Bit(GBZ80 z80, MMU mmu) {
+  RotateRight8Bit(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

@@ -26,7 +26,7 @@ public class JumpR extends Instruction {
   private final int condition;
   private final int flag;
 
-  public JumpR(GBZ80 z80, MMU mmu, int condition, int flag) {
+  JumpR(GBZ80 z80, MMU mmu, int condition, int flag) {
     super(z80, mmu);
     this.condition = condition;
     this.flag = flag;

@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class RotateLeftCarry8BitHLAddress extends RotateLeftCarry8Bit {
 
-  public RotateLeftCarry8BitHLAddress(GBZ80 z80, MMU mmu) {
+  RotateLeftCarry8BitHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

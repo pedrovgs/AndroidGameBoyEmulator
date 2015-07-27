@@ -26,7 +26,7 @@ public class Jump extends Instruction {
   private final int flag;
   private final int condition;
 
-  public Jump(GBZ80 z80, MMU mmu, int flag, int condition) {
+  Jump(GBZ80 z80, MMU mmu, int flag, int condition) {
     super(z80, mmu);
     this.flag = flag;
     this.condition = condition;

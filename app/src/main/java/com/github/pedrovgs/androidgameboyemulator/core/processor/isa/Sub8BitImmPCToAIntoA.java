@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Sub8BitImmPCToAIntoA extends Instruction {
 
-  public Sub8BitImmPCToAIntoA(GBZ80 z80, MMU mmu) {
+  Sub8BitImmPCToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 

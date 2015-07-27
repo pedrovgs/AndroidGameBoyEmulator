@@ -25,7 +25,7 @@ public class Swap8BitRegister extends Swap8Bit {
 
   private final Register register;
 
-  public Swap8BitRegister(GBZ80 z80, MMU mmu, Register register) {
+  Swap8BitRegister(GBZ80 z80, MMU mmu, Register register) {
     super(z80, mmu);
     this.register = register;
   }

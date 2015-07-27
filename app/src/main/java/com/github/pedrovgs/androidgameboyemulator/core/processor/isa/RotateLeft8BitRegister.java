@@ -25,7 +25,7 @@ public class RotateLeft8BitRegister extends RotateLeft8Bit {
 
   private final Register register;
 
-  public RotateLeft8BitRegister(GBZ80 z80, MMU mmu, Register register) {
+  RotateLeft8BitRegister(GBZ80 z80, MMU mmu, Register register) {
     super(z80, mmu);
     this.register = register;
   }

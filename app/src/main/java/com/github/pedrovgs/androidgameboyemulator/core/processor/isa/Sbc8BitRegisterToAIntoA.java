@@ -25,7 +25,7 @@ public class Sbc8BitRegisterToAIntoA extends Instruction {
 
   private final Register sourceRegister;
 
-  public Sbc8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  Sbc8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

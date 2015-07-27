@@ -24,7 +24,7 @@ public class Adc8BitRegisterPlusAIntoA extends Instruction {
 
   private final Register sourceRegister;
 
-  public Adc8BitRegisterPlusAIntoA(GBZ80 z80, Register sourceRegister) {
+  Adc8BitRegisterPlusAIntoA(GBZ80 z80, Register sourceRegister) {
     super(z80);
     this.sourceRegister = sourceRegister;
   }

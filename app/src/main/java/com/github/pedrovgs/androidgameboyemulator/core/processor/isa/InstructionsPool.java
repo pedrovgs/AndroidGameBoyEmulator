@@ -15,13 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.github.pedrovgs.androidgameboyemulator.core.processor;
+package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitHLAddressInto8BitRegsiter;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitImmPCInto8BitRegister;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Load8BitRegisterInto8BitRegister;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class InstructionsPool {
 

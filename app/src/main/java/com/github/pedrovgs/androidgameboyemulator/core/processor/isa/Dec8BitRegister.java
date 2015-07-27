@@ -25,7 +25,7 @@ public class Dec8BitRegister extends Instruction {
 
   private final Register sourceRegister;
 
-  public Dec8BitRegister(GBZ80 z80, MMU mmu, Register sourceRegister) {
+  Dec8BitRegister(GBZ80 z80, MMU mmu, Register sourceRegister) {
     super(z80, mmu);
     this.sourceRegister = sourceRegister;
   }

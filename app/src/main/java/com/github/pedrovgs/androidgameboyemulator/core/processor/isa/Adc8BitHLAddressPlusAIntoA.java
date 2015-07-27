@@ -23,7 +23,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class Adc8BitHLAddressPlusAIntoA extends Instruction {
 
-  public Adc8BitHLAddressPlusAIntoA(GBZ80 z80, MMU mmu) {
+  Adc8BitHLAddressPlusAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
