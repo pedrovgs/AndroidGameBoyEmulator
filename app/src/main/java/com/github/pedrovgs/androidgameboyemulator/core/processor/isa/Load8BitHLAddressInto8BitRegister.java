@@ -21,11 +21,11 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitHLAddressInto8BitRegsiter extends Instruction {
+public class Load8BitHLAddressInto8BitRegister extends Instruction {
 
   private final Register destinyRegister;
 
-  Load8BitHLAddressInto8BitRegsiter(GBZ80 z80, MMU mmu, Register destinyRegister) {
+  Load8BitHLAddressInto8BitRegister(GBZ80 z80, MMU mmu, Register destinyRegister) {
     super(z80, mmu);
     this.destinyRegister = destinyRegister;
   }

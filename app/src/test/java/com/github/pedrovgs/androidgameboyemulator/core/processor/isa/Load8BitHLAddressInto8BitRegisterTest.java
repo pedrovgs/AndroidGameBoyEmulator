@@ -29,7 +29,7 @@ public class Load8BitHLAddressInto8BitRegisterTest extends InstructionTest {
   @Test(expected = IllegalArgumentException.class)
   public void shouldNotAccept16BitRegistersAsDestinyRegister() {
     Instruction instruction =
-        new Load8BitHLAddressInto8BitRegsiter(z80, mmu, ANY_16BIT_DESTINY_REGISTER);
+        new Load8BitHLAddressInto8BitRegister(z80, mmu, ANY_16BIT_DESTINY_REGISTER);
 
     instruction.execute();
   }
@@ -38,7 +38,7 @@ public class Load8BitHLAddressInto8BitRegisterTest extends InstructionTest {
     z80.set16BitRegisterValue(Register.HL, ANY_16BIT_REGISTER_VALUE);
     when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction =
-        new Load8BitHLAddressInto8BitRegsiter(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+        new Load8BitHLAddressInto8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -47,7 +47,7 @@ public class Load8BitHLAddressInto8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldUseTwoCyclesAsExecutionTime() {
     Instruction instruction =
-        new Load8BitHLAddressInto8BitRegsiter(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+        new Load8BitHLAddressInto8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
