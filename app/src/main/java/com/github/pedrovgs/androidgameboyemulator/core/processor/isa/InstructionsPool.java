@@ -105,5 +105,10 @@ public class InstructionsPool {
     normalInstructions[0x74] = new Load8BitHLAddressInto8BitRegister(z80, mmu, Register.H);
     normalInstructions[0x75] = new Load8BitHLAddressInto8BitRegister(z80, mmu, Register.L);
     normalInstructions[0x36] = new Load8BitImmIntoHLAddress(z80, mmu);
+    normalInstructions[0x0A] = new Load8BitBCAddressIntoA(z80, mmu);
+    normalInstructions[0x1A] = new Load8BitDEAddressIntoA(z80, mmu);
+    normalInstructions[0x7E] = new Load8BitHLAddressInto8BitRegister(z80, mmu, Register.A);
+    normalInstructions[0xFA] = new Load16BitImmPCIntoA(z80, mmu);
+    normalInstructions[0x3E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.A);
   }
 }

@@ -31,7 +31,7 @@ public class Load16BitImmPCIntoA extends Instruction {
     int programCounter = z80.getProgramCounter();
     byte value = mmu.readByte(programCounter);
     z80.set8BitRegisterValue(Register.A, value);
-    z80.incrementProgramCounter();
+    z80.incrementProgramCounterTwice();
     z80.setLastInstructionExecutionTime(4);
   }
 }
