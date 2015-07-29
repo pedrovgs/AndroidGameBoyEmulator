@@ -77,5 +77,12 @@ public class InstructionsPool {
     normalInstructions[0x54] = new Load8BitRegisterInto8BitRegister(z80, Register.D, Register.H);
     normalInstructions[0x55] = new Load8BitRegisterInto8BitRegister(z80, Register.D, Register.L);
     normalInstructions[0x56] = new Load8BitHLAddressInto8BitRegister(z80, mmu, Register.D);
+    normalInstructions[0x58] = new Load8BitRegisterInto8BitRegister(z80, Register.E, Register.B);
+    normalInstructions[0x59] = new Load8BitRegisterInto8BitRegister(z80, Register.E, Register.C);
+    normalInstructions[0x5A] = new Load8BitRegisterInto8BitRegister(z80, Register.E, Register.E);
+    normalInstructions[0x5B] = new Load8BitRegisterInto8BitRegister(z80, Register.E, Register.E);
+    normalInstructions[0x5C] = new Load8BitRegisterInto8BitRegister(z80, Register.E, Register.H);
+    normalInstructions[0x5D] = new Load8BitRegisterInto8BitRegister(z80, Register.E, Register.L);
+    normalInstructions[0x5E] = new Load8BitHLAddressInto8BitRegister(z80, mmu, Register.E);
   }
 }
