@@ -21,17 +21,16 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitRegisterAIntoTheImmPCAddress extends Instruction {
+public class Load8BitRegisterAIntoHLAddress extends Instruction {
 
-  Load8BitRegisterAIntoTheImmPCAddress(GBZ80 z80, MMU mmu) {
+  Load8BitRegisterAIntoHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
   @Override public void execute() {
     byte registerValue = z80.get8BitRegisterValue(Register.A);
-    int address = z80.getProgramCounter();
+    int address = z80.get16BitRegisterValue(Register.HL);
     mmu.writeByte(address, registerValue);
-    z80.incrementProgramCounterTwice();
-    z80.setLastInstructionExecutionTime(4);
+    z80.setLastInstructionExecutionTime(2);
   }
 }
