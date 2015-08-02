@@ -22,6 +22,10 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public abstract class SwipeRightA8Bit extends Instruction {
 
+  SwipeRightA8Bit(GBZ80 z80) {
+    super(z80);
+  }
+
   SwipeRightA8Bit(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
