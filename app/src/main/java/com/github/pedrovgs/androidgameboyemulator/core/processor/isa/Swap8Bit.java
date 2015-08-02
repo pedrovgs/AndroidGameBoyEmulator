@@ -22,6 +22,10 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public abstract class Swap8Bit extends Instruction {
 
+  Swap8Bit(GBZ80 z80) {
+    super(z80);
+  }
+
   Swap8Bit(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }

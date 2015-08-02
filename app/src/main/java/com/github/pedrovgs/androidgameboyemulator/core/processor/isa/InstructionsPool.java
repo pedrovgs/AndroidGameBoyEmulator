@@ -293,6 +293,13 @@ public class InstructionsPool {
   }
 
   private void generateExtendedInstructions(GBZ80 z80, MMU mmu) {
-
+    extendedInstructions[0x37] = new Swap8BitRegister(z80, Register.A);
+    extendedInstructions[0x30] = new Swap8BitRegister(z80, Register.B);
+    extendedInstructions[0x31] = new Swap8BitRegister(z80, Register.C);
+    extendedInstructions[0x32] = new Swap8BitRegister(z80, Register.D);
+    extendedInstructions[0x33] = new Swap8BitRegister(z80, Register.E);
+    extendedInstructions[0x34] = new Swap8BitRegister(z80, Register.H);
+    extendedInstructions[0x35] = new Swap8BitRegister(z80, Register.L);
+    extendedInstructions[0x36] = new Swap8BitHLAddress(z80, mmu);
   }
 }
