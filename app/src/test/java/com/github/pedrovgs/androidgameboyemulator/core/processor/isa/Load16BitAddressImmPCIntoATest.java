@@ -34,13 +34,13 @@ public class Load16BitAddressImmPCIntoATest extends InstructionTest {
     assertEquals(4, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldIncrementProgramCounter() {
+  @Test public void shouldIncrementProgramCounterTwice() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
     Instruction instruction = new Load16BitImmPCIntoA(z80, mmu);
 
     instruction.execute();
 
-    assertEquals(ANY_16BIT_REGISTER_VALUE + 1, z80.getProgramCounter());
+    assertEquals(ANY_16BIT_REGISTER_VALUE + 2, z80.getProgramCounter());
   }
 
   @Test public void shouldLoad16BitPortAddressPointedByTheProgramCounterIntoTheRegisterA() {

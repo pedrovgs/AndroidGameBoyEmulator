@@ -26,13 +26,13 @@ import static org.mockito.Mockito.verify;
 
 public class Load8BitRegisterAIntoTheImmPCAddressTest extends InstructionTest {
 
-  @Test public void shouldIncrementProgramCounter() {
+  @Test public void shouldIncrementProgramCounterTwice() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
     Instruction instruction = new Load8BitRegisterAIntoTheImmPCAddress(z80, mmu);
 
     instruction.execute();
 
-    assertEquals(ANY_16BIT_REGISTER_VALUE + 1, z80.getProgramCounter());
+    assertEquals(ANY_16BIT_REGISTER_VALUE + 2, z80.getProgramCounter());
   }
 
   @Test public void shouldUseFourCyclesAsLastInstructionExecutionTime() {
