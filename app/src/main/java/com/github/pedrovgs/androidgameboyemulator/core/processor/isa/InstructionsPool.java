@@ -250,8 +250,8 @@ public class InstructionsPool {
     normalInstructions[0x37] = new SCF(z80);
     normalInstructions[0x00] = new NOP(z80);
     normalInstructions[0x76] = new HALT(z80);
-    normalInstructions[0x10] = gen.createSTOP();
-    normalInstructions[0xF3] = gen.createDI();
-    normalInstructions[0xFB] = gen.createEI();
+    normalInstructions[0x10] = new STOP(z80);
+    normalInstructions[0xF3] = new DI(z80);
+    normalInstructions[0xFB] = new EI(z80);
   }
 }

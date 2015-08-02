@@ -19,13 +19,13 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-class NOP extends Instruction {
-
-  NOP(GBZ80 z80) {
+class EI extends Instruction {
+  EI(GBZ80 z80) {
     super(z80);
   }
 
   @Override public void execute() {
+    z80.enableInterruptMasterFlag();
     setLastExecutionTime(1);
   }
 }

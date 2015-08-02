@@ -28,5 +28,6 @@ class HALT extends Instruction {
   @Override public void execute() {
     z80.enableInterruptMasterFlag();
     z80.enableHalt();
+    setLastExecutionTime(1);
   }
 }
