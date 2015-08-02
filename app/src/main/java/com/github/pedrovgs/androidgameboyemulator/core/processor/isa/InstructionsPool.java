@@ -275,5 +275,10 @@ public class InstructionsPool {
     normalInstructions[0x28] = new JumpR(z80, mmu, FLAG_Z, JMP_Z);
     normalInstructions[0x30] = new JumpR(z80, mmu, FLAG_C, JMP_NC);
     normalInstructions[0x38] = new JumpR(z80, mmu, FLAG_C, JMP_C);
+    normalInstructions[0xCD] = new Call(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
+    normalInstructions[0xC4] = new Call(z80, mmu, FLAG_Z, JMP_NZ);
+    normalInstructions[0xCC] = new Call(z80, mmu, FLAG_Z, JMP_Z);
+    normalInstructions[0xD4] = new Call(z80, mmu, FLAG_C, JMP_NC);
+    normalInstructions[0xDC] = new Call(z80, mmu, FLAG_C, JMP_C);
   }
 }
