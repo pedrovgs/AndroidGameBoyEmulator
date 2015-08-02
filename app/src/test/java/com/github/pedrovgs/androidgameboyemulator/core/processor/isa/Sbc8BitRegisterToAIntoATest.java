@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class Sbc8BitRegisterToAIntoATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new Sbc8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sbc8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -37,7 +37,7 @@ public class Sbc8BitRegisterToAIntoATest extends InstructionTest {
     z80.enableFlagCY();
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 1);
     z80.set8BitRegisterValue(Register.A, (byte) 3);
-    Instruction instruction = new Sbc8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sbc8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

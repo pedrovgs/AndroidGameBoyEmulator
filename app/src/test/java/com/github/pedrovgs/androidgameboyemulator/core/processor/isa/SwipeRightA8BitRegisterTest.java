@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class SwipeRightA8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -35,7 +35,7 @@ public class SwipeRightA8BitRegisterTest extends InstructionTest {
   }
 
   @Test public void shouldDisableFlagNAndFlagH() {
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -45,7 +45,7 @@ public class SwipeRightA8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldSwipeRegisterValueToTheRightAndStoreTheResultInTheSameRegister() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 2);
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -54,7 +54,7 @@ public class SwipeRightA8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldNotModify7thBitRegisterValue() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 0x80);
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -64,7 +64,7 @@ public class SwipeRightA8BitRegisterTest extends InstructionTest {
   @Test public void shouldEnableFlagZIfTheResultIsZeroAndWasNotPreviouslyEnabled() {
     z80.disableFlagZ();
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 1);
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -74,7 +74,7 @@ public class SwipeRightA8BitRegisterTest extends InstructionTest {
   @Test public void shouldEnableFlagZIfTheResultIsNotZeroAndWasPreviouslyEnabled() {
     z80.enableFlagZ();
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 4);
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -83,7 +83,7 @@ public class SwipeRightA8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldEnableFlagCYIfTheValueOfTheRegisterAtTheBitZeroIsOne() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 3);
-    Instruction instruction = new SwipeRightA8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new SwipeRightA8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 

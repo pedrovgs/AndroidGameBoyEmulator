@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class RotateLeft8BitRegisterATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new RotateLeft8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateLeft8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -36,7 +36,7 @@ public class RotateLeft8BitRegisterATest extends InstructionTest {
   }
 
   @Test public void shouldDisableAllFlagsExceptTheCarryOne() {
-    Instruction instruction = new RotateLeft8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateLeft8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -47,7 +47,7 @@ public class RotateLeft8BitRegisterATest extends InstructionTest {
 
   @Test public void shouldNotModifyTheValueOfTheCarryFlag() {
     z80.enableFlagCY();
-    Instruction instruction = new RotateLeft8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateLeft8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -56,7 +56,7 @@ public class RotateLeft8BitRegisterATest extends InstructionTest {
 
   @Test public void shouldShiftRegisterAValueToTheLeft() {
     z80.set8BitRegisterValue(Register.A, (byte) 0x1);
-    Instruction instruction = new RotateLeft8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateLeft8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -66,7 +66,7 @@ public class RotateLeft8BitRegisterATest extends InstructionTest {
   @Test public void shouldShiftRegisterAValueToTheLeftAndTakeIntoAccountCarryFlagValue() {
     z80.enableFlagCY();
     z80.set8BitRegisterValue(Register.A, (byte) 0x1);
-    Instruction instruction = new RotateLeft8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateLeft8BitRegisterA(z80);
 
     instruction.execute();
 

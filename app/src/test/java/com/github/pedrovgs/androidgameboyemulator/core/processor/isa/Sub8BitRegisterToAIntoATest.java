@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class Sub8BitRegisterToAIntoATest extends InstructionTest {
 
   @Test public void shouldUseOneAsLastInstructionExecutionTime() {
-    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -38,7 +38,7 @@ public class Sub8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldSubTheContentOfTheSourceRegisterAndStoreTheResultIntoA() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
     z80.set8BitRegisterValue(Register.A, (byte) (ANY_MEMORY_BYTE_VALUE + 1));
-    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -48,7 +48,7 @@ public class Sub8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldEnableFlagZIfResultIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
     z80.set8BitRegisterValue(Register.A, ANY_MEMORY_BYTE_VALUE);
-    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -58,7 +58,7 @@ public class Sub8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldDisableFlagZIfResultIsNotZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_MEMORY_BYTE_VALUE);
     z80.set8BitRegisterValue(Register.A, (byte) (ANY_MEMORY_BYTE_VALUE + 1));
-    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -66,7 +66,7 @@ public class Sub8BitRegisterToAIntoATest extends InstructionTest {
   }
 
   @Test public void shouldEnableFlagN() {
-    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Sub8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

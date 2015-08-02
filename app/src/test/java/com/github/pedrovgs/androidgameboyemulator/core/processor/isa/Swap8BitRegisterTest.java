@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class Swap8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction = new Swap8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Swap8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -35,7 +35,7 @@ public class Swap8BitRegisterTest extends InstructionTest {
   }
 
   @Test public void shouldDisableFlagCYFlagNAndFlagH() {
-    Instruction instruction = new Swap8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Swap8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -46,7 +46,7 @@ public class Swap8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldEnableFlagZIfResultIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 0x0);
-    Instruction instruction = new Swap8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Swap8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -56,7 +56,7 @@ public class Swap8BitRegisterTest extends InstructionTest {
   @Test public void shouldNotEnableFlagZIfResultIsZeroAndTheFlagWasNotPreviouslyEnabled() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 0x1);
     z80.disableFlagZ();
-    Instruction instruction = new Swap8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Swap8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -66,7 +66,7 @@ public class Swap8BitRegisterTest extends InstructionTest {
   @Test public void shouldEnableFlagZIfResultIsNotZeroAndTheFlagWasNotPreviouslyEnabled() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 0x0);
     z80.disableFlagZ();
-    Instruction instruction = new Swap8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Swap8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -75,7 +75,7 @@ public class Swap8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldSwapRegisterValueAndStoreTheResultIntoTheRegister() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 0x10);
-    Instruction instruction = new Swap8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Swap8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 

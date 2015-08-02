@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class And8BitRegisterToAIntoATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new And8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new And8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -36,7 +36,7 @@ public class And8BitRegisterToAIntoATest extends InstructionTest {
   }
 
   @Test public void shouldEnableFlagH() {
-    Instruction instruction = new And8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new And8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -46,7 +46,7 @@ public class And8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldEnableFlagZIfResultIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 0);
     z80.set8BitRegisterValue(Register.A, (byte) 1);
-    Instruction instruction = new And8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new And8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -56,7 +56,7 @@ public class And8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldDisableFlagZIfResultIsNotZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 1);
     z80.set8BitRegisterValue(Register.A, (byte) 1);
-    Instruction instruction = new And8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new And8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -66,7 +66,7 @@ public class And8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldAndTheValueOfTheRegisterWithTheRegisterAAndStoreTheResultIntoA() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 3);
     z80.set8BitRegisterValue(Register.A, (byte) 5);
-    Instruction instruction = new And8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new And8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

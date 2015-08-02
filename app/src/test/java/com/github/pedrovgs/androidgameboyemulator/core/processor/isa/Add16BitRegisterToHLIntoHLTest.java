@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class Add16BitRegisterToHLIntoHLTest extends InstructionTest {
 
   @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction = new Add16BitRegisterToHLIntoHL(z80, mmu, ANY_16BIT_SOURCE_REGISTER);
+    Instruction instruction = new Add16BitRegisterToHLIntoHL(z80, ANY_16BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -37,7 +37,7 @@ public class Add16BitRegisterToHLIntoHLTest extends InstructionTest {
   public void shouldSumSourceRegisterValuePlusHLRegisterValueAndStoreTheResultIntoHLRegister() {
     z80.set16BitRegisterValue(Register.HL, 1);
     z80.set16BitRegisterValue(ANY_16BIT_SOURCE_REGISTER, 3);
-    Instruction instruction = new Add16BitRegisterToHLIntoHL(z80, mmu, ANY_16BIT_SOURCE_REGISTER);
+    Instruction instruction = new Add16BitRegisterToHLIntoHL(z80, ANY_16BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

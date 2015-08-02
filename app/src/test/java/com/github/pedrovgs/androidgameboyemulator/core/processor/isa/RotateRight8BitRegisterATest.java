@@ -27,7 +27,7 @@ import static org.junit.Assert.assertFalse;
 public class RotateRight8BitRegisterATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new RotateRight8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateRight8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -35,7 +35,7 @@ public class RotateRight8BitRegisterATest extends InstructionTest {
   }
 
   @Test public void shouldDisableAllFlagsExceptTheCYOne() {
-    Instruction instruction = new RotateRight8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateRight8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -46,7 +46,7 @@ public class RotateRight8BitRegisterATest extends InstructionTest {
 
   @Test public void shouldRotateRegisterAToTheRightWithoutUseTheCarryFlag() {
     z80.set8BitRegisterValue(Register.A, (byte) 7);
-    Instruction instruction = new RotateRight8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateRight8BitRegisterA(z80);
 
     instruction.execute();
 
@@ -56,7 +56,7 @@ public class RotateRight8BitRegisterATest extends InstructionTest {
   @Test public void shouldRotateRegisterAToTheRightUsingTheCarryFlag() {
     z80.enableFlagCY();
     z80.set8BitRegisterValue(Register.A, (byte) 7);
-    Instruction instruction = new RotateRight8BitRegisterA(z80, mmu);
+    Instruction instruction = new RotateRight8BitRegisterA(z80);
 
     instruction.execute();
 

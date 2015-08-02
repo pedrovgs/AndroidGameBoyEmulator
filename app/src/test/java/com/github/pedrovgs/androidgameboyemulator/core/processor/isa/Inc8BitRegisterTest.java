@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 public class Inc8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new Inc8BitRegister(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Inc8BitRegister(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -34,7 +34,7 @@ public class Inc8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldIncrementTheValueOfTheSourceRegister() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_8BIT_REGISTER_VALUE);
-    Instruction instruction = new Inc8BitRegister(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Inc8BitRegister(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

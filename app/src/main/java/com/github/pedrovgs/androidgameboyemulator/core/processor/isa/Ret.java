@@ -34,7 +34,7 @@ public class Ret extends Instruction {
   @Override public void execute() {
     if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
       z80.setLastInstructionExecutionTime(popTwice());
-      if (flag != JUMP && condition != JUMP) {
+      if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
         z80.setLastInstructionExecutionTime(4);
       }
     }

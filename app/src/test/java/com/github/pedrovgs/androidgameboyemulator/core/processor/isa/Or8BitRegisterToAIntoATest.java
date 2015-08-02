@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class Or8BitRegisterToAIntoATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new Or8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Or8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -36,7 +36,7 @@ public class Or8BitRegisterToAIntoATest extends InstructionTest {
   }
 
   @Test public void shouldEnableFlagN() {
-    Instruction instruction = new Or8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Or8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -46,7 +46,7 @@ public class Or8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldEnableFlagZIfResultIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 0);
     z80.set8BitRegisterValue(Register.A, (byte) 0);
-    Instruction instruction = new Or8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Or8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -56,7 +56,7 @@ public class Or8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldDisableFlagZIfResultIsNotZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 0);
     z80.set8BitRegisterValue(Register.A, (byte) 1);
-    Instruction instruction = new Or8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Or8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -66,7 +66,7 @@ public class Or8BitRegisterToAIntoATest extends InstructionTest {
   @Test public void shouldOrTheSourceRegisterAndTheRegisterAAndStoreTheResultIntoTheRegisterA() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 2);
     z80.set8BitRegisterValue(Register.A, (byte) 1);
-    Instruction instruction = new Or8BitRegisterToAIntoA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Or8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

@@ -26,7 +26,7 @@ public class Bit8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
     Instruction instruction =
-        new Bit8BitRegister(z80, mmu, ANY_BIT_VALUE, ANY_8BIT_SOURCE_REGISTER);
+        new Bit8BitRegister(z80, ANY_BIT_VALUE, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 

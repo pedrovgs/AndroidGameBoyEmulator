@@ -25,8 +25,7 @@ import static org.junit.Assert.assertEquals;
 public class Res8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldUseTwoCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction =
-        new Res8BitRegister(z80, mmu, ANY_BIT_VALUE, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Res8BitRegister(z80, ANY_BIT_VALUE, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -36,7 +35,7 @@ public class Res8BitRegisterTest extends InstructionTest {
   @Test
   public void shouldResetTheValueOfTheBitIndicatedByTheBitParamIntoTheRegisterPassedAsArgument() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 1);
-    Instruction instruction = new Res8BitRegister(z80, mmu, 0, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Res8BitRegister(z80, 0, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 
@@ -45,7 +44,7 @@ public class Res8BitRegisterTest extends InstructionTest {
 
   @Test public void shouldResetTheBitIndicatedIntoTheRegisterWithoutModifyTheOtherRegisters() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 3);
-    Instruction instruction = new Res8BitRegister(z80, mmu, 0, ANY_8BIT_DESTINY_REGISTER);
+    Instruction instruction = new Res8BitRegister(z80, 0, ANY_8BIT_DESTINY_REGISTER);
 
     instruction.execute();
 

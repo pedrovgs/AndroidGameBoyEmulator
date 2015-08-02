@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class Cp8BitRegisterWithATest extends InstructionTest {
 
   @Test public void shouldUseOneCycleAsLastInstructionExecutionTime() {
-    Instruction instruction = new Cp8BitRegisterWithA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Cp8BitRegisterWithA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -38,7 +38,7 @@ public class Cp8BitRegisterWithATest extends InstructionTest {
   @Test public void shouldEnableFlagZIfRegisterAAndTheSourceRegisterHaveTheSameValue() {
     z80.set8BitRegisterValue(Register.A, ANY_8BIT_REGISTER_VALUE);
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_8BIT_REGISTER_VALUE);
-    Instruction instruction = new Cp8BitRegisterWithA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Cp8BitRegisterWithA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
@@ -48,7 +48,7 @@ public class Cp8BitRegisterWithATest extends InstructionTest {
   @Test public void shouldDisableFlagZIfRegisterAAndTheSourceRegisterHaveTheSameValue() {
     z80.set8BitRegisterValue(Register.A, ANY_8BIT_REGISTER_VALUE);
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) (ANY_8BIT_REGISTER_VALUE + 1));
-    Instruction instruction = new Cp8BitRegisterWithA(z80, mmu, ANY_8BIT_SOURCE_REGISTER);
+    Instruction instruction = new Cp8BitRegisterWithA(z80, ANY_8BIT_SOURCE_REGISTER);
 
     instruction.execute();
 
