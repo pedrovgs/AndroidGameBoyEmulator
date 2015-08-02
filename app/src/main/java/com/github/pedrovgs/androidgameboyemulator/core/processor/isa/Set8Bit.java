@@ -24,6 +24,10 @@ public abstract class Set8Bit extends Instruction {
 
   private final int bit;
 
+  Set8Bit(GBZ80 z80, int bit) {
+    this(z80, null, bit);
+  }
+
   Set8Bit(GBZ80 z80, MMU mmu, int bit) {
     super(z80, mmu);
     this.bit = bit;

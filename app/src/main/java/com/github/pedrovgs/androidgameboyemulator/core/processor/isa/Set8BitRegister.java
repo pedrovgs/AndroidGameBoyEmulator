@@ -17,7 +17,6 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
-import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
@@ -25,8 +24,8 @@ public class Set8BitRegister extends Set8Bit {
 
   private final Register register;
 
-  Set8BitRegister(GBZ80 z80, MMU mmu, int bit, Register register) {
-    super(z80, mmu, bit);
+  Set8BitRegister(GBZ80 z80, int bit, Register register) {
+    super(z80, bit);
     this.register = register;
   }
 
