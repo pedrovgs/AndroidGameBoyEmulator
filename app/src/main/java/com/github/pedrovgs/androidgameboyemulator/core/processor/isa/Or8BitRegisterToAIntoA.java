@@ -17,7 +17,6 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
-import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
@@ -25,8 +24,8 @@ public class Or8BitRegisterToAIntoA extends Or8Bit {
 
   private final Register sourceRegister;
 
-  Or8BitRegisterToAIntoA(GBZ80 z80, MMU mmu, Register sourceRegister) {
-    super(z80, mmu);
+  Or8BitRegisterToAIntoA(GBZ80 z80, Register sourceRegister) {
+    super(z80);
     this.sourceRegister = sourceRegister;
   }
 
