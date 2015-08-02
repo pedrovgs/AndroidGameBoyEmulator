@@ -253,5 +253,9 @@ public class InstructionsPool {
     normalInstructions[0x10] = new STOP(z80);
     normalInstructions[0xF3] = new DI(z80);
     normalInstructions[0xFB] = new EI(z80);
+    normalInstructions[0x07] = new RotateLeftCarry8BitRegisterA(z80);
+    normalInstructions[0x17] = new RotateLeft8BitRegisterA(z80);
+    normalInstructions[0x0F] = new RotateRightCarry8BitRegisterA(z80);
+    normalInstructions[0x1F] = new RotateRight8BitRegisterA(z80);
   }
 }

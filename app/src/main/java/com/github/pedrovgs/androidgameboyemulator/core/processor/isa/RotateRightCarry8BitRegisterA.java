@@ -17,14 +17,13 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
-import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class RotateRightCarry8BitRegisterA extends RotateRightCarry8Bit {
 
-  RotateRightCarry8BitRegisterA(GBZ80 z80, MMU mmu) {
-    super(z80, mmu);
+  RotateRightCarry8BitRegisterA(GBZ80 z80) {
+    super(z80);
   }
 
   @Override protected byte loadValue() {
