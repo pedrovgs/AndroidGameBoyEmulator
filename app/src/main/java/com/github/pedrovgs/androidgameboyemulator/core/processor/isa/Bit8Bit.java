@@ -24,6 +24,11 @@ public abstract class Bit8Bit extends Instruction {
 
   private final int bit;
 
+  Bit8Bit(GBZ80 z80, int bit) {
+    super(z80);
+    this.bit = bit;
+  }
+
   Bit8Bit(GBZ80 z80, MMU mmu, int bit) {
     super(z80, mmu);
     this.bit = bit;
