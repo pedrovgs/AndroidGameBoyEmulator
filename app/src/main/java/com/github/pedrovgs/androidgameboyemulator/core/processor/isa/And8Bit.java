@@ -23,6 +23,10 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public abstract class And8Bit extends Instruction {
 
+  And8Bit(GBZ80 z80) {
+    super(z80);
+  }
+
   And8Bit(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
