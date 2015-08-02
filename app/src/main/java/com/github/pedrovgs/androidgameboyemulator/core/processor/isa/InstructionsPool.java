@@ -197,5 +197,14 @@ public class InstructionsPool {
     normalInstructions[0xB5] = new Or8BitRegisterToAIntoA(z80, Register.L);
     normalInstructions[0xB6] = new Or8BitHLAddressToAIntoA(z80, mmu);
     normalInstructions[0xF6] = new Or8BitImmPCToAIntoA(z80, mmu);
+    normalInstructions[0xAF] = new Xor8BitRegisterToAIntoA(z80, Register.A);
+    normalInstructions[0xA8] = new Xor8BitRegisterToAIntoA(z80, Register.B);
+    normalInstructions[0xA9] = new Xor8BitRegisterToAIntoA(z80, Register.C);
+    normalInstructions[0xAA] = new Xor8BitRegisterToAIntoA(z80, Register.D);
+    normalInstructions[0xAB] = new Xor8BitRegisterToAIntoA(z80, Register.E);
+    normalInstructions[0xAC] = new Xor8BitRegisterToAIntoA(z80, Register.H);
+    normalInstructions[0xAD] = new Xor8BitRegisterToAIntoA(z80, Register.L);
+    normalInstructions[0xAE] = new Xor8BitHLAddressToAIntoA(z80, mmu);
+    normalInstructions[0xEE] = new Xor8BitImmPCToAIntoA(z80, mmu);
   }
 }
