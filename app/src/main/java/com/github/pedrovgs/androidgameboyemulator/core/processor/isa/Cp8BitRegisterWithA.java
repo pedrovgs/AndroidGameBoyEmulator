@@ -25,8 +25,8 @@ public class Cp8BitRegisterWithA extends Cp8Bit {
 
   private final Register sourceRegister;
 
-  Cp8BitRegisterWithA(GBZ80 z80, MMU mmu, Register sourceRegister) {
-    super(z80, mmu);
+  Cp8BitRegisterWithA(GBZ80 z80, Register sourceRegister) {
+    super(z80);
     this.sourceRegister = sourceRegister;
   }
 

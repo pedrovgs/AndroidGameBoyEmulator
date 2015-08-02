@@ -206,5 +206,22 @@ public class InstructionsPool {
     normalInstructions[0xAD] = new Xor8BitRegisterToAIntoA(z80, Register.L);
     normalInstructions[0xAE] = new Xor8BitHLAddressToAIntoA(z80, mmu);
     normalInstructions[0xEE] = new Xor8BitImmPCToAIntoA(z80, mmu);
+    normalInstructions[0xBF] = new Cp8BitRegisterWithA(z80, Register.A);
+    normalInstructions[0xB8] = new Cp8BitRegisterWithA(z80, Register.B);
+    normalInstructions[0xB9] = new Cp8BitRegisterWithA(z80, Register.C);
+    normalInstructions[0xBA] = new Cp8BitRegisterWithA(z80, Register.D);
+    normalInstructions[0xBB] = new Cp8BitRegisterWithA(z80, Register.E);
+    normalInstructions[0xBC] = new Cp8BitRegisterWithA(z80, Register.H);
+    normalInstructions[0xBD] = new Cp8BitRegisterWithA(z80, Register.L);
+    normalInstructions[0xBE] = new Cp8BitHLAddressWithA(z80, mmu);
+    normalInstructions[0xFE] = new Cp8BitImmPCWithA(z80, mmu);
+    normalInstructions[0x3C] = new Inc8BitRegister(z80, Register.A);
+    normalInstructions[0x04] = new Inc8BitRegister(z80, Register.B);
+    normalInstructions[0x0C] = new Inc8BitRegister(z80, Register.C);
+    normalInstructions[0x14] = new Inc8BitRegister(z80, Register.D);
+    normalInstructions[0x1C] = new Inc8BitRegister(z80, Register.E);
+    normalInstructions[0x24] = new Inc8BitRegister(z80, Register.H);
+    normalInstructions[0x2C] = new Inc8BitRegister(z80, Register.L);
+    normalInstructions[0x34] = new IncHLAddress(z80, mmu);
   }
 }
