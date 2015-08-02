@@ -120,5 +120,13 @@ public class InstructionsPool {
     normalInstructions[0x12] = new Load8BitRegisterAIntoDEAddress(z80, mmu);
     normalInstructions[0x77] = new Load8BitRegisterAIntoHLAddress(z80, mmu);
     normalInstructions[0xEA] = new Load8BitRegisterAIntoTheImmPCAddress(z80, mmu);
+    normalInstructions[0xF2] = new Load8BitPortRegisterOfCAddressIntoA(z80, mmu);
+    normalInstructions[0xE2] = new Load8BitRegisterAIntoAddressPortRegisterOfC(z80, mmu);
+    normalInstructions[0x3A] = new LoadHLAddressIntoAAndDecrementHL(z80, mmu);
+    normalInstructions[0x32] = new Load8BitRegisterAIntoHLAddressAndDecrementHL(z80, mmu);
+    normalInstructions[0x2A] = new LoadHLAddressIntoAAndIncrementHL(z80, mmu);
+    normalInstructions[0x22] = new Load8BitRegisterAIntoHLAddressAndIncrementHL(z80, mmu);
+    normalInstructions[0xE0] = new Load8BitRegisterAIntoAddressPortRegisterOfC(z80, mmu);
+    normalInstructions[0xF0] = new Load8BitPortRegisterOfCAddressIntoA(z80, mmu);
   }
 }
