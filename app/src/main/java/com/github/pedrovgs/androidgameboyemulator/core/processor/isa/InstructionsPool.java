@@ -333,5 +333,13 @@ public class InstructionsPool {
     extendedInstructions[0x1C] = new RotateRight8BitRegister(z80, Register.H);
     extendedInstructions[0x1D] = new RotateRight8BitRegister(z80, Register.L);
     extendedInstructions[0x1E] = new RotateRight8BitHLAddress(z80, mmu);
+    extendedInstructions[0x27] = new SwipeLeft8BitRegister(z80, Register.A);
+    extendedInstructions[0x20] = new SwipeLeft8BitRegister(z80, Register.B);
+    extendedInstructions[0x21] = new SwipeLeft8BitRegister(z80, Register.C);
+    extendedInstructions[0x22] = new SwipeLeft8BitRegister(z80, Register.D);
+    extendedInstructions[0x23] = new SwipeLeft8BitRegister(z80, Register.E);
+    extendedInstructions[0x24] = new SwipeLeft8BitRegister(z80, Register.H);
+    extendedInstructions[0x25] = new SwipeLeft8BitRegister(z80, Register.L);
+    extendedInstructions[0x26] = new SwipeLeft8BitHLAddress(z80, mmu);
   }
 }
