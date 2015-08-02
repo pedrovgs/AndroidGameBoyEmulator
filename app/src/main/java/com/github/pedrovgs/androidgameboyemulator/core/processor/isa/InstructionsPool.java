@@ -45,10 +45,6 @@ public class InstructionsPool {
   }
 
   private void generateNormalInstructions(GBZ80 z80, MMU mmu) {
-
-  }
-
-  private void generateExtendedInstructions(GBZ80 z80, MMU mmu) {
     normalInstructions[0x06] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.B);
     normalInstructions[0x0E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.C);
     normalInstructions[0x16] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.D);
@@ -288,5 +284,15 @@ public class InstructionsPool {
     normalInstructions[0xEF] = new Rst(z80, 0x28);
     normalInstructions[0xF7] = new Rst(z80, 0x30);
     normalInstructions[0xFF] = new Rst(z80, 0x38);
+    normalInstructions[0xC9] = new Ret(z80, GBZ80.JUMP, GBZ80.JUMP);
+    normalInstructions[0xC0] = new Ret(z80, FLAG_Z, JMP_NZ);
+    normalInstructions[0xC8] = new Ret(z80, FLAG_Z, JMP_Z);
+    normalInstructions[0xD0] = new Ret(z80, FLAG_C, JMP_NC);
+    normalInstructions[0xD8] = new Ret(z80, FLAG_C, JMP_C);
+    normalInstructions[0xD9] = new Reti(z80);
+  }
+
+  private void generateExtendedInstructions(GBZ80 z80, MMU mmu) {
+
   }
 }
