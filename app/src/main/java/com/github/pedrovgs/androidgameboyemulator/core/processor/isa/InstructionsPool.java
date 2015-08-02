@@ -152,5 +152,14 @@ public class InstructionsPool {
     normalInstructions[0x85] = new Add8BitRegisterPlusAIntoA(z80, Register.L);
     normalInstructions[0x86] = new Add8BitAddressHLPlusAIntoA(z80, mmu);
     normalInstructions[0xC6] = new Add8BitImmPCPlusAIntoA(z80, mmu);
+    normalInstructions[0x8F] = new Adc8BitRegisterPlusAIntoA(z80, Register.A);
+    normalInstructions[0x88] = new Adc8BitRegisterPlusAIntoA(z80, Register.B);
+    normalInstructions[0x89] = new Adc8BitRegisterPlusAIntoA(z80, Register.C);
+    normalInstructions[0x8A] = new Adc8BitRegisterPlusAIntoA(z80, Register.D);
+    normalInstructions[0x8B] = new Adc8BitRegisterPlusAIntoA(z80, Register.E);
+    normalInstructions[0x8C] = new Adc8BitRegisterPlusAIntoA(z80, Register.H);
+    normalInstructions[0x8D] = new Adc8BitRegisterPlusAIntoA(z80, Register.L);
+    normalInstructions[0x8E] = new Adc8BitHLAddressPlusAIntoA(z80, mmu);
+    normalInstructions[0xCE] = new Adc8BitImmPCPlusAIntoA(z80, mmu);
   }
 }
