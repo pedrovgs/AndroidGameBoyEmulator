@@ -34,6 +34,7 @@ public class GBZ80 {
   private int lastInstructionExecutionTime;
 
   private boolean interruptMasterFlag;
+  private boolean halt;
 
   public GBZ80() {
     this.clock = new Clock();
@@ -211,6 +212,10 @@ public class GBZ80 {
 
   public void disableInterruptMasterFlag() {
     this.interruptMasterFlag = false;
+  }
+
+  public void enableHalt() {
+    this.halt = true;
   }
 
   private void validate8BitRegister(Register register) {

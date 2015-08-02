@@ -244,5 +244,14 @@ public class InstructionsPool {
     normalInstructions[0x1B] = new Dec16BitRegister(z80, Register.DE);
     normalInstructions[0x2B] = new Dec16BitRegister(z80, Register.HL);
     normalInstructions[0x3B] = new Dec16BitStackPointer(z80);
+    normalInstructions[0x27] = new DAA(z80);
+    normalInstructions[0x2F] = new CPL(z80);
+    normalInstructions[0x3F] = new CCF(z80);
+    normalInstructions[0x37] = new SCF(z80);
+    normalInstructions[0x00] = new NOP(z80);
+    normalInstructions[0x76] = new HALT(z80);
+    normalInstructions[0x10] = gen.createSTOP();
+    normalInstructions[0xF3] = gen.createDI();
+    normalInstructions[0xFB] = gen.createEI();
   }
 }
