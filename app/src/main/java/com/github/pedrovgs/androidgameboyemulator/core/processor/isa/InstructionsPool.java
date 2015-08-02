@@ -368,5 +368,16 @@ public class InstructionsPool {
       extendedInstructions[0x46 + 0x10 * i] = new Bit8BitHLAddress(z80, mmu, bit);
       extendedInstructions[0x47 + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.A);
     }
+    for (int i = 0; i < 4; i++) {
+      int bit = 1 + 2 * i;
+      extendedInstructions[0x48 + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.B);
+      extendedInstructions[0x49 + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.C);
+      extendedInstructions[0x4A + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.D);
+      extendedInstructions[0x4B + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.E);
+      extendedInstructions[0x4C + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.H);
+      extendedInstructions[0x4D + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.L);
+      extendedInstructions[0x4E + 0x10 * i] = new Bit8BitHLAddress(z80, mmu, bit);
+      extendedInstructions[0x4F + 0x10 * i] = new Bit8BitRegister(z80, bit, Register.A);
+    }
   }
 }
