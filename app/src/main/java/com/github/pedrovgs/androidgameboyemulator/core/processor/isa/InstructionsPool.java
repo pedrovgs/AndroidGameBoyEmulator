@@ -271,5 +271,9 @@ public class InstructionsPool {
     normalInstructions[0xDA] = new Jump(z80, mmu, FLAG_C, JMP_C);
     normalInstructions[0xE9] = new JumpToHLAddress(z80, mmu);
     normalInstructions[0x18] = new JumpR(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
+    normalInstructions[0x20] = new JumpR(z80, mmu, FLAG_Z, JMP_NZ);
+    normalInstructions[0x28] = new JumpR(z80, mmu, FLAG_Z, JMP_Z);
+    normalInstructions[0x30] = new JumpR(z80, mmu, FLAG_C, JMP_NC);
+    normalInstructions[0x38] = new JumpR(z80, mmu, FLAG_C, JMP_C);
   }
 }
