@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Inc16BitRegister extends Instruction {
+class Inc16BitRegister extends Instruction {
 
   private final Register destinyRegister;
 
