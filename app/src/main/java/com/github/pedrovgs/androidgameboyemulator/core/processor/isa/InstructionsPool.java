@@ -135,5 +135,9 @@ public class InstructionsPool {
     normalInstructions[0xF9] = new Load16BitRegisterHLIntoSP(z80);
     normalInstructions[0xF8] = new Load8BitImmPCPlusSPIntoHL(z80, mmu);
     normalInstructions[0x08] = new Load16BitImmPcIntoStackPointer(z80, mmu);
+    normalInstructions[0xF5] = new Push16BitRegister(z80, mmu, Register.AF);
+    normalInstructions[0xC5] = new Push16BitRegister(z80, mmu, Register.BC);
+    normalInstructions[0xD5] = new Push16BitRegister(z80, mmu, Register.DE);
+    normalInstructions[0xE5] = new Push16BitRegister(z80, mmu, Register.HL);
   }
 }
