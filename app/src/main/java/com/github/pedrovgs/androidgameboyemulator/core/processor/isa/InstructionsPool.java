@@ -240,5 +240,9 @@ public class InstructionsPool {
     normalInstructions[0x13] = new Inc16BitRegister(z80, Register.DE);
     normalInstructions[0x23] = new Inc16BitRegister(z80, Register.HL);
     normalInstructions[0x33] = new Inc16BitStackPointer(z80);
+    normalInstructions[0x0B] = new Dec16BitRegister(z80, Register.BC);
+    normalInstructions[0x1B] = new Dec16BitRegister(z80, Register.DE);
+    normalInstructions[0x2B] = new Dec16BitRegister(z80, Register.HL);
+    normalInstructions[0x3B] = new Dec16BitStackPointer(z80);
   }
 }
