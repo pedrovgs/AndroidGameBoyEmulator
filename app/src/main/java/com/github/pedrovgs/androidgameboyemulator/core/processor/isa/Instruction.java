@@ -22,8 +22,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public abstract class Instruction {
 
-  protected static final int JUMP = 0;
-
   protected final GBZ80 z80;
   protected final MMU mmu;
 

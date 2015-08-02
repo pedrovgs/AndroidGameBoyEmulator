@@ -257,5 +257,6 @@ public class InstructionsPool {
     normalInstructions[0x17] = new RotateLeft8BitRegisterA(z80);
     normalInstructions[0x0F] = new RotateRightCarry8BitRegisterA(z80);
     normalInstructions[0x1F] = new RotateRight8BitRegisterA(z80);
+    normalInstructions[0xC3] = new Jump(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
   }
 }

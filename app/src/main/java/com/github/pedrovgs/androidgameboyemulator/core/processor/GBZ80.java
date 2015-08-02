@@ -19,6 +19,8 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 public class GBZ80 {
 
+  public static final int JUMP = 0;
+
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
   private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
   private static final int INITIAL_AF_REGISTER_VALUE = 0x01B0;
