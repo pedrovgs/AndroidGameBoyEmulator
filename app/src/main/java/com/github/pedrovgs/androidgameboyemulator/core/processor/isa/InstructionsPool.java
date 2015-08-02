@@ -231,5 +231,9 @@ public class InstructionsPool {
     normalInstructions[0x25] = new Dec8BitRegister(z80, Register.L);
     normalInstructions[0x2D] = new Dec8BitRegister(z80, Register.L);
     normalInstructions[0x35] = new DecHLAddress(z80, mmu);
+    normalInstructions[0x09] = new Add16BitRegisterToHLIntoHL(z80, Register.BC);
+    normalInstructions[0x19] = new Add16BitRegisterToHLIntoHL(z80, Register.DE);
+    normalInstructions[0x29] = new Add16BitRegisterToHLIntoHL(z80, Register.HL);
+    normalInstructions[0x39] = new Add16BitStackPointerToHLIntoHL(z80);
   }
 }
