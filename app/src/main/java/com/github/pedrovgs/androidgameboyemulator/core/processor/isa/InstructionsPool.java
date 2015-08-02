@@ -133,7 +133,7 @@ public class InstructionsPool {
     normalInstructions[0x21] = new Load16BitImmPcInto16BitRegister(z80, mmu, Register.HL);
     normalInstructions[0x31] = new Load16BitImmPcIntoStackPointer(z80, mmu);
     normalInstructions[0xF9] = new Load16BitRegisterHLIntoSP(z80);
-    normalInstructions[0xF8] = new Load16BitImmPcInto16BitRegister(z80, mmu, Register.HL);
+    normalInstructions[0xF8] = new Load8BitImmPCPlusSPIntoHL(z80, mmu);
     normalInstructions[0x08] = new Load16BitImmPcIntoStackPointer(z80, mmu);
   }
 }
