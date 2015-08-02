@@ -280,5 +280,13 @@ public class InstructionsPool {
     normalInstructions[0xCC] = new Call(z80, mmu, FLAG_Z, JMP_Z);
     normalInstructions[0xD4] = new Call(z80, mmu, FLAG_C, JMP_NC);
     normalInstructions[0xDC] = new Call(z80, mmu, FLAG_C, JMP_C);
+    normalInstructions[0xC7] = new Rst(z80, 0x00);
+    normalInstructions[0xCF] = new Rst(z80, 0x08);
+    normalInstructions[0xD7] = new Rst(z80, 0x10);
+    normalInstructions[0xDF] = new Rst(z80, 0x18);
+    normalInstructions[0xE7] = new Rst(z80, 0x20);
+    normalInstructions[0xEF] = new Rst(z80, 0x28);
+    normalInstructions[0xF7] = new Rst(z80, 0x30);
+    normalInstructions[0xFF] = new Rst(z80, 0x38);
   }
 }
