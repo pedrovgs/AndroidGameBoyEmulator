@@ -139,5 +139,9 @@ public class InstructionsPool {
     normalInstructions[0xC5] = new Push16BitRegister(z80, mmu, Register.BC);
     normalInstructions[0xD5] = new Push16BitRegister(z80, mmu, Register.DE);
     normalInstructions[0xE5] = new Push16BitRegister(z80, mmu, Register.HL);
+    normalInstructions[0xF1] = new Pop16BitRegister(z80, mmu, Register.AF);
+    normalInstructions[0xC1] = new Pop16BitRegister(z80, mmu, Register.BC);
+    normalInstructions[0xD1] = new Pop16BitRegister(z80, mmu, Register.DE);
+    normalInstructions[0xE1] = new Pop16BitRegister(z80, mmu, Register.HL);
   }
 }
