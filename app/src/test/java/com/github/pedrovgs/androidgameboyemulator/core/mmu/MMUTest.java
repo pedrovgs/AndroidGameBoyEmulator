@@ -24,9 +24,20 @@ import static org.junit.Assert.assertEquals;
 public class MMUTest extends UnitTest {
 
   public static final int MMU_SIZE = 65536;
+  private static final int ANY_ADDRESS = 11;
+  private static final byte ANY_BYTE_VALUE = 0x11;
 
   @Test public void shouldInitializeMMUFullOfZeros() {
     MMU mmu = givenAMMU();
+
+    assertMMUIsFullOfZeros(mmu);
+  }
+
+  @Test public void shouldFillTheMMUWithZerosOnReset() {
+    MMU mmu = givenAMMU();
+    mmu.writeByte(ANY_ADDRESS, ANY_BYTE_VALUE);
+
+    mmu.reset();
 
     assertMMUIsFullOfZeros(mmu);
   }

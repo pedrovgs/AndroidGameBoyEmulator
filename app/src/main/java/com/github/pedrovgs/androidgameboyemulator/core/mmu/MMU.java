@@ -43,7 +43,7 @@ public class MMU {
 
   public void reset() {
     for (int i = 0; i < memory.length; i++) {
-      memory[0] = 0;
+      memory[i] = 0;
     }
   }
 }
