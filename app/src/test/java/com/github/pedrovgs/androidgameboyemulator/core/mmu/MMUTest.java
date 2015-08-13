@@ -26,6 +26,7 @@ public class MMUTest extends UnitTest {
   public static final int MMU_SIZE = 65536;
   private static final int ANY_ADDRESS = 11;
   private static final byte ANY_BYTE_VALUE = 0x11;
+  private static final int ANY_WORD = 17;
 
   @Test public void shouldInitializeMMUFullOfZeros() {
     MMU mmu = givenAMMU();
@@ -40,6 +41,24 @@ public class MMUTest extends UnitTest {
     mmu.reset();
 
     assertMMUIsFullOfZeros(mmu);
+  }
+
+  @Test public void shouldWriteByte() {
+    MMU mmu = givenAMMU();
+    mmu.writeByte(ANY_ADDRESS, ANY_BYTE_VALUE);
+
+    byte byteWritten = mmu.readByte(ANY_ADDRESS);
+
+    assertEquals(ANY_BYTE_VALUE, byteWritten);
+  }
+
+  @Test public void shouldWriteWord() {
+    MMU mmu = givenAMMU();
+    mmu.writeWord(ANY_ADDRESS, ANY_WORD);
+
+    int word = mmu.readWord(ANY_ADDRESS);
+
+    assertEquals(ANY_WORD, word);
   }
 
   private void assertMMUIsFullOfZeros(MMU mmu) {
