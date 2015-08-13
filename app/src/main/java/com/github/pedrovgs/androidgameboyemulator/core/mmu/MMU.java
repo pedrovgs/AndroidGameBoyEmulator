@@ -17,10 +17,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public class MMU {
 
-  private final byte[] rom = new byte[16383];
-  private final byte[] videoRam = new byte[8192];
-  private final byte[] externalRam = new byte[8192];
-  private final byte[] zeroPageRam = new byte[127];
+  private final byte[] memory = new byte[65536];
 
   public byte readByte(int address) {
     return 0;
