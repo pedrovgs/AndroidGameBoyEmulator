@@ -20,19 +20,24 @@ public class MMU {
   private final byte[] memory = new byte[65536];
 
   public byte readByte(int address) {
-    return 0;
+    return memory[address];
   }
 
   public int readWord(int address) {
-    return 0;
+    byte firstByte = readByte(address);
+    int secondByte = readByte(address + 1) << 8;
+    return firstByte + secondByte;
   }
 
   public void writeByte(int address, byte value) {
-
+    memory[address] = value;
   }
 
   public void writeWord(int address, int value) {
-
+    byte firstByte = (byte) (value & 0xFF);
+    writeByte(address, firstByte);
+    byte secondByte = (byte) (value >> 8);
+    writeByte(address + 1, secondByte);
   }
 
   public void reset() {
