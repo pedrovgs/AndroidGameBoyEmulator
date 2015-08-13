@@ -19,8 +19,8 @@ package com.github.pedrovgs.androidgameboyemulator.core;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
-import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionsPool;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionsPool;
 
 public class GameBoy {
 
@@ -42,7 +42,7 @@ public class GameBoy {
   public void startEmulation() {
     while (true) {
       int programCounter = z80.getProgramCounter();
-      int rawInstruction = mmu.readByte(programCounter);
+      byte rawInstruction = mmu.readByte(programCounter);
       Instruction instruction = instructionsPool.get(rawInstruction);
       instruction.execute();
       z80.updateClock();
