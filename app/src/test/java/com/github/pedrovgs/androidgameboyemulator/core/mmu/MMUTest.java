@@ -16,34 +16,28 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
-public class MMU {
+import com.github.pedrovgs.androidgameboyemulator.UnitTest;
+import org.junit.Test;
 
-  private final byte[] memory = new byte[65536];
+import static org.junit.Assert.assertEquals;
 
-  public byte readByte(int address) {
-    return memory[address];
+public class MMUTest extends UnitTest {
+
+  public static final int MMU_SIZE = 65536;
+
+  @Test public void shouldInitializeMMUFullOfZeros() {
+    MMU mmu = givenAMMU();
+
+    assertMMUIsFullOfZeros(mmu);
   }
 
-  public int readWord(int address) {
-    byte firstByte = readByte(address);
-    int secondByte = readByte(address + 1) << 8;
-    return firstByte + secondByte;
-  }
-
-  public void writeByte(int address, byte value) {
-    memory[address] = value;
-  }
-
-  public void writeWord(int address, int value) {
-    byte firstByte = (byte) (value & 0xFF);
-    writeByte(address, firstByte);
-    byte secondByte = (byte) (value >> 8);
-    writeByte(address + 1, secondByte);
-  }
-
-  public void reset() {
-    for (int i = 0; i < memory.length; i++) {
-      memory[0] = 0;
+  private void assertMMUIsFullOfZeros(MMU mmu) {
+    for (int i = 0; i < MMU_SIZE; i++) {
+      assertEquals(0, mmu.readByte(i));
     }
+  }
+
+  private MMU givenAMMU() {
+    return new MMU();
   }
 }
