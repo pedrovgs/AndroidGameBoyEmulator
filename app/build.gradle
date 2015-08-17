@@ -35,3 +35,10 @@ dependencies {
   testCompile 'org.mockito:mockito-all:1.9.5'
   testCompile 'junit:junit:4.10'
 }
+
+task copyResDirectoryToClasses(type: Copy) {
+  from "${projectDir}/src/test/res"
+  into "${buildDir}/intermediates/classes/test/debug/res"
+}
+
+assembleDebug.dependsOn(copyResDirectoryToClasses)
