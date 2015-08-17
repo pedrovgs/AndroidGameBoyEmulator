@@ -39,6 +39,9 @@ dependencies {
 task copyResDirectoryToClasses(type: Copy) {
   from "${projectDir}/src/test/res"
   into "${buildDir}/intermediates/classes/test/debug/res"
+  from "${projectDir}/src/test/res"
+  into "${buildDir}/intermediates/classes/test/release/res"
 }
 
 assembleDebug.dependsOn(copyResDirectoryToClasses)
+assembleRelease.dependsOn(copyResDirectoryToClasses)
