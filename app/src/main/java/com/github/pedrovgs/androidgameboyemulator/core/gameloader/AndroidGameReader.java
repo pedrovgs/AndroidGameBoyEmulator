@@ -32,7 +32,17 @@ public class AndroidGameReader implements GameReader {
     bufferedReader = new BufferedReader(new FileReader(game));
   }
 
-  @Override public int getWord() throws IOException {
+  @Override public byte getByte() throws IOException {
+    int firstByte = (byte) (readHalfByte() << 4);
+    int secondByte = readHalfByte();
+    byte readByte = (byte) (firstByte + secondByte);
+    if (firstByte == -1 || secondByte == -1) {
+      return -1;
+    }
+    return readByte;
+  }
+
+  private int readHalfByte() throws IOException {
     return bufferedReader.read();
   }
 

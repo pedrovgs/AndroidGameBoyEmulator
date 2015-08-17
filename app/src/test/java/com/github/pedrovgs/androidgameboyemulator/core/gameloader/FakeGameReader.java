@@ -9,20 +9,30 @@ import java.net.URL;
 
 public class FakeGameReader implements GameReader {
 
-  private BufferedReader bufferReader;
+  private BufferedReader bufferedReader;
 
   @Override public void load(String gameUri) throws FileNotFoundException {
     File file = getFileFromPath(this, "res/" + gameUri);
-    bufferReader = new BufferedReader(new FileReader(file));
+    bufferedReader = new BufferedReader(new FileReader(file));
   }
 
-  @Override public int getWord() throws IOException {
-    return bufferReader.read();
+  @Override public byte getByte() throws IOException {
+    int firstByte = (byte) (readHalfByte() << 4);
+    int secondByte = readHalfByte();
+    byte readByte = (byte) (firstByte + secondByte);
+    if (firstByte == -1 || secondByte == -1) {
+      return -1;
+    }
+    return readByte;
+  }
+
+  private int readHalfByte() throws IOException {
+    return bufferedReader.read();
   }
 
   @Override public void closeGame() throws IOException {
-    if (bufferReader != null) {
-      bufferReader.close();
+    if (bufferedReader != null) {
+      bufferedReader.close();
     }
   }
 

@@ -34,12 +34,13 @@ public class GameLoader {
     try {
       gameReader.load(uri);
       int address = ROM_MEMORY_ADDRESS;
-      int gameWord;
-      while ((gameWord = gameReader.getWord()) != -1) {
-        mmu.writeWord(address, gameWord);
-        address += 2;
+      byte gameByte = gameReader.getByte();
+      while (gameByte != -1) {
+        mmu.writeByte(address, gameByte);
+        gameByte = gameReader.getByte();
+        address++;
       }
-    }finally {
+    } finally {
       gameReader.closeGame();
     }
   }
