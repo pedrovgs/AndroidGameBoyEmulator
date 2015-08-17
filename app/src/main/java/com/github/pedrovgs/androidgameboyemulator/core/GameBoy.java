@@ -34,12 +34,7 @@ public class GameBoy {
     instructionsPool = new InstructionsPool(z80, mmu);
   }
 
-  public void reset() {
-    z80.reset();
-    mmu.reset();
-  }
-
-  public void startEmulation() {
+  public void start() {
     while (true) {
       int programCounter = z80.getProgramCounter();
       byte rawInstruction = mmu.readByte(programCounter);
@@ -47,5 +42,10 @@ public class GameBoy {
       instruction.execute();
       z80.updateClock();
     }
+  }
+
+  public void reset() {
+    z80.reset();
+    mmu.reset();
   }
 }
