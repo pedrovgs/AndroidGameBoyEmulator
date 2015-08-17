@@ -17,6 +17,7 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core;
 
+import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
@@ -26,12 +27,18 @@ public class GameBoy {
 
   private final GBZ80 z80;
   private final MMU mmu;
+  private final GameLoader gameLoader;
   private InstructionsPool instructionsPool;
 
-  public GameBoy(GBZ80 z80, MMU mmu) {
+  public GameBoy(GBZ80 z80, MMU mmu, GameLoader gameLoader) {
     this.z80 = z80;
     this.mmu = mmu;
+    this.gameLoader = gameLoader;
     instructionsPool = new InstructionsPool(z80, mmu);
+  }
+
+  public void loadGame(String uri) {
+    gameLoader.load(uri, mmu);
   }
 
   public void start() {
