@@ -22,6 +22,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.InstructionsPool;
+import java.io.IOException;
 
 public class GameBoy {
 
@@ -37,7 +38,7 @@ public class GameBoy {
     instructionsPool = new InstructionsPool(z80, mmu);
   }
 
-  public void loadGame(String uri) {
+  public void loadGame(String uri) throws IOException {
     gameLoader.load(uri, mmu);
   }
 

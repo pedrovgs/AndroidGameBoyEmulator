@@ -12,7 +12,7 @@ public class FakeGameReader implements GameReader {
   private BufferedReader bufferReader;
 
   @Override public void load(String gameUri) throws FileNotFoundException {
-    File file = getFileFromPath(this, "res/test.json");
+    File file = getFileFromPath(this, "res/" + gameUri);
     bufferReader = new BufferedReader(new FileReader(file));
   }
 
@@ -21,7 +21,9 @@ public class FakeGameReader implements GameReader {
   }
 
   @Override public void closeGame() throws IOException {
-    bufferReader.close();
+    if (bufferReader != null) {
+      bufferReader.close();
+    }
   }
 
   private File getFileFromPath(Object obj, String fileName) {

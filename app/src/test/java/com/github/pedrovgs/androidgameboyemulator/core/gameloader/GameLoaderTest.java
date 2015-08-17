@@ -18,7 +18,30 @@
 package com.github.pedrovgs.androidgameboyemulator.core.gameloader;
 
 import com.github.pedrovgs.androidgameboyemulator.UnitTest;
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
+import java.io.IOException;
+import org.junit.Before;
+import org.junit.Test;
 
 public class GameLoaderTest extends UnitTest {
 
+  private static final String ANY_GAME_URI = "AnyGame.gb";
+
+  private FakeGameReader fakeGameReader;
+  private MMU mmu;
+
+  @Before public void setUp() {
+    fakeGameReader = new FakeGameReader();
+    mmu = new MMU();
+  }
+
+  @Test public void shouldStartLoadingGameIntoTheMemoryRomBanks() throws IOException {
+    GameLoader gameLoader = givenAGameLoader(fakeGameReader);
+
+    gameLoader.load(ANY_GAME_URI, mmu);
+  }
+
+  private GameLoader givenAGameLoader(FakeGameReader fakeGameReader) {
+    return new GameLoader(fakeGameReader);
+  }
 }
