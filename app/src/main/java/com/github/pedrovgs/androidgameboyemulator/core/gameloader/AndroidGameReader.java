@@ -17,30 +17,26 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.gameloader;
 
-import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
-public class GameLoader {
+public class AndroidGameReader implements GameReader {
 
-  private static final int ROM_MEMORY_ADDRESS = 0x1000;
+  private BufferedReader bufferedReader;
 
-  private final GameReader gameReader;
-
-  public GameLoader(GameReader gameReader) {
-    this.gameReader = gameReader;
+  @Override public void load(String gameUri) throws FileNotFoundException {
+    File game = new File(gameUri);
+    bufferedReader = new BufferedReader(new FileReader(game));
   }
 
-  public void load(String uri, MMU mmu) throws IOException {
-    try {
-      gameReader.load(uri);
-      int address = ROM_MEMORY_ADDRESS;
-      int gameWord;
-      while ((gameWord = gameReader.getWord()) != -1) {
-        mmu.writeWord(address, gameWord);
-        address += 2;
-      }
-    }finally {
-      gameReader.closeGame();
-    }
+  @Override public int getWord() throws IOException {
+    return bufferedReader.read();
+  }
+
+  @Override public void closeGame() throws IOException {
+    bufferedReader.close();
   }
 }

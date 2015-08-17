@@ -17,26 +17,14 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.gameloader;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
-public class GameReader {
+public interface GameReader {
 
-  private BufferedReader bufferedReader;
+  void load(String gameUri) throws FileNotFoundException;
 
-  public void load(String gameUri) throws FileNotFoundException {
-    File game = new File(gameUri);
-    bufferedReader = new BufferedReader(new FileReader(game));
-  }
+  int getWord() throws IOException;
 
-  public boolean isGameRead() throws IOException {
-    return bufferedReader.read() == -1;
-  }
-
-  public int getWord() throws IOException {
-    return bufferedReader.read();
-  }
+  void closeGame() throws IOException;
 }
