@@ -28,8 +28,8 @@ import static org.junit.Assert.assertEquals;
 public class GameLoaderTest extends UnitTest {
 
   private static final String ANY_GAME_URI = "AnyGame.gb";
-  private static final int FIRST_ROM_BYTE_ADDRESS = 0x1000;
-  private static final int LAST_ROM_BYTE_ADDRESS = 0x8FFF;
+  private static final int FIRST_ROM_BYTE_ADDRESS = 0x0;
+  private static final int LAST_ROM_BYTE_ADDRESS = 0x7FFF;
 
   private FakeGameReader fakeGameReader;
   private MMU mmu;

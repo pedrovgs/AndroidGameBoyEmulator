@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class GameLoader {
 
-  private static final int ROM_MEMORY_ADDRESS = 0x1000;
+  private static final int ROM_START_MEMORY_ADDRESS = 0x0;
 
   private final GameReader gameReader;
 
@@ -32,7 +32,7 @@ public class GameLoader {
 
   public void load(String uri, MMU mmu) throws IOException {
 
-    int address = ROM_MEMORY_ADDRESS;
+    int address = ROM_START_MEMORY_ADDRESS;
     try {
       gameReader.load(uri);
       int gameByte = gameReader.getByte();
