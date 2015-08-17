@@ -32,21 +32,31 @@ public class AndroidGameReader implements GameReader {
     bufferedReader = new BufferedReader(new FileReader(game));
   }
 
-  @Override public byte getByte() throws IOException {
-    int firstByte = (byte) (readHalfByte() << 4);
-    int secondByte = readHalfByte();
-    byte readByte = (byte) (firstByte + secondByte);
-    if (firstByte == -1 || secondByte == -1) {
+  @Override public int getByte() throws IOException {
+    int firstPart = readHalfByte();
+    int secondPart = readHalfByte();
+    if (firstPart == -1 && secondPart == -1) {
       return -1;
+    } else if (firstPart == -1 || secondPart == -1) {
+      firstPart = firstPart == -1 ? 0 : firstPart;
+      secondPart = secondPart == -1 ? 0 : secondPart;
     }
-    return readByte;
+    firstPart = Character.getNumericValue(firstPart) << 4;
+    secondPart = Character.getNumericValue(secondPart);
+    return (firstPart + secondPart) & 0xFF;
   }
 
   private int readHalfByte() throws IOException {
-    return bufferedReader.read();
+    int character = bufferedReader.read();
+    if (character == ' ' || character == '\n') {
+      character = bufferedReader.read();
+    }
+    return character;
   }
 
   @Override public void closeGame() throws IOException {
-    bufferedReader.close();
+    if (bufferedReader != null) {
+      bufferedReader.close();
+    }
   }
 }

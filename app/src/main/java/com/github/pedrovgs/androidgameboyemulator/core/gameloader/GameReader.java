@@ -24,7 +24,7 @@ public interface GameReader {
 
   void load(String gameUri) throws FileNotFoundException;
 
-  byte getByte() throws IOException;
+  int getByte() throws IOException;
 
   void closeGame() throws IOException;
 }
