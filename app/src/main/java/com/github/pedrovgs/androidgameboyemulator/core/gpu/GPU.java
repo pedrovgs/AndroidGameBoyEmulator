@@ -117,11 +117,12 @@ public class GPU {
   }
 
   private void scanLine() {
-
+    //TODO: Update the screen information reading the data from the VRAM.
   }
 
   private void updateLCD() {
-    //TODO Update the LCD here.
+    //TODO: Update the LCD here. We will use any listener mechanism to be able to update the screen
+    // periodically.
   }
 
   private int getPixelIndex(int x, int y) {
