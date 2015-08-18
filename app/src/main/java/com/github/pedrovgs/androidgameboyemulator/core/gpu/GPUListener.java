@@ -15,29 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.github.pedrovgs.androidgameboyemulator.lcd;
+package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.util.AttributeSet;
-import android.view.View;
+public interface GPUListener {
 
-public class LCD extends View {
-
-  public LCD(Context context) {
-    this(context, null);
-  }
-
-  public LCD(Context context, AttributeSet attrs) {
-    this(context, attrs, 0);
-  }
-
-  public LCD(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-  }
-
-  @Override protected void onDraw(Canvas canvas) {
-    super.onDraw(canvas);
-
-  }
+  void onGPUUpdated(GPU gpu);
 }
