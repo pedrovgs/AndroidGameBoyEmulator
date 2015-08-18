@@ -21,35 +21,35 @@ public class GPU {
 
   private static final int SCREEN_PIXELS_RGBA = 92160;
 
-  private final int[] screenData;
+  private final byte[] screenData;
 
   public GPU() {
-    screenData = new int[SCREEN_PIXELS_RGBA];
+    screenData = new byte[SCREEN_PIXELS_RGBA];
     reset();
   }
 
   public void reset() {
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
-      screenData[i] = 255;
+      screenData[i] = (byte) 0xFF;
     }
   }
 
-  public int getRedChannelAtPixel(int x, int y) {
+  public byte getRedChannelAtPixel(int x, int y) {
     int pixelIndex = getPixelIndex(x, y);
     return screenData[pixelIndex];
   }
 
-  public int getGreenChannelAtPixel(int x, int y) {
+  public byte getGreenChannelAtPixel(int x, int y) {
     int pixelIndex = getPixelIndex(x, y);
     return screenData[pixelIndex + 1];
   }
 
-  public int getBlueChannelAtPixel(int x, int y) {
+  public byte getBlueChannelAtPixel(int x, int y) {
     int pixelIndex = getPixelIndex(x, y);
     return screenData[pixelIndex + 2];
   }
 
-  public int getAlphaChannelAtPixel(int x, int y) {
+  public byte getAlphaChannelAtPixel(int x, int y) {
     int pixelIndex = getPixelIndex(x, y);
     return screenData[pixelIndex + 3];
   }
