@@ -21,4 +21,10 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+  <com.github.pedrovgs.androidgameboyemulator.lcd.LCD
+      android:id="@+id/lcd"
+      android:layout_width="160px"
+      android:layout_height="144px"
+      android:background="@android:color/black"/>
+
 </RelativeLayout>

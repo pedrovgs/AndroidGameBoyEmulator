@@ -19,10 +19,66 @@ package com.github.pedrovgs.androidgameboyemulator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.lcd.LCD;
 
 public class MainActivity extends Activity {
+
+  private Handler handler;
+  private FakeGPU fakeGPU;
+  private LCD lcd;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
+    lcd = (LCD) findViewById(R.id.lcd);
+    fakeGPU = new FakeGPU();
+    handler = new Handler();
+    handler.postDelayed(updateLCD, 30);
+  }
+
+  private Runnable updateLCD = new Runnable() {
+    @Override public void run() {
+      fakeGPU.increment();
+      lcd.onGPUUpdated(fakeGPU);
+      handler.postDelayed(updateLCD, 30);
+    }
+  };
+
+  private class FakeGPU extends GPU {
+
+    private boolean increase = true;
+    private int color = 0;
+
+    public void increment() {
+      if (increase) {
+        color++;
+      } else {
+        color--;
+      }
+
+      if (color == 255 && increase) {
+        increase = false;
+      } else if (color == 0 && !increase) {
+        increase = true;
+      }
+    }
+
+    @Override public byte getAlphaChannelAtPixel(int x, int y) {
+      return (byte) 255;
+    }
+
+    public byte getRedChannelAtPixel(int x, int y) {
+      return (byte) color;
+    }
+
+    public byte getGreenChannelAtPixel(int x, int y) {
+      return (byte) color;
+    }
+
+    public byte getBlueChannelAtPixel(int x, int y) {
+      return (byte) color;
+    }
   }
 }
