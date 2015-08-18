@@ -52,6 +52,8 @@ public class GameBoy {
       Instruction instruction = instructionsPool.get(rawInstruction);
       instruction.execute();
       z80.updateClock();
+      int cyclesElapsed = z80.getLastInstructionExecutionTime();
+      gpu.tick(cyclesElapsed);
     }
   }
 

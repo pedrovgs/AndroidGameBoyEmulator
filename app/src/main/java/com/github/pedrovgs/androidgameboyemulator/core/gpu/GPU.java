@@ -17,19 +17,35 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
+import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.HORIZONTAL_BLANK;
+import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.SCANLINE_OAM;
+import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.SCANLINE_VRAM;
+import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.VERTICAL_BLANK;
+
 public class GPU {
 
   private static final int SCREEN_PIXELS_RGBA = 92160;
   private static final byte PIXEL_CHANNEL_INITIAL_VALUE = (byte) 0xFF;
+  public static final int SCREEN_WIDTH = 144;
 
   private final byte[] screenData;
 
+  private GPUMode currentGPUMode;
+  private int currentModeClock;
+  private int currentLine;
+
   public GPU() {
-    screenData = new byte[SCREEN_PIXELS_RGBA];
+    this.screenData = new byte[SCREEN_PIXELS_RGBA];
+    this.currentGPUMode = HORIZONTAL_BLANK;
+    this.currentModeClock = 0;
+    this.currentLine = 0;
     reset();
   }
 
   public void reset() {
+    currentGPUMode = HORIZONTAL_BLANK;
+    currentModeClock = 0;
+    currentLine = 0;
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
     }
@@ -55,7 +71,64 @@ public class GPU {
     return screenData[pixelIndex + 3];
   }
 
+  public void tick(int cyclesElapsed) {
+    this.currentModeClock += cyclesElapsed;
+    switch (currentGPUMode) {
+      case HORIZONTAL_BLANK:
+        if (currentModeClock < HORIZONTAL_BLANK.getClocks()) {
+          resetCurrentModeClock();
+          currentLine++;
+          if (currentLine == SCREEN_WIDTH - 1) {
+            setGPUMode(VERTICAL_BLANK);
+            updateLCD();
+          } else {
+            setGPUMode(SCANLINE_VRAM);
+          }
+        }
+        break;
+      case VERTICAL_BLANK:
+        if (currentModeClock >= VERTICAL_BLANK.getClocks()) {
+          resetCurrentModeClock();
+          currentLine++;
+          if (currentLine > 153) {
+            setGPUMode(SCANLINE_VRAM);
+            currentLine = 0;
+          }
+        }
+        break;
+      case SCANLINE_OAM:
+        if (currentModeClock >= SCANLINE_OAM.getClocks()) {
+          currentModeClock = 0;
+          setGPUMode(SCANLINE_VRAM);
+        }
+        break;
+      case SCANLINE_VRAM:
+        if (currentModeClock >= SCANLINE_VRAM.getClocks()) {
+          resetCurrentModeClock();
+          setGPUMode(HORIZONTAL_BLANK);
+          scanLine();
+        }
+        break;
+    }
+  }
+
+  private void setGPUMode(GPUMode currentGPUMode) {
+    this.currentGPUMode = currentGPUMode;
+  }
+
+  private void scanLine() {
+
+  }
+
+  private void updateLCD() {
+    //TODO Update the LCD here.
+  }
+
   private int getPixelIndex(int x, int y) {
     return y * 160 + x;
+  }
+
+  private void resetCurrentModeClock() {
+    currentModeClock = 0;
   }
 }
