@@ -19,7 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 public class GPU {
 
-  private static final int SCREEN_PIXELS_RGBA = 92160;
+  private static final int SCREEN_PIXELS_RGBA = 23040;
 
   private final int[] screenData;
 
@@ -32,5 +32,10 @@ public class GPU {
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = 255;
     }
+  }
+
+  public int getPixel(int x, int y) {
+    int pixelIndex = y * 160 + x;
+    return screenData[pixelIndex];
   }
 }
