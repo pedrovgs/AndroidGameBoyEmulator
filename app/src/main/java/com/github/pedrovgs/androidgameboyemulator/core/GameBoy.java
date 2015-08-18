@@ -18,6 +18,7 @@
 package com.github.pedrovgs.androidgameboyemulator.core;
 
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
+import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
@@ -28,14 +29,16 @@ public class GameBoy {
 
   private final GBZ80 z80;
   private final MMU mmu;
+  private final GPU gpu;
   private final GameLoader gameLoader;
-  private InstructionsPool instructionsPool;
+  private final InstructionsPool instructionsPool;
 
-  public GameBoy(GBZ80 z80, MMU mmu, GameLoader gameLoader) {
+  public GameBoy(GBZ80 z80, MMU mmu, GPU gpu, GameLoader gameLoader) {
     this.z80 = z80;
     this.mmu = mmu;
+    this.gpu = gpu;
     this.gameLoader = gameLoader;
-    instructionsPool = new InstructionsPool(z80, mmu);
+    this.instructionsPool = new InstructionsPool(z80, mmu);
   }
 
   public void loadGame(String uri) throws IOException {
