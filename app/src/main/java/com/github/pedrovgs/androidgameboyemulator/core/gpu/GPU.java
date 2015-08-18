@@ -18,4 +18,19 @@
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 public class GPU {
+
+  private static final int SCREEN_PIXELS_RGBA = 92160;
+
+  private final int[] screenData;
+
+  public GPU() {
+    screenData = new int[SCREEN_PIXELS_RGBA];
+    reset();
+  }
+
+  public void reset() {
+    for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
+      screenData[i] = 255;
+    }
+  }
 }
