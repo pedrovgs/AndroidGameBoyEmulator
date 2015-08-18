@@ -19,6 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core;
 
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction;
@@ -60,5 +61,9 @@ public class GameBoy {
   public void reset() {
     z80.reset();
     mmu.reset();
+  }
+
+  public void setGPUListener(GPUListener listener) {
+    gpu.setListener(listener);
   }
 }
