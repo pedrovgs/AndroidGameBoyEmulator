@@ -18,7 +18,9 @@
 package com.github.pedrovgs.androidgameboyemulator.lcd;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
@@ -26,7 +28,12 @@ import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
 
 public class LCD extends View implements GPUListener {
 
+  private static final int LCD_HEIGHT = 144;
+  private static final int LCD_WIDTH = 160;
+
   private GPU gpu;
+  private Bitmap bitmap;
+  private Paint paint;
 
   public LCD(Context context) {
     this(context, null);
@@ -38,14 +45,44 @@ public class LCD extends View implements GPUListener {
 
   public LCD(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
+    initializeLCD();
   }
 
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
+    if (isGPUReady()) {
+      for (int x = 0; x < LCD_WIDTH; x++) {
+        for (int y = 0; y < LCD_HEIGHT; y++) {
+          int pixelColor = getGPUPixelColor(x, y);
+          bitmap.setPixel(x, y, pixelColor);
+        }
+      }
+      canvas.save();
+      canvas.drawBitmap(bitmap, 0, 0, paint);
+      canvas.restore();
+    }
   }
 
   @Override public void onGPUUpdated(GPU gpu) {
     this.gpu = gpu;
     invalidate();
+  }
+
+  private void initializeLCD() {
+    paint = new Paint();
+    bitmap = Bitmap.createBitmap(LCD_WIDTH, LCD_HEIGHT, Bitmap.Config.ARGB_8888);
+  }
+
+  private boolean isGPUReady() {
+    return gpu != null;
+  }
+
+  private int getGPUPixelColor(int x, int y) {
+    int alpha = gpu.getAlphaChannelAtPixel(x, y);
+    int red = gpu.getRedChannelAtPixel(x, y);
+    int green = gpu.getGreenChannelAtPixel(x, y);
+    int blue = gpu.getBlueChannelAtPixel(x, y);
+    int color = alpha << 24 | red << 16 | green << 8 | blue;
+    return color;
   }
 }
