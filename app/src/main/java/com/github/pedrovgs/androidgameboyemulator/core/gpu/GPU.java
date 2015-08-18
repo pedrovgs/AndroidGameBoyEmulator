@@ -34,12 +34,18 @@ public class GPU {
   private int currentModeClock;
   private int currentLine;
 
+  private GPUListener listener;
+
   public GPU() {
     this.screenData = new byte[SCREEN_PIXELS_RGBA];
     this.currentGPUMode = HORIZONTAL_BLANK;
     this.currentModeClock = 0;
     this.currentLine = 0;
     reset();
+  }
+
+  public void setListener(GPUListener listener) {
+    this.listener = listener;
   }
 
   public void reset() {
@@ -80,7 +86,7 @@ public class GPU {
           currentLine++;
           if (currentLine == SCREEN_WIDTH - 1) {
             setGPUMode(VERTICAL_BLANK);
-            updateLCD();
+            notifyListener();
           } else {
             setGPUMode(SCANLINE_VRAM);
           }
@@ -120,9 +126,10 @@ public class GPU {
     //TODO: Update the screen information reading the data from the VRAM.
   }
 
-  private void updateLCD() {
-    //TODO: Update the LCD here. We will use any listener mechanism to be able to update the screen
-    // periodically.
+  private void notifyListener() {
+    if (listener != null) {
+      listener.onGPUUpdated(this);
+    }
   }
 
   private int getPixelIndex(int x, int y) {
