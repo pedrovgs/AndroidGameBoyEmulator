@@ -115,6 +115,7 @@ public class GPU {
           scanLine();
         }
         break;
+      default:
     }
   }
 
