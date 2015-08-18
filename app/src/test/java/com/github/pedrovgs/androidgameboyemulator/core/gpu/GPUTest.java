@@ -18,7 +18,11 @@
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 import com.github.pedrovgs.androidgameboyemulator.UnitTest;
+import org.junit.Test;
 
 public class GPUTest extends UnitTest {
 
+  @Test public void shouldInitializeGPUWithEveryPixelConfiguredTo255InEveryChannel() {
+
+  }
 }

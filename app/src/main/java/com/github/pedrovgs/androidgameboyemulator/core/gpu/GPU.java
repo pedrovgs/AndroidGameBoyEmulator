@@ -19,7 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 public class GPU {
 
-  private static final int SCREEN_PIXELS_RGBA = 23040;
+  private static final int SCREEN_PIXELS_RGBA = 92160;
 
   private final int[] screenData;
 
@@ -34,8 +34,27 @@ public class GPU {
     }
   }
 
-  public int getPixel(int x, int y) {
-    int pixelIndex = y * 160 + x;
+  public int getRedChannelAtPixel(int x, int y) {
+    int pixelIndex = getPixelIndex(x, y);
     return screenData[pixelIndex];
+  }
+
+  public int getGreenChannelAtPixel(int x, int y) {
+    int pixelIndex = getPixelIndex(x, y);
+    return screenData[pixelIndex + 1];
+  }
+
+  public int getBlueChannelAtPixel(int x, int y) {
+    int pixelIndex = getPixelIndex(x, y);
+    return screenData[pixelIndex + 2];
+  }
+
+  public int getAlphaChannelAtPixel(int x, int y) {
+    int pixelIndex = getPixelIndex(x, y);
+    return screenData[pixelIndex + 3];
+  }
+
+  private int getPixelIndex(int x, int y) {
+    return y * 160 + x;
   }
 }
