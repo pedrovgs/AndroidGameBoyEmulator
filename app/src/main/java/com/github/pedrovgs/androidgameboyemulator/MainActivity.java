@@ -70,14 +70,23 @@ public class MainActivity extends Activity {
     }
 
     public byte getRedChannelAtPixel(int x, int y) {
+      if ((x <= 9 || x >= 149) || (y <= 9 || y >= 133)) {
+        return 0;
+      }
       return (byte) color;
     }
 
     public byte getGreenChannelAtPixel(int x, int y) {
+      if ((x <= 9 || x >= 149) || (y <= 9 || y >= 133)) {
+        return 0;
+      }
       return (byte) color;
     }
 
     public byte getBlueChannelAtPixel(int x, int y) {
+      if ((x <= 9 || x >= 149) || (y <= 9 || y >= 133)) {
+        return 0;
+      }
       return (byte) color;
     }
   }

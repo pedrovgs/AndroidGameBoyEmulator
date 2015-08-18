@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
@@ -34,6 +35,8 @@ public class LCD extends View implements GPUListener {
   private GPU gpu;
   private Bitmap bitmap;
   private Paint paint;
+  private Rect lcdSize;
+  private Rect lcdScaledSize;
 
   public LCD(Context context) {
     this(context, null);
@@ -58,9 +61,14 @@ public class LCD extends View implements GPUListener {
         }
       }
       canvas.save();
-      canvas.drawBitmap(bitmap, 0, 0, paint);
+      canvas.drawBitmap(bitmap, lcdSize, lcdScaledSize, paint);
       canvas.restore();
     }
+  }
+
+  @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    super.onSizeChanged(w, h, oldw, oldh);
+    lcdScaledSize = new Rect(0, 0, w, h);
   }
 
   @Override public void onGPUUpdated(GPU gpu) {
@@ -71,6 +79,8 @@ public class LCD extends View implements GPUListener {
   private void initializeLCD() {
     paint = new Paint();
     bitmap = Bitmap.createBitmap(LCD_WIDTH, LCD_HEIGHT, Bitmap.Config.ARGB_8888);
+    lcdSize = new Rect(0, 0, LCD_WIDTH, LCD_HEIGHT);
+    lcdScaledSize = new Rect(0, 0, LCD_WIDTH, LCD_HEIGHT);
   }
 
   private boolean isGPUReady() {
