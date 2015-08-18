@@ -21,8 +21,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
+import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
 
-public class LCD extends View {
+public class LCD extends View implements GPUListener {
+
+  private GPU gpu;
 
   public LCD(Context context) {
     this(context, null);
@@ -38,6 +42,10 @@ public class LCD extends View {
 
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
+  }
 
+  @Override public void onGPUUpdated(GPU gpu) {
+    this.gpu = gpu;
+    invalidate();
   }
 }
