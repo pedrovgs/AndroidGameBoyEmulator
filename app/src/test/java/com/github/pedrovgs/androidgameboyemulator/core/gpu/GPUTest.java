@@ -20,9 +20,31 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 import com.github.pedrovgs.androidgameboyemulator.UnitTest;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class GPUTest extends UnitTest {
 
-  @Test public void shouldInitializeGPUWithEveryPixelConfiguredTo255InEveryChannel() {
+  private static final int SCREEN_HEIGHT = 144;
+  private static final int SCREEN_WIDTH = 160;
 
+  @Test public void shouldInitializeGPUWithEveryPixelConfiguredTo255InEveryChannel() {
+    GPU gpu = givenAGPU();
+
+    assertAllPixelsChannelAre((byte) 0xFF, gpu);
+  }
+
+  private void assertAllPixelsChannelAre(byte channelValue, GPU gpu) {
+    for (int x = 0; x < SCREEN_WIDTH; x++) {
+      for (int y = 0; y < SCREEN_HEIGHT; y++) {
+        assertEquals(channelValue, gpu.getRedChannelAtPixel(x, y));
+        assertEquals(channelValue, gpu.getGreenChannelAtPixel(x, y));
+        assertEquals(channelValue, gpu.getBlueChannelAtPixel(x, y));
+        assertEquals(channelValue, gpu.getAlphaChannelAtPixel(x, y));
+      }
+    }
+  }
+
+  private GPU givenAGPU() {
+    return new GPU();
   }
 }

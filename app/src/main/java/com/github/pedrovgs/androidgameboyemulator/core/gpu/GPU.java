@@ -20,6 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 public class GPU {
 
   private static final int SCREEN_PIXELS_RGBA = 92160;
+  private static final byte PIXEL_CHANNEL_INITIAL_VALUE = (byte) 0xFF;
 
   private final byte[] screenData;
 
@@ -30,7 +31,7 @@ public class GPU {
 
   public void reset() {
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
-      screenData[i] = (byte) 0xFF;
+      screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
     }
   }
 
