@@ -18,7 +18,16 @@ package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public class MMU {
 
+  private static final int VRAM_BOTTOM_LIMIT = 0x8000;
+  private static final int VRAM_TOP_LIMIT = 0xA000;
+
   private final byte[] memory = new byte[65536];
+
+  private MMUListener listener;
+
+  public void setListener(MMUListener listener) {
+    this.listener = listener;
+  }
 
   public byte readByte(int address) {
     return memory[address];
@@ -32,6 +41,9 @@ public class MMU {
 
   public void writeByte(int address, byte value) {
     memory[address] = value;
+    if (address >= VRAM_BOTTOM_LIMIT && address < VRAM_TOP_LIMIT) {
+      notifyVRAMUpdated(address, value);
+    }
   }
 
   public void writeWord(int address, int value) {
@@ -44,6 +56,12 @@ public class MMU {
   public void reset() {
     for (int i = 0; i < memory.length; i++) {
       memory[i] = 0;
+    }
+  }
+
+  private void notifyVRAMUpdated(int address, byte value) {
+    if (listener != null) {
+      listener.onVRAMUpdated(address, value);
     }
   }
 }

@@ -17,12 +17,14 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMUListener;
+
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.HORIZONTAL_BLANK;
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.SCANLINE_OAM;
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.SCANLINE_VRAM;
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.VERTICAL_BLANK;
 
-public class GPU {
+public class GPU implements MMUListener {
 
   private static final int SCREEN_PIXELS_RGBA = 92160;
   private static final byte PIXEL_CHANNEL_INITIAL_VALUE = (byte) 0xFF;
@@ -126,6 +128,10 @@ public class GPU {
         break;
       default:
     }
+  }
+
+  @Override public void onVRAMUpdated(int address, byte value) {
+
   }
 
   private void setGPUMode(GPUMode currentGPUMode) {
