@@ -41,6 +41,10 @@ public class GPU implements MMUListener {
   private GPUMode currentGPUMode;
   private int currentModeClock;
   private int currentLine;
+  private int scrollX;
+  private int scrollY;
+  private boolean backgroundMap;
+  private int backgroundTile;
 
   private GPUListener listener;
 
@@ -48,9 +52,6 @@ public class GPU implements MMUListener {
     this.mmu = mmu;
     this.screenData = new byte[SCREEN_PIXELS_RGBA];
     this.tiles = new TileColor[NUMBER_OF_TILES][PIXELS_PER_TILE];
-    this.currentGPUMode = HORIZONTAL_BLANK;
-    this.currentModeClock = 0;
-    this.currentLine = 0;
     reset();
   }
 
@@ -59,9 +60,13 @@ public class GPU implements MMUListener {
   }
 
   public void reset() {
-    currentGPUMode = HORIZONTAL_BLANK;
-    currentModeClock = 0;
-    currentLine = 0;
+    this.currentGPUMode = HORIZONTAL_BLANK;
+    this.currentModeClock = 0;
+    this.currentLine = 0;
+    this.scrollX = 0;
+    this.scrollY = 0;
+    this.backgroundMap = true;
+    this.backgroundTile = 0;
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
     }
@@ -155,7 +160,35 @@ public class GPU implements MMUListener {
   }
 
   private void scanLine() {
-    //TODO: Update the screen information reading the data from the VRAM.
+    int mapOffset = backgroundMap ? 0x1C00 : 0x1800;
+    mapOffset += ((currentLine + scrollY) & 255) >> 3;
+    int lineOffset = (scrollX >> 3);
+    int y = (currentLine + scrollY) & 7;
+    int x = scrollX & 7;
+    int canvasOffset = currentLine * 160 * 4;
+
+    byte tile = mmu.readByte(mapOffset + lineOffset);
+    if (backgroundTile == 1 && tile < 128) {
+      tile += 256;
+    }
+    for (int i = 0; i < 160; i++) {
+      TileColor tileColor = tiles[tile][y];
+      screenData[canvasOffset + 0] = (byte) tileColor.getRed();
+      screenData[canvasOffset + 1] = (byte) tileColor.getGreen();
+      screenData[canvasOffset + 2] = (byte) tileColor.getBlue();
+      screenData[canvasOffset + 3] = (byte) tileColor.getAlpha();
+      canvasOffset += 4;
+
+      x++;
+      if (x == 8) {
+        x = 0;
+        lineOffset = (lineOffset + 1) & 31;
+        tile = mmu.readByte(mapOffset + lineOffset);
+        if (backgroundTile == 1 && tile < 128) {
+          tile += 256;
+        }
+      }
+    }
   }
 
   private void notifyListener() {
