@@ -34,12 +34,14 @@ public class GPU implements MMUListener {
   private static final int PIXELS_PER_TILE = 8;
   public static final int BASE_ADDRESS_MASK = 0x1FFE;
 
-  private final MMU mmu;
+  public final MMU mmu;
   private final byte[] screenData;
   private final TileColor[][] tiles;
 
   private GPUMode currentGPUMode;
   private int currentModeClock;
+
+  //TODO: Replace this registers with values in memory and getter methods.
   private int currentLine;
   private int scrollX;
   private int scrollY;

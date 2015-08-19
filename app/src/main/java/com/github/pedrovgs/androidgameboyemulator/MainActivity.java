@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.lcd.LCD;
 
 public class MainActivity extends Activity {
@@ -52,7 +53,7 @@ public class MainActivity extends Activity {
     private int color = 0;
 
     private FakeGPU() {
-      super(mmu);
+      super(new MMU());
     }
 
     public void increment() {

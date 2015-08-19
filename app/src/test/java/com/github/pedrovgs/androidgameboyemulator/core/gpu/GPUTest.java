@@ -18,6 +18,7 @@
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 import com.github.pedrovgs.androidgameboyemulator.UnitTest;
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,6 +46,7 @@ public class GPUTest extends UnitTest {
   }
 
   private GPU givenAGPU() {
+    MMU mmu = new MMU();
     return new GPU(mmu);
   }
 }
