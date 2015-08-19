@@ -61,7 +61,7 @@ public class MMU {
 
   private void notifyVRAMUpdated(int address, byte value) {
     if (listener != null) {
-      listener.onVRAMUpdated(address, value);
+      listener.onVRAMUpdated(address, this);
     }
   }
 }

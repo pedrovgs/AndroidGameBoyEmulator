@@ -17,6 +17,7 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMUListener;
 
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.HORIZONTAL_BLANK;
@@ -31,6 +32,7 @@ public class GPU implements MMUListener {
   private static final int SCREEN_WIDTH = 144;
   private static final int NUMBER_OF_TILES = 384;
   private static final int PIXELS_PER_TILE = 8;
+  public static final int BASE_ADDRESS_MASK = 0x1FFE;
 
   private final byte[] screenData;
   private final TileColor[][] tiles;
@@ -130,8 +132,20 @@ public class GPU implements MMUListener {
     }
   }
 
-  @Override public void onVRAMUpdated(int address, byte value) {
+  @Override public void onVRAMUpdated(int address, MMU mmu) {
+    address &= BASE_ADDRESS_MASK;
 
+    int tile = (address >> 4) & 511;
+    int y = (address >> 1) & 7;
+
+    int bitIndex;
+    for (int x = 0; x < 8; x++) {
+      bitIndex = 1 << (7 - x);
+      int firstBitValue = mmu.readByte(address) & bitIndex;
+      int secondBitValue = mmu.readByte(address) & bitIndex;
+      int ordinalColor = secondBitValue << 1 + firstBitValue;
+      tiles[tile][x] = TileColor.values()[ordinalColor];
+    }
   }
 
   private void setGPUMode(GPUMode currentGPUMode) {

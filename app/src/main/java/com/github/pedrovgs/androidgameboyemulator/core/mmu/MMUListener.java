@@ -18,5 +18,5 @@ package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public interface MMUListener {
 
-  void onVRAMUpdated(int address, byte value);
+  void onVRAMUpdated(int address, MMU mmu);
 }
