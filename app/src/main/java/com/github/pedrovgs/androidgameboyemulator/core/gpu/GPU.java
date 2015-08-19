@@ -26,9 +26,12 @@ public class GPU {
 
   private static final int SCREEN_PIXELS_RGBA = 92160;
   private static final byte PIXEL_CHANNEL_INITIAL_VALUE = (byte) 0xFF;
-  public static final int SCREEN_WIDTH = 144;
+  private static final int SCREEN_WIDTH = 144;
+  private static final int NUMBER_OF_TILES = 384;
+  private static final int PIXELS_PER_TILE = 8;
 
   private final byte[] screenData;
+  private final TileColor[][] tiles;
 
   private GPUMode currentGPUMode;
   private int currentModeClock;
@@ -38,6 +41,7 @@ public class GPU {
 
   public GPU() {
     this.screenData = new byte[SCREEN_PIXELS_RGBA];
+    this.tiles = new TileColor[NUMBER_OF_TILES][PIXELS_PER_TILE];
     this.currentGPUMode = HORIZONTAL_BLANK;
     this.currentModeClock = 0;
     this.currentLine = 0;
@@ -54,6 +58,11 @@ public class GPU {
     currentLine = 0;
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
+    }
+    for (int i = 0; i < NUMBER_OF_TILES; i++) {
+      for (int j = 0; j < PIXELS_PER_TILE; j++) {
+        tiles[i][j] = TileColor.OFF;
+      }
     }
   }
 
