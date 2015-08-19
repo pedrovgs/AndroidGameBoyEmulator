@@ -45,6 +45,6 @@ public class GPUTest extends UnitTest {
   }
 
   private GPU givenAGPU() {
-    return new GPU();
+    return new GPU(mmu);
   }
 }

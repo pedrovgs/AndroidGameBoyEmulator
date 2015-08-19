@@ -34,6 +34,7 @@ public class GPU implements MMUListener {
   private static final int PIXELS_PER_TILE = 8;
   public static final int BASE_ADDRESS_MASK = 0x1FFE;
 
+  private final MMU mmu;
   private final byte[] screenData;
   private final TileColor[][] tiles;
 
@@ -43,7 +44,8 @@ public class GPU implements MMUListener {
 
   private GPUListener listener;
 
-  public GPU() {
+  public GPU(MMU mmu) {
+    this.mmu = mmu;
     this.screenData = new byte[SCREEN_PIXELS_RGBA];
     this.tiles = new TileColor[NUMBER_OF_TILES][PIXELS_PER_TILE];
     this.currentGPUMode = HORIZONTAL_BLANK;
@@ -132,7 +134,7 @@ public class GPU implements MMUListener {
     }
   }
 
-  @Override public void onVRAMUpdated(int address, MMU mmu) {
+  @Override public void onVRAMUpdated(int address) {
     address &= BASE_ADDRESS_MASK;
 
     int tile = (address >> 4) & 511;

@@ -51,6 +51,10 @@ public class MainActivity extends Activity {
     private boolean increase = true;
     private int color = 0;
 
+    private FakeGPU() {
+      super(mmu);
+    }
+
     public void increment() {
       if (increase) {
         color++;
