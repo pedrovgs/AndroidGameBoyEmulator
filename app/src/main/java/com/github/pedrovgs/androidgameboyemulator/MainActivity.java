@@ -52,10 +52,10 @@ public class MainActivity extends Activity {
         super.run();
         try {
           gameBoy.loadGame(TEST_ROM_URI);
+          gameBoy.start();
         } catch (IOException e) {
           Log.e(LOGTAG, "The rom can't be loaded.", e);
         }
-        gameBoy.start();
       }
     };
     gameBoyThread.start();
