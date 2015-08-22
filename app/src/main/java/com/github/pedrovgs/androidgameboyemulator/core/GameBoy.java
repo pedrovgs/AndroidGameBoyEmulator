@@ -34,6 +34,8 @@ public class GameBoy {
   private final GameLoader gameLoader;
   private final InstructionsPool instructionsPool;
 
+  private String loadedGameUri;
+
   public GameBoy(GBZ80 z80, MMU mmu, GPU gpu, GameLoader gameLoader) {
     this.z80 = z80;
     this.mmu = mmu;
@@ -44,6 +46,7 @@ public class GameBoy {
   }
 
   public void loadGame(String uri) throws IOException {
+    loadedGameUri = uri;
     gameLoader.load(uri, mmu);
   }
 
@@ -59,9 +62,13 @@ public class GameBoy {
     }
   }
 
-  public void reset() {
+  public void reset() throws IOException {
     z80.reset();
     mmu.reset();
+    gpu.reset();
+    if (loadedGameUri != null) {
+      loadGame(loadedGameUri);
+    }
   }
 
   public void setGPUListener(GPUListener listener) {
