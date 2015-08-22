@@ -32,7 +32,9 @@ public class GPU implements MMUListener {
   private static final int SCREEN_WIDTH = 144;
   private static final int NUMBER_OF_TILES = 384;
   private static final int PIXELS_PER_TILE = 8;
-  public static final int BASE_ADDRESS_MASK = 0x1FFE;
+  private static final int BASE_ADDRESS_MASK = 0x1FFE;
+  private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
+  private static final int BG_MAP_BIT_INDEX = 3;
 
   public final MMU mmu;
   private final byte[] screenData;
@@ -45,7 +47,6 @@ public class GPU implements MMUListener {
   private int currentLine;
   private int scrollX;
   private int scrollY;
-  private boolean backgroundMap;
   private int backgroundTile;
 
   private GPUListener listener;
@@ -67,7 +68,6 @@ public class GPU implements MMUListener {
     this.currentLine = 0;
     this.scrollX = 0;
     this.scrollY = 0;
-    this.backgroundMap = true;
     this.backgroundTile = 0;
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
@@ -162,7 +162,7 @@ public class GPU implements MMUListener {
   }
 
   private void scanLine() {
-    int mapOffset = backgroundMap ? 0x1C00 : 0x1800;
+    int mapOffset = getBackgroundMap() == 1 ? 0x1C00 : 0x1800;
     mapOffset += ((currentLine + scrollY) & 255) >> 3;
     int lineOffset = (scrollX >> 3);
     int y = (currentLine + scrollY) & 7;
@@ -191,6 +191,10 @@ public class GPU implements MMUListener {
         }
       }
     }
+  }
+
+  private int getBackgroundMap() {
+    return mmu.readByte(LCD_GPU_CONTROL_ADDRESS) >> BG_MAP_BIT_INDEX & 0x1;
   }
 
   private void notifyListener() {
