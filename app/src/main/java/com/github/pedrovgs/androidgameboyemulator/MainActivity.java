@@ -33,7 +33,7 @@ import java.io.IOException;
 public class MainActivity extends Activity {
 
   private static final String LOGTAG = "AndroidGameBoyEmulator";
-  private static final String TEST_ROM_URI = "";
+  private static final String TEST_ROM_URI = "/sdcard/Download/test.gb";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
