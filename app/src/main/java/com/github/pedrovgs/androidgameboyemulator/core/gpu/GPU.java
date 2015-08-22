@@ -36,6 +36,7 @@ public class GPU implements MMUListener {
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
   private static final int BG_MAP_BIT_INDEX = 3;
   private static final int BG_TILE_BIT_INDEX = 4;
+  private static final int SCROLL_Y_ADDRESS = 0xFF42;
 
   public final MMU mmu;
   private final byte[] screenData;
@@ -47,7 +48,6 @@ public class GPU implements MMUListener {
   //TODO: Replace this registers with values in memory and getter methods.
   private int currentLine;
   private int scrollX;
-  private int scrollY;
 
   private GPUListener listener;
 
@@ -67,7 +67,6 @@ public class GPU implements MMUListener {
     this.currentModeClock = 0;
     this.currentLine = 0;
     this.scrollX = 0;
-    this.scrollY = 0;
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
     }
@@ -162,9 +161,9 @@ public class GPU implements MMUListener {
 
   private void scanLine() {
     int mapOffset = getBackgroundMap() == 1 ? 0x1C00 : 0x1800;
-    mapOffset += ((currentLine + scrollY) & 255) >> 3;
+    mapOffset += ((currentLine + getScrollY()) & 255) >> 3;
     int lineOffset = (scrollX >> 3);
-    int y = (currentLine + scrollY) & 7;
+    int y = (currentLine + getScrollY()) & 7;
     int x = scrollX & 7;
     int canvasOffset = currentLine * 160 * 4;
 
@@ -190,6 +189,10 @@ public class GPU implements MMUListener {
         }
       }
     }
+  }
+
+  private int getScrollY() {
+    return mmu.readByte(SCROLL_Y_ADDRESS);
   }
 
   private int getBackgroundMap() {
