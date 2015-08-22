@@ -38,6 +38,7 @@ public class GPU implements MMUListener {
   private static final int BG_TILE_BIT_INDEX = 4;
   private static final int SCROLL_Y_ADDRESS = 0xFF42;
   private static final int SCROLL_X_ADDRESS = 0xFF43;
+  private static final int CURRENT_LINE_ADDRESS = 0xFF44;
 
   public final MMU mmu;
   private final byte[] screenData;
@@ -45,9 +46,6 @@ public class GPU implements MMUListener {
 
   private GPUMode currentGPUMode;
   private int currentModeClock;
-
-  //TODO: Replace this registers with values in memory and getter methods.
-  private int currentLine;
 
   private GPUListener listener;
 
@@ -65,7 +63,6 @@ public class GPU implements MMUListener {
   public void reset() {
     this.currentGPUMode = HORIZONTAL_BLANK;
     this.currentModeClock = 0;
-    this.currentLine = 0;
     for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
       screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
     }
@@ -102,8 +99,8 @@ public class GPU implements MMUListener {
       case HORIZONTAL_BLANK:
         if (currentModeClock < HORIZONTAL_BLANK.getClocks()) {
           resetCurrentModeClock();
-          currentLine++;
-          if (currentLine == SCREEN_WIDTH - 1) {
+          incrementCurrentLine();
+          if (getCurrentLine() == SCREEN_WIDTH - 1) {
             setGPUMode(VERTICAL_BLANK);
             notifyListener();
           } else {
@@ -114,10 +111,10 @@ public class GPU implements MMUListener {
       case VERTICAL_BLANK:
         if (currentModeClock >= VERTICAL_BLANK.getClocks()) {
           resetCurrentModeClock();
-          currentLine++;
-          if (currentLine > 153) {
+          incrementCurrentLine();
+          if (getCurrentLine() > 153) {
             setGPUMode(SCANLINE_VRAM);
-            currentLine = 0;
+            setCurrentLine(0);
           }
         }
         break;
@@ -160,11 +157,11 @@ public class GPU implements MMUListener {
 
   private void scanLine() {
     int mapOffset = getBackgroundMap() == 1 ? 0x1C00 : 0x1800;
-    mapOffset += ((currentLine + getScrollY()) & 255) >> 3;
+    mapOffset += ((getCurrentLine() + getScrollY()) & 255) >> 3;
     int lineOffset = (getScrollX() >> 3);
-    int y = (currentLine + getScrollY()) & 7;
+    int y = (getCurrentLine() + getScrollY()) & 7;
     int x = getScrollX() & 7;
-    int canvasOffset = currentLine * 160 * 4;
+    int canvasOffset = getCurrentLine() * 160 * 4;
 
     byte tile = mmu.readByte(mapOffset + lineOffset);
     if (getBackgroundTile() == 1 && tile < 128) {
@@ -188,6 +185,19 @@ public class GPU implements MMUListener {
         }
       }
     }
+  }
+
+  private void incrementCurrentLine() {
+    int currentLine = getCurrentLine();
+    setCurrentLine(currentLine + 1);
+  }
+
+  private void setCurrentLine(int currentLine) {
+    mmu.writeByte(CURRENT_LINE_ADDRESS, (byte) currentLine);
+  }
+
+  private int getCurrentLine() {
+    return mmu.readByte(CURRENT_LINE_ADDRESS);
   }
 
   private short getScrollX() {
