@@ -19,80 +19,45 @@ package com.github.pedrovgs.androidgameboyemulator;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
+import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
+import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameReader;
+import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
+import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
+import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.lcd.LCD;
+import java.io.IOException;
 
 public class MainActivity extends Activity {
 
-  private Handler handler;
-  private FakeGPU fakeGPU;
-  private LCD lcd;
+  private static final String LOGTAG = "AndroidGameBoyEmulator";
+  private static final String TEST_ROM_URI = "";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-    lcd = (LCD) findViewById(R.id.lcd);
-    fakeGPU = new FakeGPU();
-    handler = new Handler();
-    handler.postDelayed(updateLCD, 30);
-  }
+    LCD lcd = (LCD) findViewById(R.id.lcd);
+    MMU mmu = new MMU();
+    GBZ80 z80 = new GBZ80();
+    GPU gpu = new GPU(mmu);
+    GameReader gameReader = new AndroidGameReader();
+    GameLoader gameLoader = new GameLoader(gameReader);
+    final GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader);
+    gameBoy.setGPUListener(lcd);
 
-  private Runnable updateLCD = new Runnable() {
-    @Override public void run() {
-      fakeGPU.increment();
-      lcd.onGPUUpdated(fakeGPU);
-      handler.postDelayed(updateLCD, 30);
-    }
-  };
-
-  private class FakeGPU extends GPU {
-
-    private boolean increase = true;
-    private int color = 0;
-
-    private FakeGPU() {
-      super(new MMU());
-    }
-
-    public void increment() {
-      if (increase) {
-        color++;
-      } else {
-        color--;
+    Thread gameBoyThread = new Thread() {
+      @Override public void run() {
+        super.run();
+        try {
+          gameBoy.loadGame(TEST_ROM_URI);
+        } catch (IOException e) {
+          Log.e(LOGTAG, "The rom can't be loaded.", e);
+        }
+        gameBoy.start();
       }
-
-      if (color == 255 && increase) {
-        increase = false;
-      } else if (color == 0 && !increase) {
-        increase = true;
-      }
-    }
-
-    @Override public byte getAlphaChannelAtPixel(int x, int y) {
-      return (byte) 255;
-    }
-
-    public byte getRedChannelAtPixel(int x, int y) {
-      if ((x <= 9 || x >= 149) || (y <= 9 || y >= 133)) {
-        return 0;
-      }
-      return (byte) color;
-    }
-
-    public byte getGreenChannelAtPixel(int x, int y) {
-      if ((x <= 9 || x >= 149) || (y <= 9 || y >= 133)) {
-        return 0;
-      }
-      return (byte) color;
-    }
-
-    public byte getBlueChannelAtPixel(int x, int y) {
-      if ((x <= 9 || x >= 149) || (y <= 9 || y >= 133)) {
-        return 0;
-      }
-      return (byte) color;
-    }
+    };
+    gameBoyThread.start();
   }
 }
