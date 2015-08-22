@@ -36,12 +36,16 @@ dependencies {
   testCompile 'junit:junit:4.10'
 }
 
-task copyResDirectoryToClasses(type: Copy) {
+task copyResDirectoryToDebugClasses(type: Copy) {
   from "${projectDir}/src/test/res"
   into "${buildDir}/intermediates/classes/test/debug/res"
+}
+
+task copyResDirectoryToReleaseClasses(type: Copy) {
   from "${projectDir}/src/test/res"
   into "${buildDir}/intermediates/classes/test/release/res"
 }
 
-assembleDebug.dependsOn(copyResDirectoryToClasses)
-assembleRelease.dependsOn(copyResDirectoryToClasses)
+
+assembleDebug.dependsOn(copyResDirectoryToDebugClasses)
+assembleRelease.dependsOn(copyResDirectoryToReleaseClasses)
