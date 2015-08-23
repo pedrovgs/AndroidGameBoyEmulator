@@ -47,6 +47,10 @@ public class InstructionsPool {
     } else {
       instruction = normalInstructions[operationCode];
     }
+    boolean undefinedInstruction = instruction == null;
+    if(undefinedInstruction){
+      instruction = new UndefinedInstruction();
+    }
     return instruction;
   }
 

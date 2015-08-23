@@ -37,7 +37,7 @@ public class GameLoader {
       gameReader.load(uri);
       int gameByte = gameReader.getByte();
       while (gameByte != -1) {
-        mmu.writeByte(address, (byte) gameByte);
+        //mmu.writeByte(address, (byte) gameByte);
         gameByte = gameReader.getByte();
         address++;
       }
