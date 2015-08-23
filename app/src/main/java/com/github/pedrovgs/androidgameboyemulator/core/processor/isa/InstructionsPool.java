@@ -40,13 +40,17 @@ public class InstructionsPool {
     generateExtendedInstructions(z80, mmu);
   }
 
-  public Instruction get(int operationCode) {
-    Instruction instruction;
-    if (operationCode == 0xCB) {
-      instruction = extendedInstructions[operationCode];
-    } else {
-      instruction = normalInstructions[operationCode];
+  public Instruction getExtendedInstruction(int operationCode) {
+    Instruction instruction = extendedInstructions[operationCode];
+    boolean undefinedInstruction = instruction == null;
+    if (undefinedInstruction) {
+      instruction = new UndefinedInstruction();
     }
+    return instruction;
+  }
+
+  public Instruction getNormalInstruction(int operationCode) {
+    Instruction instruction = normalInstructions[operationCode];
     boolean undefinedInstruction = instruction == null;
     if (undefinedInstruction) {
       instruction = new UndefinedInstruction();

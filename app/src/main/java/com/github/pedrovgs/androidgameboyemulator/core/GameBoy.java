@@ -30,7 +30,8 @@ import java.io.IOException;
 public class GameBoy {
 
   private static final String LOGTAG = "GameBoy";
-  public static final int BIOS_LIMIT = 0x0100;
+  private static final int BIOS_LIMIT = 0x0100;
+  private static final int EXTENDED_OPERATION_CODE = 0xCB;
 
   private final GBZ80 z80;
   private final MMU mmu;
@@ -58,10 +59,18 @@ public class GameBoy {
     while (true) {
       int programCounter = z80.getProgramCounter();
       Log.d(LOGTAG, "Program Counter = " + programCounter);
-      int rawInstruction = mmu.readByte(programCounter) & 0xFF;
-      Instruction instruction = instructionsPool.get(rawInstruction);
+      int instructionCode = mmu.readByte(programCounter) & 0xFF;
       z80.incrementProgramCounter();
-      Log.d(LOGTAG, "Instruction fetched = " + instruction.getClass().getSimpleName());
+      Instruction instruction;
+      if (isExtendedInstruction(instructionCode)) {
+        int extendedInstructionCode = mmu.readByte(z80.getProgramCounter());
+        z80.incrementProgramCounter();
+        instruction = instructionsPool.getExtendedInstruction(extendedInstructionCode);
+        Log.d(LOGTAG, "Extended instruction fetched = " + instruction.getClass().getSimpleName());
+      } else {
+        instruction = instructionsPool.getNormalInstruction(instructionCode);
+        Log.d(LOGTAG, "Normal instruction fetched = " + instruction.getClass().getSimpleName());
+      }
       instruction.execute();
       z80.adjustProgramCounter();
       z80.updateClock();
@@ -71,6 +80,10 @@ public class GameBoy {
         mmu.setSystemReady(true);
       }
     }
+  }
+
+  private boolean isExtendedInstruction(int instructionCode) {
+    return instructionCode == EXTENDED_OPERATION_CODE;
   }
 
   public void reset() throws IOException {
