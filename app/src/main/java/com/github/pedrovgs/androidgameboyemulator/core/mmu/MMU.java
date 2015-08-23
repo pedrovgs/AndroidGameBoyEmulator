@@ -16,13 +16,18 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
+import android.util.Log;
+
 public class MMU {
 
+  private static final String LOGTAG = "MMU";
   private static final int VRAM_BOTTOM_LIMIT = 0x8000;
   private static final int VRAM_TOP_LIMIT = 0xA000;
+  private static final int BIOS_LIMIT = 0x100;
 
   private final byte[] memory = new byte[65536];
 
+  private boolean systemReady;
   private MMUListener listener;
 
   public MMU() {
@@ -34,7 +39,16 @@ public class MMU {
   }
 
   public byte readByte(int address) {
-    return memory[address];
+    byte value = 0;
+    if (!systemReady && address < BIOS_LIMIT) {
+      value = (byte) BIOS.data[address];
+    } else if (address == BIOS_LIMIT) {
+      systemReady = true;
+      Log.d(LOGTAG, "BIOS loaded. Let's go to load the game.");
+    } else {
+      value = memory[address];
+    }
+    return value;
   }
 
   public int readWord(int address) {
@@ -58,22 +72,24 @@ public class MMU {
     writeByte(address + 1, secondByte);
   }
 
-  private void notifyVRAMUpdated(int address, byte value) {
-    if (listener != null) {
-      listener.onVRAMUpdated(address);
-    }
+  public boolean isSystemReady() {
+    return systemReady;
   }
 
   public void reset() {
     for (int i = 0; i < memory.length; i++) {
       memory[i] = 0;
     }
-    configureBios();
+    systemReady = false;
   }
 
-  private void configureBios() {
-    for (int i = 0; i < BIOS.data.length; i++) {
-      writeByte(i, (byte) BIOS.data[i]);
+  public void setSystemReady(boolean systemReady) {
+    this.systemReady = systemReady;
+  }
+
+  private void notifyVRAMUpdated(int address, byte value) {
+    if (listener != null) {
+      listener.onVRAMUpdated(address);
     }
   }
 }

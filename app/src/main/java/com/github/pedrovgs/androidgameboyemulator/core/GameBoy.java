@@ -30,6 +30,7 @@ import java.io.IOException;
 public class GameBoy {
 
   private static final String LOGTAG = "GameBoy";
+  public static final int BIOS_PC_LIMIT = 0x0100;
 
   private final GBZ80 z80;
   private final MMU mmu;
