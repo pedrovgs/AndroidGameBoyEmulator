@@ -21,7 +21,8 @@ public class GBZ80 {
 
   public static final int JUMP = 0;
 
-  private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
+  private static final int MAX_PC_VALUE = 65535;
+  private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x0;
   private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
   private static final int INITIAL_AF_REGISTER_VALUE = 0x01B0;
   private static final int INITIAL_BC_REGISTER_VALUE = 0x0013;
@@ -110,6 +111,11 @@ public class GBZ80 {
 
   public void setProgramCounter(int programCounter) {
     this.programCounter = programCounter;
+  }
+
+  public void adjustProgramCounter() {
+    int programCounter = getProgramCounter();
+    setProgramCounter(programCounter & MAX_PC_VALUE);
   }
 
   public int getStackPointer() {

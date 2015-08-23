@@ -30,7 +30,6 @@ import java.io.IOException;
 public class GameBoy {
 
   private static final String LOGTAG = "GameBoy";
-  private static final int MAX_PC_VALUE = 65535;
 
   private final GBZ80 z80;
   private final MMU mmu;
@@ -57,15 +56,14 @@ public class GameBoy {
   public void start() {
     while (true) {
       int programCounter = z80.getProgramCounter();
-      z80.setProgramCounter(programCounter & MAX_PC_VALUE);
-      Log.d(LOGTAG, "Program Counter = " + z80.getProgramCounter());
-      byte rawInstruction = mmu.readByte(programCounter);
-      int operationCode = rawInstruction & 0xFF;
-      Instruction instruction = instructionsPool.get(operationCode);
+      Log.d(LOGTAG, "Program Counter = " + programCounter);
+      int rawInstruction = mmu.readByte(programCounter) & 0xFF;
+      Instruction instruction = instructionsPool.get(rawInstruction);
+      z80.incrementProgramCounter();
+      z80.adjustProgramCounter();
       Log.d(LOGTAG, "Instruction fetched = " + instruction.getClass().getSimpleName());
       instruction.execute();
       z80.updateClock();
-      z80.incrementProgramCounter();
       int cyclesElapsed = z80.getLastInstructionExecutionTime();
       gpu.tick(cyclesElapsed);
     }
