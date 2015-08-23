@@ -57,10 +57,10 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
-              Toast.makeText(MainActivity.this, "Error loading the rom", Toast.LENGTH_SHORT).show();
+              Toast.makeText(MainActivity.this, "Error loading the ROM", Toast.LENGTH_SHORT).show();
             }
           });
-          Log.e(LOGTAG, "The rom can't be loaded.", e);
+          Log.e(LOGTAG, "The ROM can't be loaded.", e);
         }
       }
     };

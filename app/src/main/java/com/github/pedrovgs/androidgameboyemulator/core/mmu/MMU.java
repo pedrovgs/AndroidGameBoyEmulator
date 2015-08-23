@@ -41,7 +41,7 @@ public class MMU {
   public byte readByte(int address) {
     byte value = 0;
     if (!systemReady && address < BIOS_LIMIT) {
-      value = (byte) BIOS.data[address];
+      value = (byte) BIOS.ROM[address];
     } else if (address == BIOS_LIMIT) {
       systemReady = true;
       Log.d(LOGTAG, "BIOS loaded. Let's go to load the game.");
@@ -72,15 +72,15 @@ public class MMU {
     writeByte(address + 1, secondByte);
   }
 
-  public boolean isSystemReady() {
-    return systemReady;
-  }
-
   public void reset() {
     for (int i = 0; i < memory.length; i++) {
       memory[i] = 0;
     }
     systemReady = false;
+  }
+
+  public boolean isSystemReady() {
+    return systemReady;
   }
 
   public void setSystemReady(boolean systemReady) {

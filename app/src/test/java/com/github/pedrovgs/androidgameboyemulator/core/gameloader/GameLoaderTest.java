@@ -35,8 +35,9 @@ public class GameLoaderTest extends UnitTest {
   private MMU mmu;
 
   @Before public void setUp() {
-    fakeGameReader = new FakeGameReader();
-    mmu = new MMU();
+    this.fakeGameReader = new FakeGameReader();
+    this.mmu = new MMU();
+    this.mmu.setSystemReady(true);
   }
 
   @Test public void shouldStartLoadingGameIntoTheMemoryRomBanks() throws IOException {

@@ -29,7 +29,7 @@ public class GBZ80Test {
   public static final Register ANY_16BIT_REGISTER = Register.HL;
   private static final byte ANY_8BIT_VALUE = 8;
   private static final int ANY_16BIT_VALUE = 1666;
-  private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x100;
+  private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x0;
   private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
 
   @Test public void shouldUpdate8BitRegisterValue() {

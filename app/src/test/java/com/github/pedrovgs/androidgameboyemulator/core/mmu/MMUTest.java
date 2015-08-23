@@ -39,6 +39,7 @@ public class MMUTest extends UnitTest {
     mmu.writeByte(ANY_ADDRESS, ANY_BYTE_VALUE);
 
     mmu.reset();
+    mmu.setSystemReady(true);
 
     assertMMUIsFullOfZeros(mmu);
   }
@@ -100,6 +101,8 @@ public class MMUTest extends UnitTest {
   }
 
   private MMU givenAMMU() {
-    return new MMU();
+    MMU mmu = new MMU();
+    mmu.setSystemReady(true);
+    return mmu;
   }
 }
