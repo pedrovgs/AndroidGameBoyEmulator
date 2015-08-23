@@ -73,7 +73,11 @@ public class LCD extends View implements GPUListener {
 
   @Override public void onGPUUpdated(GPU gpu) {
     this.gpu = gpu;
-    invalidate();
+    post(new Runnable() {
+      @Override public void run() {
+        invalidate();
+      }
+    });
   }
 
   private void initializeLCD() {
