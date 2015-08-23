@@ -17,14 +17,15 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 public class Rst extends Instruction {
 
   private final int pc;
 
-  Rst(GBZ80 z80, int pc) {
-    super(z80);
+  Rst(GBZ80 z80, MMU mmu, int pc) {
+    super(z80, mmu);
     this.pc = pc;
   }
 
