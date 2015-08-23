@@ -25,6 +25,10 @@ public class MMU {
 
   private MMUListener listener;
 
+  public MMU() {
+    reset();
+  }
+
   public void setListener(MMUListener listener) {
     this.listener = listener;
   }
@@ -54,15 +58,22 @@ public class MMU {
     writeByte(address + 1, secondByte);
   }
 
+  private void notifyVRAMUpdated(int address, byte value) {
+    if (listener != null) {
+      listener.onVRAMUpdated(address);
+    }
+  }
+
   public void reset() {
     for (int i = 0; i < memory.length; i++) {
       memory[i] = 0;
     }
+    configureBios();
   }
 
-  private void notifyVRAMUpdated(int address, byte value) {
-    if (listener != null) {
-      listener.onVRAMUpdated(address);
+  private void configureBios() {
+    for (int i = 0; i < BIOS.data.length; i++) {
+      writeByte(i, (byte) BIOS.data[i]);
     }
   }
 }
