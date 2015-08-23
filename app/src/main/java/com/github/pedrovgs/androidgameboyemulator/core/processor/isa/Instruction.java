@@ -37,7 +37,7 @@ public abstract class Instruction {
   public abstract void execute();
 
   protected void setLastExecutionTime(int duration) {
-    z80.setLastInstructionExecutionTime(1);
+    z80.setLastInstructionExecutionTime(duration);
   }
 
   protected void pushTwice(int data) {
@@ -46,15 +46,15 @@ public abstract class Instruction {
   }
 
   protected int popTwice() {
-    int memoryValue = mmu.readByte(z80.getStackPointer()) & 0xff;
-    z80.setStackPointer((z80.getStackPointer() + 1) & 0xffff);
-    memoryValue |= ((mmu.readByte(z80.getStackPointer()) & 0xff) << 8);
-    z80.setStackPointer((z80.getStackPointer() + 1) & 0xffff);
+    int memoryValue = mmu.readByte(z80.getStackPointer()) & 0xFF;
+    z80.setStackPointer((z80.getStackPointer() + 1) & 0xFFFF);
+    memoryValue |= ((mmu.readByte(z80.getStackPointer()) & 0xFF) << 8);
+    z80.setStackPointer((z80.getStackPointer() + 1) & 0xFFFF);
     return memoryValue;
   }
 
   private void push(byte value) {
-    z80.setStackPointer((z80.getStackPointer() - 1) & 0xffff);
+    z80.setStackPointer((z80.getStackPointer() - 1) & 0xFFFF);
     mmu.writeByte(z80.getStackPointer(), value);
   }
 }
