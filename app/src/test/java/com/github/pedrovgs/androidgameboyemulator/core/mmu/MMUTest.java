@@ -95,7 +95,7 @@ public class MMUTest extends UnitTest {
 
   private void assertMMUIsFullOfZeros(MMU mmu) {
     for (int i = 0; i < MMU_SIZE; i++) {
-      assertEquals(0, mmu.readByte(i));
+      assertEquals(0, mmu.readByte(i) & 0xFF);
     }
   }
 

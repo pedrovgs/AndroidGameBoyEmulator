@@ -144,8 +144,8 @@ public class GPU implements MMUListener {
     int bitIndex;
     for (int x = 0; x < 8; x++) {
       bitIndex = 1 << (7 - x);
-      int firstBitValue = mmu.readByte(address) & bitIndex;
-      int secondBitValue = mmu.readByte(address) & bitIndex;
+      int firstBitValue = (mmu.readByte(address) & 0xFF) & bitIndex;
+      int secondBitValue = (mmu.readByte(address) & 0xFF) & bitIndex;
       int ordinalColor = secondBitValue << 1 + firstBitValue;
       tiles[tile][x] = TileColor.values()[ordinalColor];
     }
@@ -163,7 +163,7 @@ public class GPU implements MMUListener {
     int x = getScrollX() & 7;
     int canvasOffset = getCurrentLine() * 160 * 4;
 
-    byte tile = mmu.readByte(mapOffset + lineOffset);
+    int tile = mmu.readByte(mapOffset + lineOffset) & 0xFF;
     if (getBackgroundTile() == 1 && tile < 128) {
       tile += 256;
     }
@@ -179,7 +179,7 @@ public class GPU implements MMUListener {
       if (x == 8) {
         x = 0;
         lineOffset = (lineOffset + 1) & 31;
-        tile = mmu.readByte(mapOffset + lineOffset);
+        tile = mmu.readByte(mapOffset + lineOffset) & 0xFF;
         if (getBackgroundTile() == 1 && tile < 128) {
           tile += 256;
         }
@@ -197,23 +197,23 @@ public class GPU implements MMUListener {
   }
 
   private int getCurrentLine() {
-    return mmu.readByte(CURRENT_LINE_ADDRESS);
+    return mmu.readByte(CURRENT_LINE_ADDRESS) & 0xFF;
   }
 
-  private short getScrollX() {
-    return mmu.readByte(SCROLL_X_ADDRESS);
+  private int getScrollX() {
+    return mmu.readByte(SCROLL_X_ADDRESS) & 0xFF;
   }
 
   private int getScrollY() {
-    return mmu.readByte(SCROLL_Y_ADDRESS);
+    return mmu.readByte(SCROLL_Y_ADDRESS) & 0xFF;
   }
 
   private int getBackgroundMap() {
-    return mmu.readByte(LCD_GPU_CONTROL_ADDRESS) >> BG_MAP_BIT_INDEX & 0x1;
+    return (mmu.readByte(LCD_GPU_CONTROL_ADDRESS) & 0xFF) >> BG_MAP_BIT_INDEX & 0x1;
   }
 
   private int getBackgroundTile() {
-    return mmu.readByte(LCD_GPU_CONTROL_ADDRESS) >> BG_TILE_BIT_INDEX & 0x1;
+    return (mmu.readByte(LCD_GPU_CONTROL_ADDRESS) & 0xFF) >> BG_TILE_BIT_INDEX & 0x1;
   }
 
   private void notifyListener() {
