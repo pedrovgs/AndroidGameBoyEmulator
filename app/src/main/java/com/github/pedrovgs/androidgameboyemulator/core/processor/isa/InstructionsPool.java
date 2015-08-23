@@ -40,8 +40,14 @@ public class InstructionsPool {
     generateExtendedInstructions(z80, mmu);
   }
 
-  public Instruction get(int rawInstruction) {
-    return null;
+  public Instruction get(int operationCode) {
+    Instruction instruction;
+    if (operationCode == 0xCB) {
+      instruction = extendedInstructions[operationCode];
+    } else {
+      instruction = normalInstructions[operationCode];
+    }
+    return instruction;
   }
 
   private void generateNormalInstructions(GBZ80 z80, MMU mmu) {
