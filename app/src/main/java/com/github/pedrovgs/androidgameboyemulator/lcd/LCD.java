@@ -92,11 +92,11 @@ public class LCD extends View implements GPUListener {
   }
 
   private int getGPUPixelColor(int x, int y) {
-    int alpha = gpu.getAlphaChannelAtPixel(x, y);
-    int red = gpu.getRedChannelAtPixel(x, y);
-    int green = gpu.getGreenChannelAtPixel(x, y);
-    int blue = gpu.getBlueChannelAtPixel(x, y);
-    int color = alpha << 24 | red << 16 | green << 8 | blue;
+    int alpha = gpu.getAlphaChannelAtPixel(x, y) & 0xFF;
+    int red = gpu.getRedChannelAtPixel(x, y) & 0xFF;
+    int green = gpu.getGreenChannelAtPixel(x, y) & 0xFF;
+    int blue = gpu.getBlueChannelAtPixel(x, y) & 0xFF;
+    int color = (alpha << 24) | (red << 16) | (green << 8) | blue;
     return color;
   }
 }
