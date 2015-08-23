@@ -53,8 +53,8 @@ public class GameBoy {
   public void start() {
     while (true) {
       int programCounter = z80.getProgramCounter();
-      byte rawInstruction = mmu.readByte(programCounter);
-      Instruction instruction = instructionsPool.get(rawInstruction);
+      byte operationCode = mmu.readByte(programCounter);
+      Instruction instruction = instructionsPool.get(operationCode);
       instruction.execute();
       z80.updateClock();
       int cyclesElapsed = z80.getLastInstructionExecutionTime();
