@@ -17,6 +17,7 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core;
 
+import android.util.Log;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
@@ -27,6 +28,9 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction
 import java.io.IOException;
 
 public class GameBoy {
+
+  private static final String LOGTAG = "GameBoy";
+  private static final int MAX_PC_VALUE = 65535;
 
   private final GBZ80 z80;
   private final MMU mmu;
@@ -53,13 +57,12 @@ public class GameBoy {
   public void start() {
     while (true) {
       int programCounter = z80.getProgramCounter();
-      //TODO: Remove this hack.
-      if (programCounter > 65535) {
-        programCounter = 65535;
-      }
+      z80.setProgramCounter(programCounter & MAX_PC_VALUE);
+      Log.d(LOGTAG, "Program Counter = " + z80.getProgramCounter());
       byte rawInstruction = mmu.readByte(programCounter);
       int operationCode = rawInstruction & 0xFF;
       Instruction instruction = instructionsPool.get(operationCode);
+      Log.d(LOGTAG, "Instruction fetched = " + instruction.getClass().getSimpleName());
       instruction.execute();
       z80.updateClock();
       z80.incrementProgramCounter();
