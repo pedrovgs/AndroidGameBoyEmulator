@@ -22,6 +22,6 @@ class Clock {
   private int totalCpuExecutionTime;
 
   public void incrementClockM(int totalCpuExecutionTime) {
-    this.totalCpuExecutionTime = totalCpuExecutionTime;
+    this.totalCpuExecutionTime += totalCpuExecutionTime;
   }
 }

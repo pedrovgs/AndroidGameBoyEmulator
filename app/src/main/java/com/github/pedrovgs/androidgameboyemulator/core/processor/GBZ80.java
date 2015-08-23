@@ -22,16 +22,13 @@ public class GBZ80 {
   public static final int JUMP = 0;
 
   private static final int MAX_PC_VALUE = 65535;
-  private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x0;
-  private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
-  private static final int INITIAL_AF_REGISTER_VALUE = 0x01B0;
-  private static final int INITIAL_BC_REGISTER_VALUE = 0x0013;
-  private static final int INITIAL_DE_REGISTER_VALUE = 0x00D8;
-  private static final int INITIAL_HL_REGISTER_VALUE = 0x014D;
+  private static final int INITIAL_REGISTER_VALUE = 0x0;
+  private static final int NUMBER_OF_8BIT_REGISTERS = 8;
 
   private final Clock clock;
 
-  private byte[] registers;
+  private final byte[] registers;
+
   private int programCounter;
   private int stackPointer;
   private int lastInstructionExecutionTime;
@@ -41,26 +38,16 @@ public class GBZ80 {
 
   public GBZ80() {
     this.clock = new Clock();
+    this.registers = new byte[NUMBER_OF_8BIT_REGISTERS];
     reset();
   }
 
   public void reset() {
-    this.registers = new byte[8];
-    this.programCounter = INITIAL_PROGRAM_COUNTER_VALUE;
-    this.stackPointer = INITIAL_STACK_POINTER_VALUE;
-    set16BitRegisterValue(Register.AF, INITIAL_AF_REGISTER_VALUE);
-    set16BitRegisterValue(Register.BC, INITIAL_BC_REGISTER_VALUE);
-    set16BitRegisterValue(Register.DE, INITIAL_DE_REGISTER_VALUE);
-    set16BitRegisterValue(Register.HL, INITIAL_HL_REGISTER_VALUE);
-  }
-
-  public void clearRegisters() {
-    this.programCounter = 0;
-    this.stackPointer = 0;
-    set16BitRegisterValue(Register.AF, 0);
-    set16BitRegisterValue(Register.BC, 0);
-    set16BitRegisterValue(Register.DE, 0);
-    set16BitRegisterValue(Register.HL, 0);
+    this.programCounter = INITIAL_REGISTER_VALUE;
+    this.stackPointer = INITIAL_REGISTER_VALUE;
+    for (int i = 0; i < registers.length; i++) {
+      registers[i] = INITIAL_REGISTER_VALUE;
+    }
   }
 
   public byte get8BitRegisterValue(Register register) {

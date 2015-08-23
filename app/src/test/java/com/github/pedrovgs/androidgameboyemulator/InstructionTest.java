@@ -41,6 +41,5 @@ public class InstructionTest extends UnitTest {
 
   @Before public void setUpGBZ80Processor() {
     this.z80 = new GBZ80();
-    z80.clearRegisters();
   }
 }

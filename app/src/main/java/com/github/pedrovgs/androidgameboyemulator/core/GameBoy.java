@@ -30,7 +30,7 @@ import java.io.IOException;
 public class GameBoy {
 
   private static final String LOGTAG = "GameBoy";
-  public static final int BIOS_PC_LIMIT = 0x0100;
+  public static final int BIOS_LIMIT = 0x0100;
 
   private final GBZ80 z80;
   private final MMU mmu;
@@ -61,12 +61,15 @@ public class GameBoy {
       int rawInstruction = mmu.readByte(programCounter) & 0xFF;
       Instruction instruction = instructionsPool.get(rawInstruction);
       z80.incrementProgramCounter();
-      z80.adjustProgramCounter();
       Log.d(LOGTAG, "Instruction fetched = " + instruction.getClass().getSimpleName());
       instruction.execute();
+      z80.adjustProgramCounter();
       z80.updateClock();
       int cyclesElapsed = z80.getLastInstructionExecutionTime();
       gpu.tick(cyclesElapsed);
+      if (!mmu.isSystemReady() && z80.getProgramCounter() == BIOS_LIMIT) {
+        mmu.setSystemReady(true);
+      }
     }
   }
 

@@ -24,13 +24,15 @@ public class MMU {
   private static final int VRAM_BOTTOM_LIMIT = 0x8000;
   private static final int VRAM_TOP_LIMIT = 0xA000;
   private static final int BIOS_LIMIT = 0x100;
+  private static final int MEMORY_SPACE = 65536;
 
-  private final byte[] memory = new byte[65536];
+  private final byte[] memory;
 
   private boolean systemReady;
   private MMUListener listener;
 
   public MMU() {
+    this.memory = new byte[MEMORY_SPACE];
     reset();
   }
 
@@ -43,8 +45,7 @@ public class MMU {
     if (!systemReady && address < BIOS_LIMIT) {
       value = (byte) BIOS.ROM[address];
     } else if (address == BIOS_LIMIT) {
-      systemReady = true;
-      Log.d(LOGTAG, "BIOS loaded. Let's go to load the game.");
+      setSystemReady(true);
     } else {
       value = memory[address];
     }
@@ -85,6 +86,9 @@ public class MMU {
 
   public void setSystemReady(boolean systemReady) {
     this.systemReady = systemReady;
+    if (systemReady) {
+      Log.d(LOGTAG, "BIOS loaded. Let's go to load the game.");
+    }
   }
 
   private void notifyVRAMUpdated(int address, byte value) {
