@@ -65,8 +65,16 @@ public class MMUTest extends UnitTest {
     MMU mmu = givenAMMU();
     mmu.writeWord(ANY_ADDRESS, 0x0101);
 
-    assertEquals(1, mmu.readByte(ANY_ADDRESS));
-    assertEquals(1, mmu.readByte(ANY_ADDRESS + 1));
+    assertEquals(1, mmu.readByte(ANY_ADDRESS) & 0xFF);
+    assertEquals(1, mmu.readByte(ANY_ADDRESS + 1) & 0xFF);
+  }
+
+  @Test public void shouldWriteWordWithBigValuesAndRecoverThemAsTwoBytes() {
+    MMU mmu = givenAMMU();
+    mmu.writeWord(ANY_ADDRESS, 0x0FFFE);
+
+    assertEquals(0xFE, mmu.readByte(ANY_ADDRESS) & 0xFF);
+    assertEquals(0xFF, mmu.readByte(ANY_ADDRESS + 1) & 0xFF);
   }
 
   @Test public void shouldWriteBytesAndRecoverTheValueAsOneWord() {
