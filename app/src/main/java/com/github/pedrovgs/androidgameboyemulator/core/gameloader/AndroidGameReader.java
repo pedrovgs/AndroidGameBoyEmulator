@@ -41,8 +41,16 @@ public class AndroidGameReader implements GameReader {
       firstPart = firstPart == -1 ? 0 : firstPart;
       secondPart = secondPart == -1 ? 0 : secondPart;
     }
-    firstPart = Integer.parseInt(String.valueOf((char) firstPart), 16) << 4;
-    secondPart = Integer.parseInt(String.valueOf((char) secondPart), 16);
+    try {
+      firstPart = Integer.parseInt(String.valueOf((char) firstPart), 16) << 4;
+    } catch (NumberFormatException e) {
+      firstPart = 0;
+    }
+    try {
+      secondPart = Integer.parseInt(String.valueOf((char) secondPart), 16);
+    } catch (NumberFormatException e) {
+      secondPart = 0;
+    }
     return (firstPart + secondPart) & 0xFF;
   }
 
