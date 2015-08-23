@@ -34,8 +34,9 @@ public class MMU {
   }
 
   public int readWord(int address) {
-    byte firstByte = readByte(address);
-    int secondByte = readByte(address + 1) << 8;
+    int firstByte = readByte(address) & 0xFF;
+    int secondByte = readByte(address + 1) & 0xFF;
+    secondByte = secondByte << 8;
     return firstByte + secondByte;
   }
 
