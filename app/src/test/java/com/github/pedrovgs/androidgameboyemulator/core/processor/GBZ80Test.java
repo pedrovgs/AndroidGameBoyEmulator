@@ -30,7 +30,7 @@ public class GBZ80Test {
   private static final byte ANY_8BIT_VALUE = 8;
   private static final int ANY_16BIT_VALUE = 1666;
   private static final int INITIAL_PROGRAM_COUNTER_VALUE = 0x0;
-  private static final int INITIAL_STACK_POINTER_VALUE = 0xFFFE;
+  private static final int INITIAL_STACK_POINTER_VALUE = 0x0;
 
   @Test public void shouldUpdate8BitRegisterValue() {
     GBZ80 z80 = new GBZ80();
