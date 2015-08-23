@@ -48,7 +48,7 @@ public class InstructionsPool {
       instruction = normalInstructions[operationCode];
     }
     boolean undefinedInstruction = instruction == null;
-    if(undefinedInstruction){
+    if (undefinedInstruction) {
       instruction = new UndefinedInstruction();
     }
     return instruction;
@@ -299,7 +299,7 @@ public class InstructionsPool {
     normalInstructions[0xC8] = new Ret(z80, mmu, FLAG_Z, JMP_Z);
     normalInstructions[0xD0] = new Ret(z80, mmu, FLAG_C, JMP_NC);
     normalInstructions[0xD8] = new Ret(z80, mmu, FLAG_C, JMP_C);
-    normalInstructions[0xD9] = new Reti(z80);
+    normalInstructions[0xD9] = new Reti(z80, mmu);
   }
 
   private void generateExtendedInstructions(GBZ80 z80, MMU mmu) {
