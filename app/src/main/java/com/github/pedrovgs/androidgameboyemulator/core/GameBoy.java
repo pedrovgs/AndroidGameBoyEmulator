@@ -53,12 +53,15 @@ public class GameBoy {
   public void start() {
     while (true) {
       int programCounter = z80.getProgramCounter();
+      //TODO: Remove this hack.
+      if (programCounter > 65535) {
+        programCounter = 65535;
+      }
       byte rawInstruction = mmu.readByte(programCounter);
       int operationCode = rawInstruction & 0xFF;
       Instruction instruction = instructionsPool.get(operationCode);
       instruction.execute();
       z80.updateClock();
-      //Is this needed?
       z80.incrementProgramCounter();
       int cyclesElapsed = z80.getLastInstructionExecutionTime();
       gpu.tick(cyclesElapsed);

@@ -137,17 +137,17 @@ public class GPU implements MMUListener {
 
   @Override public void onVRAMUpdated(int address) {
     address &= BASE_ADDRESS_MASK;
-
     int tile = (address >> 4) & 511;
     int y = (address >> 1) & 7;
 
     int bitIndex;
     for (int x = 0; x < 8; x++) {
       bitIndex = 1 << (7 - x);
-      int firstBitValue = (mmu.readByte(address) & 0xFF) & bitIndex;
-      int secondBitValue = (mmu.readByte(address) & 0xFF) & bitIndex;
-      int ordinalColor = secondBitValue << 1 + firstBitValue;
-      tiles[tile][x] = TileColor.values()[ordinalColor];
+      int firstValue = (mmu.readByte(address) & bitIndex) != 0 ? 1 : 0;
+      int secondValue = (mmu.readByte(address + 1) & bitIndex) != 0 ? 2 : 0;
+      int ordinalTileColor = firstValue + secondValue;
+      TileColor tileColor = TileColor.values()[ordinalTileColor];
+      tiles[y][x] = tileColor;
     }
   }
 

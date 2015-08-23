@@ -20,6 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
@@ -54,6 +55,11 @@ public class MainActivity extends Activity {
           gameBoy.loadGame(TEST_ROM_URI);
           gameBoy.start();
         } catch (IOException e) {
+          runOnUiThread(new Runnable() {
+            @Override public void run() {
+              Toast.makeText(MainActivity.this, "Error loading the rom", Toast.LENGTH_SHORT).show();
+            }
+          });
           Log.e(LOGTAG, "The rom can't be loaded.", e);
         }
       }
