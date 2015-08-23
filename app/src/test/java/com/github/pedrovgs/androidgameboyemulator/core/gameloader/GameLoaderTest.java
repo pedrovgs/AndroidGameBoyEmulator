@@ -44,7 +44,7 @@ public class GameLoaderTest extends UnitTest {
 
     gameLoader.load(ANY_GAME_URI, mmu);
 
-    assertEquals(0xC3, mmu.readByte(FIRST_ROM_BYTE_ADDRESS));
+    assertEquals((byte) 0xC3, mmu.readByte(FIRST_ROM_BYTE_ADDRESS));
   }
 
   @Test public void shouldLoadTheWholeGameIntoTheMMU() throws IOException {
@@ -52,7 +52,7 @@ public class GameLoaderTest extends UnitTest {
 
     gameLoader.load(ANY_GAME_URI, mmu);
 
-    assertEquals(0xF5, mmu.readByte(LAST_ROM_BYTE_ADDRESS));
+    assertEquals((byte) 0xF5, mmu.readByte(LAST_ROM_BYTE_ADDRESS));
   }
 
   private GameLoader givenAGameLoader(FakeGameReader fakeGameReader) {
