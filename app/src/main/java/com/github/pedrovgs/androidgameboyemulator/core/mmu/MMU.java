@@ -21,6 +21,7 @@ import android.util.Log;
 public class MMU {
 
   private static final String LOGTAG = "MMU";
+
   private static final int VRAM_BOTTOM_LIMIT = 0x8000;
   private static final int VRAM_TOP_LIMIT = 0xA000;
   private static final int BIOS_LIMIT = 0x100;
@@ -49,6 +50,7 @@ public class MMU {
     } else {
       value = memory[address];
     }
+    Log.d(LOGTAG, "READ BYTE -> Byte value = " + value + " Read from " + address);
     return value;
   }
 
@@ -56,7 +58,9 @@ public class MMU {
     int firstByte = readByte(address) & 0xFF;
     int secondByte = readByte(address + 1) & 0xFF;
     secondByte = secondByte << 8;
-    return firstByte + secondByte;
+    int value = firstByte + secondByte;
+    Log.d(LOGTAG, "WRITE WORD-> Byte value = " + value + " Read from " + address);
+    return value;
   }
 
   public void writeByte(int address, byte value) {
@@ -64,6 +68,7 @@ public class MMU {
     if (address >= VRAM_BOTTOM_LIMIT && address < VRAM_TOP_LIMIT) {
       notifyVRAMUpdated(address, value);
     }
+    Log.d(LOGTAG, "WRITE BYTE -> Write byte value = " + value + " written at " + address);
   }
 
   public void writeWord(int address, int value) {
@@ -71,6 +76,9 @@ public class MMU {
     writeByte(address, firstByte);
     byte secondByte = (byte) (value >> 8);
     writeByte(address + 1, secondByte);
+    Log.d(LOGTAG, "WRITE WORD");
+    Log.d(LOGTAG, "Byte value = " + firstByte + " written at " + address);
+    Log.d(LOGTAG, "Byte value = " + secondByte + " written at " + address + 1);
   }
 
   public void reset() {
