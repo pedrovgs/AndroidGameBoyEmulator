@@ -35,6 +35,7 @@ public class InstructionTest extends UnitTest {
   protected static final int ANY_16BIT_REGISTER_VALUE = 23;
   protected static final int ANY_STACK_POINTER_VALUE = 44;
   protected static final int ANY_BIT_VALUE = 1;
+  protected static final int ANY_PROGRAM_COUNTER = 11;
 
   protected GBZ80 z80;
   @Mock protected MMU mmu;
