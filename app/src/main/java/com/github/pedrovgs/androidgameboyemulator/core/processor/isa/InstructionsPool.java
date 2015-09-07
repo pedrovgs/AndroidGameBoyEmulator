@@ -25,10 +25,10 @@ public class InstructionsPool {
 
   private static final int FLAG_Z = 0x80;
   private static final int FLAG_C = 0x10;
-  private static final int JMP_NZ = 0;
-  private static final int JMP_Z = 0x80;
-  private static final int JMP_NC = 0;
-  private static final int JMP_C = 0x10;
+  private static final int JUMP_NON_ZERO = 0;
+  private static final int JUMP_ZERO = 0x80;
+  private static final int JUMP_NON_CARRY = 0;
+  private static final int JUMP_CARRY = 0x10;
 
   private final Instruction[] normalInstructions;
   private final Instruction[] extendedInstructions;
@@ -275,21 +275,21 @@ public class InstructionsPool {
     normalInstructions[0x0F] = new RotateRightCarry8BitRegisterA(z80);
     normalInstructions[0x1F] = new RotateRight8BitRegisterA(z80);
     normalInstructions[0xC3] = new Jump(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
-    normalInstructions[0xC2] = new Jump(z80, mmu, JMP_NZ, FLAG_Z);
-    normalInstructions[0xCA] = new Jump(z80, mmu, JMP_Z, FLAG_Z);
-    normalInstructions[0xD2] = new Jump(z80, mmu, JMP_NC, FLAG_C);
-    normalInstructions[0xDA] = new Jump(z80, mmu, JMP_C, FLAG_C);
+    normalInstructions[0xC2] = new Jump(z80, mmu, JUMP_NON_ZERO, FLAG_Z);
+    normalInstructions[0xCA] = new Jump(z80, mmu, JUMP_ZERO, FLAG_Z);
+    normalInstructions[0xD2] = new Jump(z80, mmu, JUMP_NON_CARRY, FLAG_C);
+    normalInstructions[0xDA] = new Jump(z80, mmu, JUMP_CARRY, FLAG_C);
     normalInstructions[0xE9] = new JumpToHLAddress(z80, mmu);
     normalInstructions[0x18] = new JumpR(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
-    normalInstructions[0x20] = new JumpR(z80, mmu, JMP_NZ, FLAG_Z);
-    normalInstructions[0x28] = new JumpR(z80, mmu, JMP_Z, FLAG_Z);
-    normalInstructions[0x30] = new JumpR(z80, mmu, JMP_NC, FLAG_C);
-    normalInstructions[0x38] = new JumpR(z80, mmu, JMP_C, FLAG_C);
+    normalInstructions[0x20] = new JumpR(z80, mmu, JUMP_NON_ZERO, FLAG_Z);
+    normalInstructions[0x28] = new JumpR(z80, mmu, JUMP_ZERO, FLAG_Z);
+    normalInstructions[0x30] = new JumpR(z80, mmu, JUMP_NON_CARRY, FLAG_C);
+    normalInstructions[0x38] = new JumpR(z80, mmu, JUMP_CARRY, FLAG_C);
     normalInstructions[0xCD] = new Call(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
-    normalInstructions[0xC4] = new Call(z80, mmu, FLAG_Z, JMP_NZ);
-    normalInstructions[0xCC] = new Call(z80, mmu, FLAG_Z, JMP_Z);
-    normalInstructions[0xD4] = new Call(z80, mmu, FLAG_C, JMP_NC);
-    normalInstructions[0xDC] = new Call(z80, mmu, FLAG_C, JMP_C);
+    normalInstructions[0xC4] = new Call(z80, mmu, FLAG_Z, JUMP_NON_ZERO);
+    normalInstructions[0xCC] = new Call(z80, mmu, FLAG_Z, JUMP_ZERO);
+    normalInstructions[0xD4] = new Call(z80, mmu, FLAG_C, JUMP_NON_CARRY);
+    normalInstructions[0xDC] = new Call(z80, mmu, FLAG_C, JUMP_CARRY);
     normalInstructions[0xC7] = new Rst(z80, mmu, 0x00);
     normalInstructions[0xCF] = new Rst(z80, mmu, 0x08);
     normalInstructions[0xD7] = new Rst(z80, mmu, 0x10);
@@ -299,10 +299,10 @@ public class InstructionsPool {
     normalInstructions[0xF7] = new Rst(z80, mmu, 0x30);
     normalInstructions[0xFF] = new Rst(z80, mmu, 0x38);
     normalInstructions[0xC9] = new Ret(z80, mmu, GBZ80.JUMP, GBZ80.JUMP);
-    normalInstructions[0xC0] = new Ret(z80, mmu, FLAG_Z, JMP_NZ);
-    normalInstructions[0xC8] = new Ret(z80, mmu, FLAG_Z, JMP_Z);
-    normalInstructions[0xD0] = new Ret(z80, mmu, FLAG_C, JMP_NC);
-    normalInstructions[0xD8] = new Ret(z80, mmu, FLAG_C, JMP_C);
+    normalInstructions[0xC0] = new Ret(z80, mmu, FLAG_Z, JUMP_NON_ZERO);
+    normalInstructions[0xC8] = new Ret(z80, mmu, FLAG_Z, JUMP_ZERO);
+    normalInstructions[0xD0] = new Ret(z80, mmu, FLAG_C, JUMP_NON_CARRY);
+    normalInstructions[0xD8] = new Ret(z80, mmu, FLAG_C, JUMP_CARRY);
     normalInstructions[0xD9] = new Reti(z80, mmu);
   }
 
