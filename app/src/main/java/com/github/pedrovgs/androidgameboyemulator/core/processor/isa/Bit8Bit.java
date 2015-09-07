@@ -36,6 +36,8 @@ public abstract class Bit8Bit extends Instruction {
 
   @Override public void execute() {
     byte n = loadValue();
+    z80.resetFlagF();
+    z80.enableFlagCY();
     z80.enableFlagH();
     if ((n >> bit & 1) == 0) {
       z80.enableFlagZ();
