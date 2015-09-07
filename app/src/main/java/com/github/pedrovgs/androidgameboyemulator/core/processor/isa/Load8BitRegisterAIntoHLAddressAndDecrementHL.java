@@ -31,8 +31,8 @@ public class Load8BitRegisterAIntoHLAddressAndDecrementHL extends Instruction {
     int address = z80.get16BitRegisterValue(Register.HL);
     byte value = z80.get8BitRegisterValue(Register.A);
     mmu.writeByte(address, value);
-    z80.setLastInstructionExecutionTime(2);
     int newHlRegisterValue = z80.get16BitRegisterValue(Register.HL) - 1;
     z80.set16BitRegisterValue(Register.HL, newHlRegisterValue);
+    z80.setLastInstructionExecutionTime(2);
   }
 }
