@@ -67,7 +67,7 @@ public class GameBoy {
       z80.incrementProgramCounter();
       Instruction instruction;
       if (isExtendedInstruction(instructionCode)) {
-        int extendedInstructionCode = mmu.readByte(z80.getProgramCounter());
+        int extendedInstructionCode = mmu.readByte(z80.getProgramCounter()) & 0xFF;
         z80.incrementProgramCounter();
         instruction = instructionsPool.getExtendedInstruction(extendedInstructionCode);
         Log.d(INSTRUCTION_LOGTAG,
@@ -91,8 +91,8 @@ public class GameBoy {
 
   private void incrementTickCounter() {
     tickCounter++;
-    if (tickCounter == 7) {
-      throw new RuntimeException();
+    if (tickCounter == 20) {
+      //throw new RuntimeException();
     }
   }
 
