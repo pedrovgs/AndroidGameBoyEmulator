@@ -59,7 +59,7 @@ public class MMU {
     int secondByte = readByte(address + 1) & 0xFF;
     secondByte = secondByte << 8;
     int value = firstByte + secondByte;
-    Log.d(LOGTAG, "WRITE WORD-> Byte value = " + value + " Read from " + address);
+    Log.d(LOGTAG, "READ WORD -> Byte value = " + value + " Read from " + address);
     return value;
   }
 
@@ -76,7 +76,7 @@ public class MMU {
     writeByte(address, firstByte);
     byte secondByte = (byte) (value >> 8);
     writeByte(address + 1, secondByte);
-    Log.d(LOGTAG, "WRITE WORD");
+    Log.d(LOGTAG, "WRITE WORD -->");
     Log.d(LOGTAG, "Byte value = " + firstByte + " written at " + address);
     Log.d(LOGTAG, "Byte value = " + secondByte + " written at " + address + 1);
   }
