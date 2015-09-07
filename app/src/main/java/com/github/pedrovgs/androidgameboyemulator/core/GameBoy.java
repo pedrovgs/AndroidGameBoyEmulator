@@ -31,6 +31,7 @@ public class GameBoy {
 
   private static final String LOGTAG = "GameBoy";
   private static final String PC_LOGTAG = "ProgramCounter";
+  private static final String INSTRUCTION_LOGTAG = "Instruction";
 
   private static final int BIOS_LIMIT = 0x0100;
   private static final int EXTENDED_OPERATION_CODE = 0xCB;
@@ -69,10 +70,12 @@ public class GameBoy {
         int extendedInstructionCode = mmu.readByte(z80.getProgramCounter());
         z80.incrementProgramCounter();
         instruction = instructionsPool.getExtendedInstruction(extendedInstructionCode);
-        Log.d(LOGTAG, "Extended instruction fetched = " + instruction.getClass().getSimpleName());
+        Log.d(INSTRUCTION_LOGTAG,
+            "Extended instruction fetched = " + instruction.getClass().getSimpleName());
       } else {
         instruction = instructionsPool.getNormalInstruction(instructionCode);
-        Log.d(LOGTAG, "Normal instruction fetched = " + instruction.getClass().getSimpleName());
+        Log.d(INSTRUCTION_LOGTAG,
+            "Normal instruction fetched = " + instruction.getClass().getSimpleName());
       }
       instruction.execute();
       z80.adjustProgramCounter();
