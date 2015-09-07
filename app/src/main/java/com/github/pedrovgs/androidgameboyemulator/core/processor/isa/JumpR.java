@@ -37,7 +37,8 @@ public class JumpR extends Instruction {
     byte value = mmu.readByte(programCounter);
     z80.incrementProgramCounter();
     if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
-      z80.setProgramCounter(value);
+      int newProgramCounterValue = z80.getProgramCounter() + value;
+      z80.setProgramCounter(newProgramCounterValue);
       if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
         z80.setLastInstructionExecutionTime(3);
       }
