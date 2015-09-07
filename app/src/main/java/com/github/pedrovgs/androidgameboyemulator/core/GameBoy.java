@@ -30,6 +30,8 @@ import java.io.IOException;
 public class GameBoy {
 
   private static final String LOGTAG = "GameBoy";
+  private static final String PC_LOGTAG = "ProgramCounter";
+
   private static final int BIOS_LIMIT = 0x0100;
   private static final int EXTENDED_OPERATION_CODE = 0xCB;
 
@@ -40,6 +42,7 @@ public class GameBoy {
   private final InstructionsPool instructionsPool;
 
   private String loadedGameUri;
+  private int tickCounter;
 
   public GameBoy(GBZ80 z80, MMU mmu, GPU gpu, GameLoader gameLoader) {
     this.z80 = z80;
@@ -58,7 +61,7 @@ public class GameBoy {
   public void start() {
     while (true) {
       int programCounter = z80.getProgramCounter();
-      Log.d(LOGTAG, "Program Counter = " + programCounter);
+      Log.d(PC_LOGTAG, "Program Counter = " + programCounter);
       int instructionCode = mmu.readByte(programCounter) & 0xFF;
       z80.incrementProgramCounter();
       Instruction instruction;
@@ -79,6 +82,14 @@ public class GameBoy {
       if (!mmu.isSystemReady() && z80.getProgramCounter() == BIOS_LIMIT) {
         mmu.setSystemReady(true);
       }
+      incrementTickCounter();
+    }
+  }
+
+  private void incrementTickCounter() {
+    tickCounter++;
+    if (tickCounter == 7) {
+      throw new RuntimeException();
     }
   }
 
