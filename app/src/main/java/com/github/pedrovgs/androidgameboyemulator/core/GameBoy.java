@@ -29,9 +29,9 @@ import java.io.IOException;
 
 public class GameBoy {
 
-  private static final String LOGTAG = "GameBoy";
   private static final String PC_LOGTAG = "ProgramCounter";
   private static final String INSTRUCTION_LOGTAG = "Instruction";
+  private static final String TICK_LOGTAG = "TickCounter";
 
   private static final int BIOS_LIMIT = 0x0100;
   private static final int EXTENDED_OPERATION_CODE = 0xCB;
@@ -90,10 +90,8 @@ public class GameBoy {
   }
 
   private void incrementTickCounter() {
+    Log.d(TICK_LOGTAG, "Instruction executed number = " + tickCounter);
     tickCounter++;
-    if (tickCounter == 20) {
-      //throw new RuntimeException();
-    }
   }
 
   private boolean isExtendedInstruction(int instructionCode) {
