@@ -35,13 +35,8 @@ public class Inc8BitRegister extends Instruction {
     z80.set8BitRegisterValue(sourceRegister, result);
     z80.setLastInstructionExecutionTime(1);
 
-    boolean wasCEnabled = z80.isFlagCYEnabled();
     z80.resetFlagF();
-    if (wasCEnabled) {
-      z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
-    }
+    z80.enableFlagCY();
     if (result == 0) {
       z80.enableFlagZ();
       z80.enableFlagH();
