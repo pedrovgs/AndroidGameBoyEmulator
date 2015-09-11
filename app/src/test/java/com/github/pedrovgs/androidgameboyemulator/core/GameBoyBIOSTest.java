@@ -68,8 +68,11 @@ public class GameBoyBIOSTest {
 
     tickUntilSecondBiosStageFinished(gameBoy);
 
+    assertEquals(18, z80.get8BitRegisterValue(Register.C) & 0xFF);
+    assertEquals(0x77, z80.get8BitRegisterValue(Register.A) & 0xFF);
+    assertEquals(0x90, mmu.readByte(65318) & 0xFF);
+    assertEquals(0xFF11, mmu.readByte(65297) & 0XFF);
     //assertEquals(65315, z80.get16BitRegisterValue(Register.HL));
-    //assertEquals(10, z80.get8BitRegisterValue(Register.C) & 0xFF);
   }
 
   private GameBoy givenAGameBoy() {

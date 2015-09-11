@@ -44,7 +44,8 @@ public class MMU {
   public byte readByte(int address) {
     byte value = 0;
     if (!systemReady && address < BIOS_LIMIT) {
-      value = (byte) BIOS.ROM[address];
+      int biosValue = BIOS.ROM[address];
+      value = (byte) biosValue;
     } else if (address == BIOS_LIMIT) {
       setSystemReady(true);
     } else {
