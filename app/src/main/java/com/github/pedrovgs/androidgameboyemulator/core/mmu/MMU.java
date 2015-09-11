@@ -64,6 +64,7 @@ public class MMU {
   }
 
   public void writeByte(int address, byte value) {
+    System.out.println("Address = " + address + "--- Value = " + value);
     memory[address] = value;
     if (address >= VRAM_BOTTOM_LIMIT && address < VRAM_TOP_LIMIT) {
       notifyVRAMUpdated(address, value);

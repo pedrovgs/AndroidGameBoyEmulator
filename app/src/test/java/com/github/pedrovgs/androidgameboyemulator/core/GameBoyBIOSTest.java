@@ -12,10 +12,19 @@ import static org.junit.Assert.assertEquals;
 
 public class GameBoyBIOSTest {
 
-  private static final String ANY_GAME_URI = "AnyGame.gb";
-  private static final int FIST_BIOS_STAGE_COMPLITED_PC = 3074;
+  private static final int FIST_BIOS_STAGE_TICKS = 26823;
+  private static final int STACK_POINTER_INITIAL_VALUE = 0xFFFE;
   private GBZ80 z80;
   private MMU mmu;
+
+  @Test public void shouldInitializeStackPointerToTheDefaultValueInTheFirstTick()
+      throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickGameBoy(gameBoy, 1);
+
+    assertEquals(STACK_POINTER_INITIAL_VALUE, z80.getStackPointer());
+  }
 
   @Test public void shouldInitializeVideoMemoryWithZero() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
@@ -33,11 +42,14 @@ public class GameBoyBIOSTest {
     return new GameBoy(z80, mmu, gpu, gameLoader);
   }
 
-  private void tickUntilFirstBiosStageFinished(GameBoy gameBoy) throws IOException {
-    gameBoy.loadGame(ANY_GAME_URI);
-    while (z80.getProgramCounter() <= FIST_BIOS_STAGE_COMPLITED_PC) {
+  private void tickGameBoy(GameBoy gameBoy, int numberOfTicks) throws IOException {
+    while (gameBoy.getTickCounter() < numberOfTicks) {
       gameBoy.tick();
     }
+  }
+
+  private void tickUntilFirstBiosStageFinished(GameBoy gameBoy) throws IOException {
+    tickGameBoy(gameBoy, FIST_BIOS_STAGE_TICKS);
   }
 
   private void assertVideoMemoryIsInitializedToZero() {
