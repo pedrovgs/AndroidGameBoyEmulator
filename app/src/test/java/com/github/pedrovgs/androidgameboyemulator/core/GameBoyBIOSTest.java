@@ -9,11 +9,15 @@ import java.io.IOException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GameBoyBIOSTest {
 
-  private static final int FIST_BIOS_STAGE_TICKS = 26823;
+  private static final int INITIALIZE_LCD_STAGE_TICKS = 26823;
   private static final int STACK_POINTER_INITIAL_VALUE = 0xFFFE;
+  private static final int FIRST_STAGE_FINISH_PROGRAM_COUNTER = 8;
+  private static final int INITIALIZE_AUDIO_STAGE_TICKS = 11;
+
   private GBZ80 z80;
   private MMU mmu;
 
@@ -34,6 +38,31 @@ public class GameBoyBIOSTest {
     assertVideoMemoryIsInitializedToZero();
   }
 
+  @Test public void shouldFinishFirstStageWithTheNExtStageProgramCounter() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilFirstBiosStageFinished(gameBoy);
+
+    assertEquals(FIRST_STAGE_FINISH_PROGRAM_COUNTER, z80.getProgramCounter());
+  }
+
+  @Test public void shouldNotFinishBIOSExecutionAtTheEndOfTheFirstStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilFirstBiosStageFinished(gameBoy);
+
+    assertFalse(mmu.isSystemReady());
+  }
+
+  @Test public void shouldInitializeAudioDevice() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+
+    //assertEquals(65315, z80.get16BitRegisterValue(Register.HL));
+    //assertEquals(10, z80.get8BitRegisterValue(Register.C) & 0xFF);
+  }
+
   private GameBoy givenAGameBoy() {
     z80 = new GBZ80();
     mmu = new MMU();
@@ -43,13 +72,18 @@ public class GameBoyBIOSTest {
   }
 
   private void tickGameBoy(GameBoy gameBoy, int numberOfTicks) throws IOException {
-    while (gameBoy.getTickCounter() < numberOfTicks) {
+    for (int i = 0; i < numberOfTicks; i++) {
       gameBoy.tick();
     }
   }
 
   private void tickUntilFirstBiosStageFinished(GameBoy gameBoy) throws IOException {
-    tickGameBoy(gameBoy, FIST_BIOS_STAGE_TICKS);
+    tickGameBoy(gameBoy, INITIALIZE_LCD_STAGE_TICKS);
+  }
+
+  private void tickUntilSecondBiosStageFinished(GameBoy gameBoy) throws IOException {
+    tickUntilFirstBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, INITIALIZE_AUDIO_STAGE_TICKS);
   }
 
   private void assertVideoMemoryIsInitializedToZero() {

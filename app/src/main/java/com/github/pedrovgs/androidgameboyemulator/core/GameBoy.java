@@ -98,10 +98,6 @@ public class GameBoy {
     tickCounter++;
   }
 
-  public int getTickCounter() {
-    return tickCounter;
-  }
-
   private boolean isExtendedInstruction(int instructionCode) {
     return instructionCode == EXTENDED_OPERATION_CODE;
   }
