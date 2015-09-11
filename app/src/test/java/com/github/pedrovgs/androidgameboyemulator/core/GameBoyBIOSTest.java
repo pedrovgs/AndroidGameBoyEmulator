@@ -17,6 +17,7 @@ public class GameBoyBIOSTest {
   private static final int STACK_POINTER_INITIAL_VALUE = 0xFFFE;
   private static final int FIRST_STAGE_FINISH_PROGRAM_COUNTER = 12;
   private static final int INITIALIZE_AUDIO_STAGE_TICKS = 11;
+  private static final int THIRD_STAGE_FIRST_PC_VALUE = 29;
 
   private GBZ80 z80;
   private MMU mmu;
@@ -71,6 +72,14 @@ public class GameBoyBIOSTest {
     assertEquals(18, z80.get8BitRegisterValue(Register.C) & 0xFF);
     assertEquals(0x77, z80.get8BitRegisterValue(Register.A) & 0xFF);
     assertEquals(65316, z80.get16BitRegisterValue(Register.HL));
+  }
+
+  @Test public void shouldStartThirdBIOSStageWith29AsProgramCounter() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+
+    assertEquals(THIRD_STAGE_FIRST_PC_VALUE, z80.getProgramCounter());
   }
 
   private GameBoy givenAGameBoy() {
