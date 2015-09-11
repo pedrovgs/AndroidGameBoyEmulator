@@ -31,7 +31,6 @@ public class Load8BitRegisterAIntoAddressPortRegisterOfC extends Instruction {
     byte registerValue = z80.get8BitRegisterValue(Register.A);
     int address = (z80.get8BitRegisterValue(Register.C) & 0xFF) + 0xFF00;
     mmu.writeByte(address, registerValue);
-    z80.incrementProgramCounter();
     z80.setLastInstructionExecutionTime(2);
   }
 }
