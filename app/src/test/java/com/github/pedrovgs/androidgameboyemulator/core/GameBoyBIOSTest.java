@@ -146,6 +146,16 @@ public class GameBoyBIOSTest {
     assertFollowsPCSequence(gameBoy, callSequence);
   }
 
+  @Test public void shouldPrepareTheNintendoLogoLoopDuringTheThirdStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, 7);
+
+    List<Integer> afterCallSequence = Arrays.asList(0x2E, 0x2F, 0x30, 0x32);
+    assertFollowsPCSequence(gameBoy, afterCallSequence);
+  }
+
   @Ignore("Ignored until the bios unlocked") @Test public void shouldPutTheNintendoLogoIntoMemory()
       throws IOException {
     GameBoy gameBoy = givenAGameBoy();

@@ -24,6 +24,5 @@ class UndefinedInstruction extends Instruction {
   }
 
   @Override public void execute() {
-
   }
 }

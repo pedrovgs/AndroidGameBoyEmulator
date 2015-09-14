@@ -32,6 +32,7 @@ public class Cp8BitImmPCWithA extends Cp8Bit {
 
   @Override protected byte getValue() {
     int address = z80.getProgramCounter();
+    z80.incrementProgramCounter();
     return mmu.readByte(address);
   }
 }
