@@ -174,7 +174,14 @@ public class GameBoyBIOSTest {
   @Test public void shouldInitializeTileMapDuringTheFourthStage() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilPCEqualsTo(gameBoy, 0x55);
+    tickUntilFourthStageFinished(gameBoy);
+  }
+
+  @Test public void shouldPerformNintendoLogoScrollDuringTheFifthStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilFourthStageFinished(gameBoy);
+    tickUntilPCEqualsTo(gameBoy, 0xE0);
   }
 
   @Ignore @Test public void shouldFinishBIOSExecution() throws IOException {
@@ -250,5 +257,9 @@ public class GameBoyBIOSTest {
 
   private void tickUntilThirdStageFinished(GameBoy gameBoy) {
     tickUntilPCEqualsTo(gameBoy, 0x40);
+  }
+
+  private void tickUntilFourthStageFinished(GameBoy gameBoy) {
+    tickUntilPCEqualsTo(gameBoy, 0x55);
   }
 }
