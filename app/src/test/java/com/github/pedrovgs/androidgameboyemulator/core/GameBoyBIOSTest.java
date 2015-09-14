@@ -96,6 +96,25 @@ public class GameBoyBIOSTest {
     assertEquals(THIRD_STAGE_FIRST_PC_VALUE, z80.getProgramCounter());
   }
 
+  @Test public void shouldInitializeColorPaletteDuringTheThirdStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, 2);
+
+    assertEquals(0xFC, z80.get8BitRegisterValue(Register.A) & 0xFF);
+    assertEquals(0xFC, mmu.readByte(0xFF20) & 0xFF);
+  }
+
+  @Test public void shouldPointDERegisterToTheNintendoLogoDuringTheThirdStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, 3);
+
+    assertEquals(0x104, z80.get16BitRegisterValue(Register.DE));
+  }
+
   @Ignore("Ignored until the bios unlocked") @Test public void shouldPutTheNintendoLogoIntoMemory()
       throws IOException {
     GameBoy gameBoy = givenAGameBoy();

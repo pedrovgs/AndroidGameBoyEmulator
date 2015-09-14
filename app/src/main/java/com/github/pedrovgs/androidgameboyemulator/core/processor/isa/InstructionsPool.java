@@ -143,7 +143,7 @@ public class InstructionsPool {
     normalInstructions[0x32] = new Load8BitRegisterAIntoHLAddressAndDecrementHL(z80, mmu);
     normalInstructions[0x2A] = new LoadHLAddressIntoAAndIncrementHL(z80, mmu);
     normalInstructions[0x22] = new Load8BitRegisterAIntoHLAddressAndIncrementHL(z80, mmu);
-    normalInstructions[0xE0] = new Load8BitRegisterAIntoAddressPortRegisterOfC(z80, mmu);
+    normalInstructions[0xE0] = new Load8BitRegisterAIntoPortAddressImmPC(z80, mmu);
     normalInstructions[0xF0] = new Load8BitPortRegisterOfCAddressIntoA(z80, mmu);
     normalInstructions[0x01] = new Load16BitImmPcInto16BitRegister(z80, mmu, Register.BC);
     normalInstructions[0x11] = new Load16BitImmPcInto16BitRegister(z80, mmu, Register.DE);
