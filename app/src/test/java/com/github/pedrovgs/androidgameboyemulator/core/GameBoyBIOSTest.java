@@ -9,11 +9,11 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GameBoyBIOSTest {
 
@@ -180,14 +180,32 @@ public class GameBoyBIOSTest {
   @Test public void shouldPerformNintendoLogoScrollDuringTheFifthStage() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilFourthStageFinished(gameBoy);
-    tickUntilPCEqualsTo(gameBoy, 0xE0);
+    tickUntilFifthStageFinished(gameBoy);
   }
 
-  @Ignore @Test public void shouldFinishBIOSExecution() throws IOException {
+  @Test public void shouldExecuteTheCheckRoutineSuccessfullyDuringTheSixthStage()
+      throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilPCEqualsTo(gameBoy, 0x100);
+    tickUntilBIOSLoaded(gameBoy);
+
+    assertEquals(0, mmu.readByte(0x014D) & 0xFF);
+  }
+
+  @Test public void shouldIndicateTheBIOSHasBeenLoaded() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilBIOSLoaded(gameBoy);
+
+    assertEquals(1, mmu.readByte(0xFF50) & 0xFF);
+  }
+
+  @Test public void shouldFinishBIOSExecution() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilBIOSLoaded(gameBoy);
+
+    assertTrue(mmu.isSystemReady());
   }
 
   private GameBoy givenAGameBoy() throws IOException {
@@ -261,5 +279,14 @@ public class GameBoyBIOSTest {
 
   private void tickUntilFourthStageFinished(GameBoy gameBoy) {
     tickUntilPCEqualsTo(gameBoy, 0x55);
+  }
+
+  private void tickUntilFifthStageFinished(GameBoy gameBoy) {
+    tickUntilFourthStageFinished(gameBoy);
+    tickUntilPCEqualsTo(gameBoy, 0xE0);
+  }
+
+  private void tickUntilBIOSLoaded(GameBoy gameBoy) {
+    tickUntilPCEqualsTo(gameBoy, 0x100);
   }
 }
