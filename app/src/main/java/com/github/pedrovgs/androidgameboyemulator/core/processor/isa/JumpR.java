@@ -45,7 +45,7 @@ public class JumpR extends Instruction {
       if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
         z80.setLastInstructionExecutionTime(3);
       }
-    }else{
+    } else {
       Log.d(LOGTAG, "Do not jump");
     }
     z80.setLastInstructionExecutionTime(2);
