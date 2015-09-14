@@ -9,6 +9,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -20,6 +21,7 @@ public class GameBoyBIOSTest {
   private static final int FIRST_STAGE_FINISH_PROGRAM_COUNTER = 12;
   private static final int INITIALIZE_AUDIO_STAGE_TICKS = 11;
   private static final int THIRD_STAGE_FIRST_PC_VALUE = 29;
+  private static final String ANY_GAME_URI = "AnyGame.gb";
 
   private GBZ80 z80;
   private MMU mmu;
@@ -94,12 +96,23 @@ public class GameBoyBIOSTest {
     assertEquals(THIRD_STAGE_FIRST_PC_VALUE, z80.getProgramCounter());
   }
 
-  private GameBoy givenAGameBoy() {
+  @Ignore("Ignored until the bios unlocked") @Test public void shouldPutTheNintendoLogoIntoMemory()
+      throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilBIOSIsLoaded(gameBoy);
+
+    assertNintendoLogoIsLoadedIntoMemory();
+  }
+
+  private GameBoy givenAGameBoy() throws IOException {
     z80 = new GBZ80();
     mmu = new MMU();
     GPU gpu = new GPU(mmu);
     GameLoader gameLoader = new GameLoader(new FakeGameReader());
-    return new GameBoy(z80, mmu, gpu, gameLoader);
+    GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader);
+    gameBoy.loadGame(ANY_GAME_URI);
+    return gameBoy;
   }
 
   private void tickGameBoy(GameBoy gameBoy, int numberOfTicks) throws IOException {
@@ -136,6 +149,23 @@ public class GameBoyBIOSTest {
     for (Integer expectedPC : pcSequence) {
       assertEquals((int) expectedPC, z80.getProgramCounter());
       gameBoy.tick();
+    }
+  }
+
+  private void tickUntilBIOSIsLoaded(GameBoy gameBoy) {
+    while (!mmu.isSystemReady()) {
+      gameBoy.tick();
+    }
+  }
+
+  private void assertNintendoLogoIsLoadedIntoMemory() {
+    List<Integer> nintendoLogo =
+        Arrays.asList(0xce, 0xed, 0x66, 0x66, 0xcc, 0x0d, 0x00, 0x0b, 0x03, 0x73, 0x00, 0x83, 0x00,
+            0x0c, 0x00, 0x0d, 0x00, 0x08, 0x11, 0x1f, 0x88, 0x89, 0x00, 0x0e, 0xdc, 0xcc, 0x6e,
+            0xe6, 0xdd, 0xdd, 0xd9, 0x99, 0xbb, 0xbb, 0x67, 0x63, 0x6e, 0x0e, 0xec, 0xcc, 0xdd,
+            0xdc, 0x99, 0x9f, 0xbb, 0xb9, 0x33, 0x3e);
+    for (int i = 0x104; i < 0x133; i++) {
+      assertEquals(nintendoLogo, mmu.readByte(i) & 0xFF);
     }
   }
 }
