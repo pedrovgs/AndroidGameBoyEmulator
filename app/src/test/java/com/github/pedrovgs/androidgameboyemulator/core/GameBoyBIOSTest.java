@@ -9,6 +9,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -159,10 +160,27 @@ public class GameBoyBIOSTest {
   @Test public void shouldPutTheNintendoLogoIntoMemoryDuringTheThirdStage() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilSecondBiosStageFinished(gameBoy);
-    tickUntilPCEqualsTo(gameBoy, 0x34);
+    tickUntilThirdStageFinished(gameBoy);
 
     assertNintendoLogoIsLoadedIntoMemory();
+  }
+
+  @Test public void shouldPutTheNintendoRLogoIntoMemoryDuringTheThirdStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilThirdStageFinished(gameBoy);
+  }
+
+  @Test public void shouldInitializeTileMapDuringTheFourthStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilPCEqualsTo(gameBoy, 0x55);
+  }
+
+  @Ignore @Test public void shouldFinishBIOSExecution() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilPCEqualsTo(gameBoy, 0x100);
   }
 
   private GameBoy givenAGameBoy() throws IOException {
@@ -228,5 +246,9 @@ public class GameBoyBIOSTest {
     for (int i = 0x104, j = 0; i < 0x133; i++, j++) {
       assertEquals((int) nintendoLogo.get(j), mmu.readByte(i) & 0xFF);
     }
+  }
+
+  private void tickUntilThirdStageFinished(GameBoy gameBoy) {
+    tickUntilPCEqualsTo(gameBoy, 0x40);
   }
 }
