@@ -115,6 +115,37 @@ public class GameBoyBIOSTest {
     assertEquals(0x104, z80.get16BitRegisterValue(Register.DE));
   }
 
+  @Test public void shouldPointHLRegisterToAPortionOfTheVRAMDuringTheThirdStage()
+      throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, 4);
+
+    assertEquals(0x8010, z80.get16BitRegisterValue(Register.HL));
+  }
+
+  @Test public void shouldLoadAWithTheMemoryValuePointedByDERegisterDuringTheThirdStage()
+      throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, 5);
+
+    byte expectedMemoryValue = mmu.readByte(0x104);
+    assertEquals(expectedMemoryValue, z80.get8BitRegisterValue(Register.A));
+  }
+
+  @Test public void shouldExecuteTwoCallInstructionsDuringTheThirdStage() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickGameBoy(gameBoy, 5);
+
+    List<Integer> callSequence = Arrays.asList(0x28, 0x2B);
+    assertFollowsPCSequence(gameBoy, callSequence);
+  }
+
   @Ignore("Ignored until the bios unlocked") @Test public void shouldPutTheNintendoLogoIntoMemory()
       throws IOException {
     GameBoy gameBoy = givenAGameBoy();
