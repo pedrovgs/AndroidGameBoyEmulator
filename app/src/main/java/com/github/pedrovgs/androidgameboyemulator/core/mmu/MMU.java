@@ -46,8 +46,6 @@ public class MMU {
     if (!systemReady && address < BIOS_LIMIT) {
       int biosValue = BIOS.ROM[address];
       value = (byte) biosValue;
-    } else if (address == BIOS_LIMIT) {
-      setSystemReady(true);
     } else {
       value = memory[address];
     }
@@ -101,7 +99,7 @@ public class MMU {
   }
 
   private void notifyVRAMUpdated(int address, byte value) {
-    if (isSystemReady() && listener != null) {
+    if (listener != null) {
       listener.onVRAMUpdated(address);
     }
   }
