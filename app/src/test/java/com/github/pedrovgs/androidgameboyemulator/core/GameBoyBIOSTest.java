@@ -7,6 +7,8 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -74,6 +76,16 @@ public class GameBoyBIOSTest {
     assertEquals(65316, z80.get16BitRegisterValue(Register.HL));
   }
 
+  @Test public void shouldFollowTheSecondStageProgramCounterSequence() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilFirstBiosStageFinished(gameBoy);
+
+    List<Integer> secondStageSequence =
+        Arrays.asList(0xC, 0xF, 0x11, 0x13, 0x14, 0x15, 0x16, 0x18, 0x19, 0x1A, 0x1C);
+    assertFollowsPCSequence(gameBoy, secondStageSequence);
+  }
+
   @Test public void shouldStartThirdBIOSStageWith29AsProgramCounter() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
@@ -117,6 +129,13 @@ public class GameBoyBIOSTest {
     for (int address = 0x9FFF; address >= 0x8000; address--) {
       byte value = mmu.readByte(address);
       assertEquals("Address = " + address + " not initialized to 0", 0, value);
+    }
+  }
+
+  private void assertFollowsPCSequence(GameBoy gameBoy, List<Integer> pcSequence) {
+    for (Integer expectedPC : pcSequence) {
+      assertEquals((int) expectedPC, z80.getProgramCounter());
+      gameBoy.tick();
     }
   }
 }
