@@ -31,7 +31,8 @@ class Inc16BitRegister extends Instruction {
 
   @Override public void execute() {
     int registerValue = z80.get16BitRegisterValue(destinyRegister);
-    z80.set16BitRegisterValue(destinyRegister, registerValue + 1);
+    int newRegisterValue = registerValue + 1;
+    z80.set16BitRegisterValue(destinyRegister, newRegisterValue);
     z80.setLastInstructionExecutionTime(2);
   }
 }

@@ -18,7 +18,7 @@
 package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 public enum Register {
-  A, B, C, D, E, F, H, L, AF(0), BC(2), DE(4), HL(6);
+  A, F, B, C, D, E, H, L, AF(0), BC(2), DE(4), HL(6);
 
   private final int registerIndex;
 

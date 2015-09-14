@@ -9,7 +9,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -146,21 +145,22 @@ public class GameBoyBIOSTest {
     assertFollowsPCSequence(gameBoy, callSequence);
   }
 
-  @Test public void shouldPrepareTheNintendoLogoLoopDuringTheThirdStage() throws IOException {
+  @Test public void shouldPrepareTheNintendoLogoLoopDuringTheThirdStageAndStartIterating()
+      throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilSecondBiosStageFinished(gameBoy);
     tickGameBoy(gameBoy, 7);
 
-    List<Integer> afterCallSequence = Arrays.asList(0x2E, 0x2F, 0x30, 0x32);
+    List<Integer> afterCallSequence = Arrays.asList(0x2E, 0x2F, 0x30, 0x32, 0x27);
     assertFollowsPCSequence(gameBoy, afterCallSequence);
   }
 
-  @Ignore("Ignored until the bios unlocked") @Test public void shouldPutTheNintendoLogoIntoMemory()
-      throws IOException {
+  @Test public void shouldPutTheNintendoLogoIntoMemoryDuringTheThirdStage() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilBIOSIsLoaded(gameBoy);
+    tickUntilSecondBiosStageFinished(gameBoy);
+    tickUntilPCEqualsTo(gameBoy, 0x34);
 
     assertNintendoLogoIsLoadedIntoMemory();
   }
@@ -212,8 +212,8 @@ public class GameBoyBIOSTest {
     }
   }
 
-  private void tickUntilBIOSIsLoaded(GameBoy gameBoy) {
-    while (!mmu.isSystemReady()) {
+  private void tickUntilPCEqualsTo(GameBoy gameBoy, int pcValue) {
+    while (z80.getProgramCounter() != pcValue) {
       gameBoy.tick();
     }
   }
@@ -224,8 +224,9 @@ public class GameBoyBIOSTest {
             0x0c, 0x00, 0x0d, 0x00, 0x08, 0x11, 0x1f, 0x88, 0x89, 0x00, 0x0e, 0xdc, 0xcc, 0x6e,
             0xe6, 0xdd, 0xdd, 0xd9, 0x99, 0xbb, 0xbb, 0x67, 0x63, 0x6e, 0x0e, 0xec, 0xcc, 0xdd,
             0xdc, 0x99, 0x9f, 0xbb, 0xb9, 0x33, 0x3e);
-    for (int i = 0x104; i < 0x133; i++) {
-      assertEquals(nintendoLogo, mmu.readByte(i) & 0xFF);
+
+    for (int i = 0x104, j = 0; i < 0x133; i++, j++) {
+      assertEquals((int) nintendoLogo.get(j), mmu.readByte(i) & 0xFF);
     }
   }
 }
