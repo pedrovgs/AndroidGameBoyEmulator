@@ -21,14 +21,14 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitPortAddressImmPCIntoA extends Instruction {
+class Load8BitPortAddressImmPCIntoA extends Instruction {
 
   Load8BitPortAddressImmPCIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
   @Override public void execute() {
-    int address = (z80.getProgramCounter() & 0XFF) + 0xFF00;
+    int address = (mmu.readByte(z80.getProgramCounter()) & 0XFF) + 0xFF00;
     byte memoryValue = mmu.readByte(address);
     z80.set8BitRegisterValue(Register.A, memoryValue);
     z80.incrementProgramCounter();
