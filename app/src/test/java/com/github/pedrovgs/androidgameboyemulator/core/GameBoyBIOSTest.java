@@ -103,7 +103,7 @@ public class GameBoyBIOSTest {
     tickGameBoy(gameBoy, 2);
 
     assertEquals(0xFC, z80.get8BitRegisterValue(Register.A) & 0xFF);
-    assertEquals(0xFC, mmu.readByte(0xFF20) & 0xFF);
+    assertEquals(0xFC, mmu.readByte(0xFF47) & 0xFF);
   }
 
   @Test public void shouldPointDERegisterToTheNintendoLogoDuringTheThirdStage() throws IOException {
