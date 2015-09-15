@@ -33,19 +33,23 @@ public class GPU implements MMUListener {
   private static final int SCREEN_PIXELS_RGBA = 92160;
   private static final byte PIXEL_CHANNEL_INITIAL_VALUE = (byte) 0xFF;
   private static final int SCREEN_WIDTH = 144;
-  private static final int NUMBER_OF_TILES = 384;
+  private static final int NUMBER_OF_TILES = 512;
   private static final int PIXELS_PER_TILE = 8;
-  private static final int BASE_ADDRESS_MASK = 0x1FFE;
+  private static final int BASE_ADDRESS_MASK = 0x1FFF;
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
   private static final int BG_MAP_BIT_INDEX = 3;
   private static final int BG_TILE_BIT_INDEX = 4;
   private static final int SCROLL_Y_ADDRESS = 0xFF42;
   private static final int SCROLL_X_ADDRESS = 0xFF43;
   private static final int CURRENT_LINE_ADDRESS = 0xFF44;
+  private static final TileColor[] OFF_COLOR_TILE_ROW = new TileColor[] {
+      TileColor.OFF, TileColor.OFF, TileColor.OFF, TileColor.OFF, TileColor.OFF, TileColor.OFF,
+      TileColor.OFF, TileColor.OFF
+  };
 
   public final MMU mmu;
   private final byte[] screenData;
-  private final TileColor[][] tiles;
+  private final TileColor[][][] tiles;
 
   private GPUMode currentGPUMode;
   private int currentModeClock;
@@ -55,7 +59,7 @@ public class GPU implements MMUListener {
   public GPU(MMU mmu) {
     this.mmu = mmu;
     this.screenData = new byte[SCREEN_PIXELS_RGBA];
-    this.tiles = new TileColor[NUMBER_OF_TILES][PIXELS_PER_TILE];
+    this.tiles = new TileColor[NUMBER_OF_TILES][PIXELS_PER_TILE][PIXELS_PER_TILE];
     reset();
   }
 
@@ -71,7 +75,7 @@ public class GPU implements MMUListener {
     }
     for (int i = 0; i < NUMBER_OF_TILES; i++) {
       for (int j = 0; j < PIXELS_PER_TILE; j++) {
-        tiles[i][j] = TileColor.OFF;
+        tiles[i][j] = OFF_COLOR_TILE_ROW;
       }
     }
   }
@@ -139,19 +143,22 @@ public class GPU implements MMUListener {
     }
   }
 
-  @Override public void onVRAMUpdated(int address) {
+  @Override public void onVRAMUpdated(int address, byte value) {
     address &= BASE_ADDRESS_MASK;
+    if ((address & 1) == 0x1) {
+      address--;
+    }
     int tile = (address >> 4) & 511;
     int y = (address >> 1) & 7;
 
     int bitIndex;
     for (int x = 0; x < 8; x++) {
       bitIndex = 1 << (7 - x);
-      int firstValue = (mmu.readByte(address) & bitIndex) != 0 ? 1 : 0;
-      int secondValue = (mmu.readByte(address + 1) & bitIndex) != 0 ? 2 : 0;
+      int firstValue = ((mmu.readByte(address) & 0xFF) & bitIndex) != 0 ? 1 : 0;
+      int secondValue = ((mmu.readByte(address + 1) & 0xFF) & bitIndex) != 0 ? 2 : 0;
       int ordinalTileColor = firstValue + secondValue;
       TileColor tileColor = TileColor.values()[ordinalTileColor];
-      tiles[y][x] = tileColor;
+      tiles[tile][y][x] = tileColor;
     }
   }
 
@@ -173,7 +180,7 @@ public class GPU implements MMUListener {
       tile += 256;
     }
     for (int i = 0; i < 160; i++) {
-      TileColor tileColor = tiles[tile][y];
+      TileColor tileColor = tiles[tile][y][x];
       screenData[canvasOffset + 0] = (byte) tileColor.getRed();
       screenData[canvasOffset + 1] = (byte) tileColor.getGreen();
       screenData[canvasOffset + 2] = (byte) tileColor.getBlue();
