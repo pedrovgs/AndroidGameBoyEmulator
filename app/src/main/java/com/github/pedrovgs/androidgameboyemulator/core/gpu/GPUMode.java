@@ -19,7 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 enum GPUMode {
 
-  HORIZONTAL_BLANK(204), VERTICAL_BLANK(456), SCANLINE_VRAM(80), SCANLINE_OAM(172);
+  HORIZONTAL_BLANK(204), VERTICAL_BLANK(456), SCANLINE_OAM(80), SCANLINE_VRAM(172);
 
   private final int clocks;
 
