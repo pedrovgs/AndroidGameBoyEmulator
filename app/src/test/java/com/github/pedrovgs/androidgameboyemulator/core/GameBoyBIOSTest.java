@@ -187,12 +187,12 @@ public class GameBoyBIOSTest {
       throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilBIOSLoaded(gameBoy);
+    tickUntilChecksumFinished(gameBoy);
 
-    assertEquals(0, mmu.readByte(0x014D) & 0xFF);
+    assertEquals(0, z80.get8BitRegisterValue(Register.A));
   }
 
-  @Test public void shouldIndicateTheBIOSHasBeenLoaded() throws IOException {
+  @Test public void shouldIndicateTheBIOSHasBeenLoadedUnlockingTheRomMapping() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilBIOSLoaded(gameBoy);
@@ -288,5 +288,9 @@ public class GameBoyBIOSTest {
 
   private void tickUntilBIOSLoaded(GameBoy gameBoy) {
     tickUntilPCEqualsTo(gameBoy, 0x100);
+  }
+
+  private void tickUntilChecksumFinished(GameBoy gameBoy) {
+    tickUntilPCEqualsTo(gameBoy, 0xFA);
   }
 }
