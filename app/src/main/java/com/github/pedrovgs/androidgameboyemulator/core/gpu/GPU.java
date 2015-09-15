@@ -156,10 +156,10 @@ public class GPU implements MMUListener {
 
   private TileColor getTileColorByTileId(int tileId, int x, int y) {
     int tileAddress = (tileId * 16) + getTileSetAddress();
-    tileAddress += (y / 8) * 2;
-    int bitIndex = 1 << (7 - x);
-    int firstValue = ((mmu.readByte(tileAddress) & 0xFF) & bitIndex) != 0 ? 1 : 0;
-    int secondValue = ((mmu.readByte(tileAddress + 1) & 0xFF) & bitIndex) != 0 ? 2 : 0;
+    tileAddress += (y % 8) * 2;
+    x = (7 - x) % 8;
+    int firstValue = ((mmu.readByte(tileAddress) & 0xFF) >> x & 1) != 0 ? 1 : 0;
+    int secondValue = ((mmu.readByte(tileAddress + 1) & 0xFF) >> x & 1) != 0 ? 2 : 0;
     int ordinalTileColor = firstValue + secondValue;
     TileColor tileColor = TileColor.values()[ordinalTileColor];
     return tileColor;

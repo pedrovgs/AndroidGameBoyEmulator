@@ -39,7 +39,7 @@ public class GPUTest extends UnitTest {
     assertAllPixelsChannelAre((byte) 0xFF, gpu);
   }
 
-  @Test public void shouldReturnBlackColorsAtPosition00() {
+  @Test public void shouldReturnGrayAtTheFirstPosition() {
     GPU gpu = givenAGPU();
 
     mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
@@ -51,6 +51,35 @@ public class GPUTest extends UnitTest {
     assertEquals(192, gpu.getRedChannelAtPixel(0, 0) & 0xFF);
     assertEquals(192, gpu.getGreenChannelAtPixel(0, 0) & 0xFF);
     assertEquals(192, gpu.getBlueChannelAtPixel(0, 0) & 0xFF);
+  }
+
+  @Test public void shouldReturnBlackAtTheFirstPosition() {
+    GPU gpu = givenAGPU();
+
+    mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
+    int tileAddress = TILE_SET_1_BASE_ADDRESS + (ANY_TILE_ID * 16);
+    mmu.writeByte(tileAddress, (byte) 0x7F);
+    mmu.writeByte(tileAddress + 1, (byte) 0x00);
+
+    assertEquals(255, gpu.getAlphaChannelAtPixel(0, 0) & 0xFF);
+    assertEquals(255, gpu.getRedChannelAtPixel(0, 0) & 0xFF);
+    assertEquals(255, gpu.getGreenChannelAtPixel(0, 0) & 0xFF);
+    assertEquals(255, gpu.getBlueChannelAtPixel(0, 0) & 0xFF);
+  }
+
+  @Test public void shouldReturnGrayAtTheLastPosition() {
+    GPU gpu = givenAGPU();
+
+    int lastPositionAddress = MAP_1_BASE_ADDRESS + 359;
+    mmu.writeByte(lastPositionAddress, ANY_TILE_ID);
+    int tileAddress = TILE_SET_1_BASE_ADDRESS + (ANY_TILE_ID * 16) + (143 % 8) * 2;
+    mmu.writeByte(tileAddress, (byte) 0xFF);
+    mmu.writeByte(tileAddress + 1, (byte) 0x00);
+
+    assertEquals(255, gpu.getAlphaChannelAtPixel(159, 143) & 0xFF);
+    assertEquals(192, gpu.getRedChannelAtPixel(159, 143) & 0xFF);
+    assertEquals(192, gpu.getGreenChannelAtPixel(159, 143) & 0xFF);
+    assertEquals(192, gpu.getBlueChannelAtPixel(159, 143) & 0xFF);
   }
 
   private void assertAllPixelsChannelAre(byte channelValue, GPU gpu) {
