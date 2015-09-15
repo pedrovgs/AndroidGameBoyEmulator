@@ -27,11 +27,30 @@ public class GPUTest extends UnitTest {
 
   private static final int SCREEN_HEIGHT = 144;
   private static final int SCREEN_WIDTH = 160;
+  private static final byte ANY_TILE_ID = 11;
+  private static final int TILE_SET_1_BASE_ADDRESS = 0x8000;
+  private static final int MAP_1_BASE_ADDRESS = 0x9C00;
+
+  private MMU mmu;
 
   @Test public void shouldInitializeGPUWithEveryPixelConfiguredTo255InEveryChannel() {
     GPU gpu = givenAGPU();
 
     assertAllPixelsChannelAre((byte) 0xFF, gpu);
+  }
+
+  @Test public void shouldReturnBlackColorsAtPosition00() {
+    GPU gpu = givenAGPU();
+
+    mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
+    int tileAddress = TILE_SET_1_BASE_ADDRESS + (ANY_TILE_ID * 16);
+    mmu.writeByte(tileAddress, (byte) 0xFF);
+    mmu.writeByte(tileAddress + 1, (byte) 0x00);
+
+    assertEquals(255, gpu.getAlphaChannelAtPixel(0, 0) & 0xFF);
+    assertEquals(192, gpu.getRedChannelAtPixel(0, 0) & 0xFF);
+    assertEquals(192, gpu.getGreenChannelAtPixel(0, 0) & 0xFF);
+    assertEquals(192, gpu.getBlueChannelAtPixel(0, 0) & 0xFF);
   }
 
   private void assertAllPixelsChannelAre(byte channelValue, GPU gpu) {
@@ -46,7 +65,7 @@ public class GPUTest extends UnitTest {
   }
 
   private GPU givenAGPU() {
-    MMU mmu = new MMU();
+    mmu = new MMU();
     return new GPU(mmu);
   }
 }

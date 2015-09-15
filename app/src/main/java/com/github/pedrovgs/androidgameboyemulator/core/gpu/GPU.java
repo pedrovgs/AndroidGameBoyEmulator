@@ -35,11 +35,13 @@ public class GPU implements MMUListener {
   private static final int SCROLL_Y_ADDRESS = 0xFF42;
   private static final int SCROLL_X_ADDRESS = 0xFF43;
   private static final int CURRENT_LINE_ADDRESS = 0xFF44;
-  private static final int MAP1_ADDRESS = 0x9800;
-  private static final int MAP2_ADDRESS = 0x9C00;
+  private static final int MAP_0_ADDRESS = 0x9800;
+  private static final int MAP_1_ADDRESS = 0x9C00;
   private static final int SCREEN_WIDTH_IN_PX = 160;
   private static final int SCREEN_WIDTH_IN_TILES = 20;
   private static final int TILE_SIZE_IN_PX = 8;
+  private static final int TILE_SET_0_ADDRESS = 0x8800;
+  private static final int TILE_SET_1_ADDRESS = 0x8000;
 
   public final MMU mmu;
 
@@ -121,7 +123,7 @@ public class GPU implements MMUListener {
   }
 
   @Override public void onVRAMUpdated(int address, byte value) {
-    notifyListener();
+    //notifyListener();
   }
 
   private TileColor getTileColor(int x, int y) {
@@ -141,11 +143,19 @@ public class GPU implements MMUListener {
   }
 
   private int getMapAddress() {
-    return getBackgroundMap() == 1 ? MAP1_ADDRESS : MAP2_ADDRESS;
+    return isUsingMap0() ? MAP_0_ADDRESS : MAP_1_ADDRESS;
+  }
+
+  private int getTileSetAddress() {
+    return isUsingMap0() ? TILE_SET_0_ADDRESS : TILE_SET_1_ADDRESS;
+  }
+
+  private boolean isUsingMap0() {
+    return getBackgroundMap() == 1;
   }
 
   private TileColor getTileColorByTileId(int tileId, int x, int y) {
-    int tileAddress = (tileId * 16) + getMapAddress();
+    int tileAddress = (tileId * 16) + getTileSetAddress();
     tileAddress += (y / 8) * 2;
     int bitIndex = 1 << (7 - x);
     int firstValue = ((mmu.readByte(tileAddress) & 0xFF) & bitIndex) != 0 ? 1 : 0;
