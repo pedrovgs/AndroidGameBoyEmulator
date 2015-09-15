@@ -22,6 +22,12 @@ public class GameBoyBIOSTest {
   private static final int INITIALIZE_AUDIO_STAGE_TICKS = 11;
   private static final int THIRD_STAGE_FIRST_PC_VALUE = 29;
   private static final String ANY_GAME_URI = "AnyGame.gb";
+  private static final int VRAM_BOTTOM_ADDRESS = 0X8000;
+  private static final int COLOR_PALETTE_ADDRESS = 0xFF47;
+  private static final int NINTENDO_LOGO_ADDRESS = 0x104;
+  private static final int UNLOCK_ROM_ADDRESS = 0xFF50;
+  private static final int VRAM_TOP_ADDRESS = 0x9FFF;
+  private static final int NINTENDO_LOGO_END_ADDRESS = 0x133;
 
   private GBZ80 z80;
   private MMU mmu;
@@ -49,7 +55,7 @@ public class GameBoyBIOSTest {
 
     tickUntilFirstBiosStageFinished(gameBoy);
 
-    assertEquals(0X8000 - 1, z80.get16BitRegisterValue(Register.HL));
+    assertEquals(VRAM_BOTTOM_ADDRESS - 1, z80.get16BitRegisterValue(Register.HL));
   }
 
   @Test public void shouldFinishFirstStageWithTheNextStageProgramCounter() throws IOException {
@@ -103,7 +109,7 @@ public class GameBoyBIOSTest {
     tickGameBoy(gameBoy, 2);
 
     assertEquals(0xFC, z80.get8BitRegisterValue(Register.A) & 0xFF);
-    assertEquals(0xFC, mmu.readByte(0xFF47) & 0xFF);
+    assertEquals(0xFC, mmu.readByte(COLOR_PALETTE_ADDRESS) & 0xFF);
   }
 
   @Test public void shouldPointDERegisterToTheNintendoLogoDuringTheThirdStage() throws IOException {
@@ -112,7 +118,7 @@ public class GameBoyBIOSTest {
     tickUntilSecondBiosStageFinished(gameBoy);
     tickGameBoy(gameBoy, 3);
 
-    assertEquals(0x104, z80.get16BitRegisterValue(Register.DE));
+    assertEquals(NINTENDO_LOGO_ADDRESS, z80.get16BitRegisterValue(Register.DE));
   }
 
   @Test public void shouldPointHLRegisterToAPortionOfTheVRAMDuringTheThirdStage()
@@ -197,7 +203,7 @@ public class GameBoyBIOSTest {
 
     tickUntilBIOSLoaded(gameBoy);
 
-    assertEquals(1, mmu.readByte(0xFF50) & 0xFF);
+    assertEquals(1, mmu.readByte(UNLOCK_ROM_ADDRESS) & 0xFF);
   }
 
   @Test public void shouldFinishBIOSExecution() throws IOException {
@@ -242,7 +248,7 @@ public class GameBoyBIOSTest {
   }
 
   private void assertVideoMemoryIsInitializedToZero() {
-    for (int address = 0x9FFF; address >= 0x8000; address--) {
+    for (int address = VRAM_TOP_ADDRESS; address >= VRAM_BOTTOM_ADDRESS; address--) {
       byte value = mmu.readByte(address);
       assertEquals("Address = " + address + " not initialized to 0", 0, value);
     }
@@ -268,7 +274,7 @@ public class GameBoyBIOSTest {
             0xe6, 0xdd, 0xdd, 0xd9, 0x99, 0xbb, 0xbb, 0x67, 0x63, 0x6e, 0x0e, 0xec, 0xcc, 0xdd,
             0xdc, 0x99, 0x9f, 0xbb, 0xb9, 0x33, 0x3e);
 
-    for (int i = 0x104, j = 0; i < 0x133; i++, j++) {
+    for (int i = NINTENDO_LOGO_ADDRESS, j = 0; i < NINTENDO_LOGO_END_ADDRESS; i++, j++) {
       assertEquals((int) nintendoLogo.get(j), mmu.readByte(i) & 0xFF);
     }
   }
