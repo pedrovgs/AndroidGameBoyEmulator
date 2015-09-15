@@ -51,7 +51,7 @@ public class Load8BitRegisterAIntoPortAddressImmPCTest extends InstructionTest {
 
     instruction.execute();
 
-    int expectedAddress = (ANY_16BIT_REGISTER_VALUE & 0xFF) + 0xFF00;
+    int expectedAddress = (mmu.readByte(ANY_16BIT_REGISTER_VALUE) & 0xFF) + 0xFF00;
     verify(mmu).writeByte(expectedAddress, ANY_8BIT_REGISTER_VALUE);
   }
 }
