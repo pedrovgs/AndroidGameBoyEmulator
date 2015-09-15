@@ -29,27 +29,19 @@ import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.VERTIC
 public class GPU implements MMUListener {
 
   private static final String LOGTAG = "GPU";
-
-  private static final int SCREEN_PIXELS_RGBA = 92160;
-  private static final byte PIXEL_CHANNEL_INITIAL_VALUE = (byte) 0xFF;
-  private static final int SCREEN_WIDTH = 144;
-  private static final int NUMBER_OF_TILES = 512;
-  private static final int PIXELS_PER_TILE = 8;
-  private static final int BASE_ADDRESS_MASK = 0x1FFF;
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
   private static final int BG_MAP_BIT_INDEX = 3;
   private static final int BG_TILE_BIT_INDEX = 4;
   private static final int SCROLL_Y_ADDRESS = 0xFF42;
   private static final int SCROLL_X_ADDRESS = 0xFF43;
   private static final int CURRENT_LINE_ADDRESS = 0xFF44;
-  private static final TileColor[] OFF_COLOR_TILE_ROW = new TileColor[] {
-      TileColor.OFF, TileColor.OFF, TileColor.OFF, TileColor.OFF, TileColor.OFF, TileColor.OFF,
-      TileColor.OFF, TileColor.OFF
-  };
+  private static final int MAP1_ADDRESS = 0x9800;
+  private static final int MAP2_ADDRESS = 0x9C00;
+  private static final int SCREEN_WIDTH_IN_PX = 160;
+  private static final int SCREEN_WIDTH_IN_TILES = 20;
+  private static final int TILE_SIZE_IN_PX = 8;
 
   public final MMU mmu;
-  private final byte[] screenData;
-  private final TileColor[][][] tiles;
 
   private GPUMode currentGPUMode;
   private int currentModeClock;
@@ -58,8 +50,6 @@ public class GPU implements MMUListener {
 
   public GPU(MMU mmu) {
     this.mmu = mmu;
-    this.screenData = new byte[SCREEN_PIXELS_RGBA];
-    this.tiles = new TileColor[NUMBER_OF_TILES][PIXELS_PER_TILE][PIXELS_PER_TILE];
     reset();
   }
 
@@ -70,34 +60,22 @@ public class GPU implements MMUListener {
   public void reset() {
     this.currentGPUMode = HORIZONTAL_BLANK;
     this.currentModeClock = 0;
-    for (int i = 0; i < SCREEN_PIXELS_RGBA; i++) {
-      screenData[i] = PIXEL_CHANNEL_INITIAL_VALUE;
-    }
-    for (int i = 0; i < NUMBER_OF_TILES; i++) {
-      for (int j = 0; j < PIXELS_PER_TILE; j++) {
-        tiles[i][j] = OFF_COLOR_TILE_ROW;
-      }
-    }
   }
 
   public byte getRedChannelAtPixel(int x, int y) {
-    int pixelIndex = getPixelIndex(x, y);
-    return screenData[pixelIndex];
+    return (byte) getTileColor(x, y).getRed();
   }
 
   public byte getGreenChannelAtPixel(int x, int y) {
-    int pixelIndex = getPixelIndex(x, y);
-    return screenData[pixelIndex + 1];
+    return (byte) getTileColor(x, y).getGreen();
   }
 
   public byte getBlueChannelAtPixel(int x, int y) {
-    int pixelIndex = getPixelIndex(x, y);
-    return screenData[pixelIndex + 2];
+    return (byte) getTileColor(x, y).getBlue();
   }
 
   public byte getAlphaChannelAtPixel(int x, int y) {
-    int pixelIndex = getPixelIndex(x, y);
-    return screenData[pixelIndex + 3];
+    return (byte) getTileColor(x, y).getAlpha();
   }
 
   public void tick(int cyclesElapsed) {
@@ -108,7 +86,7 @@ public class GPU implements MMUListener {
         if (currentModeClock >= HORIZONTAL_BLANK.getClocks()) {
           resetCurrentModeClock();
           incrementCurrentLine();
-          if (getCurrentLine() == SCREEN_WIDTH - 1) {
+          if (getCurrentLine() == SCREEN_WIDTH_IN_PX - 1) {
             setGPUMode(VERTICAL_BLANK);
             notifyListener();
           } else {
@@ -136,7 +114,6 @@ public class GPU implements MMUListener {
         if (currentModeClock >= SCANLINE_VRAM.getClocks()) {
           resetCurrentModeClock();
           setGPUMode(HORIZONTAL_BLANK);
-          scanLine();
         }
         break;
       default:
@@ -144,59 +121,43 @@ public class GPU implements MMUListener {
   }
 
   @Override public void onVRAMUpdated(int address, byte value) {
-    address &= BASE_ADDRESS_MASK;
-    if ((address & 1) == 0x1) {
-      address--;
-    }
-    int tile = (address >> 4) & 511;
-    int y = (address >> 1) & 7;
+    notifyListener();
+  }
 
-    int bitIndex;
-    for (int x = 0; x < 8; x++) {
-      bitIndex = 1 << (7 - x);
-      int firstValue = ((mmu.readByte(address) & 0xFF) & bitIndex) != 0 ? 1 : 0;
-      int secondValue = ((mmu.readByte(address + 1) & 0xFF) & bitIndex) != 0 ? 2 : 0;
-      int ordinalTileColor = firstValue + secondValue;
-      TileColor tileColor = TileColor.values()[ordinalTileColor];
-      tiles[tile][y][x] = tileColor;
-    }
+  private TileColor getTileColor(int x, int y) {
+    int scrolledX = x + getScrollX();
+    int scrolledY = y + getScrollY();
+    int tileId = getTileId(scrolledX, scrolledY);
+    TileColor tileColor = getTileColorByTileId(tileId, x, y);
+    return tileColor;
+  }
+
+  private int getTileId(int x, int y) {
+    int tileIndexX = x / TILE_SIZE_IN_PX;
+    int tileIndexY = y / TILE_SIZE_IN_PX;
+    int mapAddress = getMapAddress();
+    mapAddress += tileIndexX + (tileIndexY * SCREEN_WIDTH_IN_TILES);
+    return mmu.readByte(mapAddress) & 0xFF;
+  }
+
+  private int getMapAddress() {
+    return getBackgroundMap() == 1 ? MAP1_ADDRESS : MAP2_ADDRESS;
+  }
+
+  private TileColor getTileColorByTileId(int tileId, int x, int y) {
+    int tileAddress = (tileId * 16) + getMapAddress();
+    tileAddress += (y / 8) * 2;
+    int bitIndex = 1 << (7 - x);
+    int firstValue = ((mmu.readByte(tileAddress) & 0xFF) & bitIndex) != 0 ? 1 : 0;
+    int secondValue = ((mmu.readByte(tileAddress + 1) & 0xFF) & bitIndex) != 0 ? 2 : 0;
+    int ordinalTileColor = firstValue + secondValue;
+    TileColor tileColor = TileColor.values()[ordinalTileColor];
+    return tileColor;
   }
 
   private void setGPUMode(GPUMode currentGPUMode) {
     Log.d(LOGTAG, "GPU mode changed to = " + currentGPUMode);
     this.currentGPUMode = currentGPUMode;
-  }
-
-  private void scanLine() {
-    int mapOffset = getBackgroundMap() == 1 ? 0x1C00 : 0x1800;
-    mapOffset += ((getCurrentLine() + getScrollY()) & 255) >> 3;
-    int lineOffset = (getScrollX() >> 3);
-    int y = (getCurrentLine() + getScrollY()) & 7;
-    int x = getScrollX() & 7;
-    int canvasOffset = getCurrentLine() * 160 * 4;
-
-    int tile = mmu.readByte(mapOffset + lineOffset) & 0xFF;
-    if (getBackgroundTile() == 1 && tile < 128) {
-      tile += 256;
-    }
-    for (int i = 0; i < 160; i++) {
-      TileColor tileColor = tiles[tile][y][x];
-      screenData[canvasOffset + 0] = (byte) tileColor.getRed();
-      screenData[canvasOffset + 1] = (byte) tileColor.getGreen();
-      screenData[canvasOffset + 2] = (byte) tileColor.getBlue();
-      screenData[canvasOffset + 3] = (byte) tileColor.getAlpha();
-      canvasOffset += 4;
-
-      x++;
-      if (x == 8) {
-        x = 0;
-        lineOffset = (lineOffset + 1) & 31;
-        tile = mmu.readByte(mapOffset + lineOffset) & 0xFF;
-        if (getBackgroundTile() == 1 && tile < 128) {
-          tile += 256;
-        }
-      }
-    }
   }
 
   private void incrementCurrentLine() {
@@ -232,10 +193,6 @@ public class GPU implements MMUListener {
     if (listener != null) {
       listener.onGPUUpdated(this);
     }
-  }
-
-  private int getPixelIndex(int x, int y) {
-    return y * 160 + x;
   }
 
   private void resetCurrentModeClock() {

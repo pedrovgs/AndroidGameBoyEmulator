@@ -31,6 +31,7 @@ public class GameBoyBIOSTest {
 
   private GBZ80 z80;
   private MMU mmu;
+  private GPU gpu;
 
   @Test public void shouldInitializeStackPointerToTheDefaultValueInTheFirstTick()
       throws IOException {
@@ -187,6 +188,8 @@ public class GameBoyBIOSTest {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilFifthStageFinished(gameBoy);
+
+    gpu.printTiles();
   }
 
   @Test public void shouldExecuteTheCheckRoutineSuccessfullyDuringTheSixthStage()
@@ -217,7 +220,7 @@ public class GameBoyBIOSTest {
   private GameBoy givenAGameBoy() throws IOException {
     z80 = new GBZ80();
     mmu = new MMU();
-    GPU gpu = new GPU(mmu);
+    gpu = new GPU(mmu);
     GameLoader gameLoader = new GameLoader(new FakeGameReader());
     GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader);
     gameBoy.loadGame(ANY_GAME_URI);
