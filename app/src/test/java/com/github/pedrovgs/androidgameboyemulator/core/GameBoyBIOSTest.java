@@ -188,8 +188,6 @@ public class GameBoyBIOSTest {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilFifthStageFinished(gameBoy);
-
-    gpu.printTiles();
   }
 
   @Test public void shouldExecuteTheCheckRoutineSuccessfullyDuringTheSixthStage()
