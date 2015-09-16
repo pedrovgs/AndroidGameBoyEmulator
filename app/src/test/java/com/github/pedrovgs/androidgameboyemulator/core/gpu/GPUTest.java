@@ -28,7 +28,7 @@ public class GPUTest extends UnitTest {
   private static final int SCREEN_HEIGHT = 144;
   private static final int SCREEN_WIDTH = 160;
   private static final byte ANY_TILE_ID = 11;
-  private static final int TILE_SET_1_BASE_ADDRESS = 0x8000;
+  private static final int TILE_SET_0_ADDRESS = 0x8800;
   private static final int MAP_1_BASE_ADDRESS = 0x9C00;
 
   private MMU mmu;
@@ -43,7 +43,7 @@ public class GPUTest extends UnitTest {
     GPU gpu = givenAGPU();
 
     mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
-    int tileAddress = TILE_SET_1_BASE_ADDRESS + (ANY_TILE_ID * 16);
+    int tileAddress = TILE_SET_0_ADDRESS + (ANY_TILE_ID * 16);
     mmu.writeByte(tileAddress, (byte) 0xFF);
     mmu.writeByte(tileAddress + 1, (byte) 0x00);
 
@@ -57,7 +57,7 @@ public class GPUTest extends UnitTest {
     GPU gpu = givenAGPU();
 
     mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
-    int tileAddress = TILE_SET_1_BASE_ADDRESS + (ANY_TILE_ID * 16);
+    int tileAddress = TILE_SET_0_ADDRESS + (ANY_TILE_ID * 16);
     mmu.writeByte(tileAddress, (byte) 0x7F);
     mmu.writeByte(tileAddress + 1, (byte) 0x00);
 
@@ -72,7 +72,7 @@ public class GPUTest extends UnitTest {
 
     int lastPositionAddress = MAP_1_BASE_ADDRESS + 359;
     mmu.writeByte(lastPositionAddress, ANY_TILE_ID);
-    int tileAddress = TILE_SET_1_BASE_ADDRESS + (ANY_TILE_ID * 16) + (143 % 8) * 2;
+    int tileAddress = TILE_SET_0_ADDRESS + (ANY_TILE_ID * 16) + (143 % 8) * 2;
     mmu.writeByte(tileAddress, (byte) 0xFF);
     mmu.writeByte(tileAddress + 1, (byte) 0x00);
 
