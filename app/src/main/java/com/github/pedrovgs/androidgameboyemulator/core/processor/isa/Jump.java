@@ -38,7 +38,7 @@ public class Jump extends Instruction {
     z80.incrementProgramCounterTwice();
     if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
       z80.setProgramCounter(n);
-      if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
+      if (flag != JUMP && condition != JUMP) {
         z80.setLastInstructionExecutionTime(4);
       }
     }

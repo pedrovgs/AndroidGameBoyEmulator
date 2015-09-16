@@ -31,13 +31,8 @@ public class Push16BitRegister extends Instruction {
   }
 
   @Override public void execute() {
-    int value = z80.get16BitRegisterValue(sourceRegister);
-    z80.decrementStackPointer();
-    byte firstPart = (byte) ((value >> 8) & 0xFF);
-    mmu.writeByte(z80.getStackPointer(), firstPart);
-    z80.decrementStackPointer();
-    byte secondPart = (byte) (value & 0xFF);
-    mmu.writeByte(z80.getStackPointer(), secondPart);
+    int registerValue = z80.get16BitRegisterValue(sourceRegister);
+    pushTwice(registerValue);
     z80.setLastInstructionExecutionTime(4);
   }
 }

@@ -31,11 +31,13 @@ public class Pop16BitRegister extends Instruction {
   }
 
   @Override public void execute() {
-    int registerValue = mmu.readByte(z80.getStackPointer()) & 0xFF;
-    z80.incrementStackPointer();
-    registerValue |= ((mmu.readByte(z80.getStackPointer()) & 0xFF) << 8);
-    z80.incrementStackPointer();
-    z80.set16BitRegisterValue(destinyRegister, registerValue);
+    if (destinyRegister == Register.AF) {
+      int registerValue = popTwice();
+      z80.set16BitRegisterValue(destinyRegister, registerValue & 0xFF00);
+    } else {
+      int registerValue = popTwice();
+      z80.set16BitRegisterValue(destinyRegister, registerValue);
+    }
     z80.setLastInstructionExecutionTime(3);
   }
 }

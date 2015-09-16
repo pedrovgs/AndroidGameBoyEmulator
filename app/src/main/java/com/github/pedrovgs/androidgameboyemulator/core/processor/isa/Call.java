@@ -39,7 +39,7 @@ public class Call extends Instruction {
     if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
       pushTwice(z80.getProgramCounter());
       z80.setProgramCounter(value);
-      if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
+      if (flag != JUMP && condition != JUMP) {
         z80.setLastInstructionExecutionTime(6);
       }
     }

@@ -19,8 +19,6 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor;
 
 public class GBZ80 {
 
-  public static final int JUMP = 0;
-
   private static final int MAX_PC_VALUE = 65535;
   private static final int INITIAL_REGISTER_VALUE = 0x0;
   private static final int NUMBER_OF_8BIT_REGISTERS = 8;

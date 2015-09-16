@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public abstract class RotateLeft8Bit extends Instruction {
+abstract class RotateLeft8Bit extends Instruction {
 
   RotateLeft8Bit(GBZ80 z80) {
     super(z80);
@@ -31,12 +31,12 @@ public abstract class RotateLeft8Bit extends Instruction {
   }
 
   @Override public void execute() {
-    byte registerAValue = loadByte();
-    registerAValue = (byte) (registerAValue << 1);
+    byte registerValue = loadByte();
+    registerValue = (byte) (registerValue << 1);
     if (z80.isFlagCYEnabled()) {
-      registerAValue |= 0x1;
+      registerValue |= 0x1;
     }
-    storeValue(registerAValue);
+    storeValue(registerValue);
     z80.disableFlagH();
     z80.disableFlagN();
     z80.disableFlagZ();

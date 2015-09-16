@@ -39,7 +39,7 @@ public class JumpR extends Instruction {
     if ((z80.get8BitRegisterValue(Register.F) & flag) == condition) {
       int newProgramCounterValue = z80.getProgramCounter() + value;
       z80.setProgramCounter(newProgramCounterValue);
-      if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
+      if (flag != JUMP && condition != JUMP) {
         z80.setLastInstructionExecutionTime(3);
       }
     }
