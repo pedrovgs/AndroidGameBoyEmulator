@@ -23,6 +23,7 @@ import java.io.IOException;
 public class GameLoader {
 
   private static final int ROM_START_MEMORY_ADDRESS = 0x0;
+  private static final int ROM_END_MEMORY_ADDRESS = 0xFFFF;
 
   private final GameReader gameReader;
 
@@ -34,8 +35,9 @@ public class GameLoader {
 
     byte[] gameInBytes = gameReader.readGame(uri);
     int address = ROM_START_MEMORY_ADDRESS;
-    for (int i = 0; i < gameInBytes.length; i++) {
-      mmu.writeByte(address, gameInBytes[i]);
+    for (int i = 0; i < ROM_END_MEMORY_ADDRESS; i++) {
+      byte gameInByte = gameInBytes[i];
+      mmu.writeByte(address, gameInByte);
       address++;
     }
   }
