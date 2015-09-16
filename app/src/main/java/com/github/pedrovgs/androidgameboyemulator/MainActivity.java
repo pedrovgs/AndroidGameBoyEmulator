@@ -58,6 +58,8 @@ public class MainActivity extends Activity {
           }
           fillMemoryWithTrash(mmu);
           lcd.onGPUUpdated(gpu);
+          byte color = gpu.getBlueChannelAtPixel(6, 6);
+          color = color;
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
@@ -72,6 +74,7 @@ public class MainActivity extends Activity {
   }
 
   private void fillMemoryWithTrash(MMU mmu) {
+    //Configure tile0 in tile set 1
     mmu.writeByte(0x8000, (byte) 0x3c);
     mmu.writeByte(0x8001, (byte) 0x3c);
     mmu.writeByte(0x8002, (byte) 0x42);
@@ -91,5 +94,8 @@ public class MainActivity extends Activity {
     for (int i = 0x9c00; i < 0x9fff; i++) {
       mmu.writeByte(i, (byte) 0);
     }
+    //Scroll x & y = 0
+    mmu.writeByte(0xff42, (byte) 0);
+    mmu.writeByte(0xff43, (byte) 0);
   }
 }

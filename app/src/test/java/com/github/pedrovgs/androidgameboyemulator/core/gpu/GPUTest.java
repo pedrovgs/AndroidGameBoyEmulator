@@ -22,14 +22,12 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GPUTest extends UnitTest {
 
   private static final int SCREEN_HEIGHT = 144;
   private static final int SCREEN_WIDTH = 160;
-  private static final byte ANY_TILE_ID = 11;
-  private static final int TILE_SET_0_ADDRESS = 0x8800;
-  private static final int MAP_1_BASE_ADDRESS = 0x9C00;
 
   private MMU mmu;
 
@@ -39,47 +37,86 @@ public class GPUTest extends UnitTest {
     assertAllPixelsChannelAre((byte) 0xFF, gpu);
   }
 
-  @Test public void shouldReturnGrayAtTheFirstPosition() {
+  @Test public void shouldRenderTheCopyRightImageCloseToTheOrigin() {
     GPU gpu = givenAGPU();
+    configureTileZeroWithTheCopyrightTile();
+    configureMapToUseAlwaysTileZero();
 
-    mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
-    int tileAddress = TILE_SET_0_ADDRESS + (ANY_TILE_ID * 16);
-    mmu.writeByte(tileAddress, (byte) 0xFF);
-    mmu.writeByte(tileAddress + 1, (byte) 0x00);
+    assertPixelHasColor(gpu, 0, 0, false);
+    assertPixelHasColor(gpu, 1, 0, false);
+    assertPixelHasColor(gpu, 2, 0, true);
+    assertPixelHasColor(gpu, 3, 0, true);
+    assertPixelHasColor(gpu, 4, 0, true);
+    assertPixelHasColor(gpu, 5, 0, true);
+    assertPixelHasColor(gpu, 6, 0, false);
+    assertPixelHasColor(gpu, 7, 0, false);
 
-    assertEquals(255, gpu.getAlphaChannelAtPixel(0, 0) & 0xFF);
-    assertEquals(192, gpu.getRedChannelAtPixel(0, 0) & 0xFF);
-    assertEquals(192, gpu.getGreenChannelAtPixel(0, 0) & 0xFF);
-    assertEquals(192, gpu.getBlueChannelAtPixel(0, 0) & 0xFF);
+    assertPixelHasColor(gpu, 0, 6, false);
+    assertPixelHasColor(gpu, 1, 6, true);
+    assertPixelHasColor(gpu, 2, 6, false);
+    assertPixelHasColor(gpu, 3, 6, false);
+    assertPixelHasColor(gpu, 4, 6, false);
+    assertPixelHasColor(gpu, 5, 6, false);
+    assertPixelHasColor(gpu, 6, 6, true);
+    assertPixelHasColor(gpu, 7, 6, false);
   }
 
-  @Test public void shouldReturnBlackAtTheFirstPosition() {
+  @Test public void shouldRenderTheCopyRightImageFartherThanTheOrigin() {
     GPU gpu = givenAGPU();
+    configureTileZeroWithTheCopyrightTile();
+    configureMapToUseAlwaysTileZero();
 
-    mmu.writeByte(MAP_1_BASE_ADDRESS, ANY_TILE_ID);
-    int tileAddress = TILE_SET_0_ADDRESS + (ANY_TILE_ID * 16);
-    mmu.writeByte(tileAddress, (byte) 0x7F);
-    mmu.writeByte(tileAddress + 1, (byte) 0x00);
+    assertPixelHasColor(gpu, 8, 0, false);
+    assertPixelHasColor(gpu, 9, 0, false);
+    assertPixelHasColor(gpu, 10, 0, true);
+    assertPixelHasColor(gpu, 11, 0, true);
+    assertPixelHasColor(gpu, 12, 0, true);
+    assertPixelHasColor(gpu, 13, 0, true);
+    assertPixelHasColor(gpu, 14, 0, false);
+    assertPixelHasColor(gpu, 15, 0, false);
 
-    assertEquals(255, gpu.getAlphaChannelAtPixel(0, 0) & 0xFF);
-    assertEquals(255, gpu.getRedChannelAtPixel(0, 0) & 0xFF);
-    assertEquals(255, gpu.getGreenChannelAtPixel(0, 0) & 0xFF);
-    assertEquals(255, gpu.getBlueChannelAtPixel(0, 0) & 0xFF);
+    assertPixelHasColor(gpu, 8, 6, false);
+    assertPixelHasColor(gpu, 9, 6, true);
+    assertPixelHasColor(gpu, 10, 6, false);
+    assertPixelHasColor(gpu, 11, 6, false);
+    assertPixelHasColor(gpu, 12, 6, false);
+    assertPixelHasColor(gpu, 13, 6, false);
+    assertPixelHasColor(gpu, 14, 6, true);
+    assertPixelHasColor(gpu, 15, 6, false);
   }
 
-  @Test public void shouldReturnGrayAtTheLastPosition() {
-    GPU gpu = givenAGPU();
+  private void assertPixelHasColor(GPU gpu, int x, int y, boolean hasColor) {
+    int channel = gpu.getBlueChannelAtPixel(x, y) & 0xFF;
+    if (hasColor) {
+      assertEquals(0, channel);
+    } else {
+      assertFalse(channel == 0);
+    }
+  }
 
-    int lastPositionAddress = MAP_1_BASE_ADDRESS + 359;
-    mmu.writeByte(lastPositionAddress, ANY_TILE_ID);
-    int tileAddress = TILE_SET_0_ADDRESS + (ANY_TILE_ID * 16) + (143 % 8) * 2;
-    mmu.writeByte(tileAddress, (byte) 0xFF);
-    mmu.writeByte(tileAddress + 1, (byte) 0x00);
+  private void configureTileZeroWithTheCopyrightTile() {
+    mmu.writeByte(0x9000, (byte) 0x3c);
+    mmu.writeByte(0x9001, (byte) 0x3c);
+    mmu.writeByte(0x9002, (byte) 0x42);
+    mmu.writeByte(0x9003, (byte) 0x42);
+    mmu.writeByte(0x9004, (byte) 0xb9);
+    mmu.writeByte(0x9005, (byte) 0xb9);
+    mmu.writeByte(0x9006, (byte) 0xa5);
+    mmu.writeByte(0x9007, (byte) 0xa5);
+    mmu.writeByte(0x9008, (byte) 0xb9);
+    mmu.writeByte(0x9009, (byte) 0xb9);
+    mmu.writeByte(0x900A, (byte) 0xA2);
+    mmu.writeByte(0x900B, (byte) 0xA2);
+    mmu.writeByte(0x900C, (byte) 0x42);
+    mmu.writeByte(0x900D, (byte) 0x42);
+    mmu.writeByte(0x900E, (byte) 0x3c);
+    mmu.writeByte(0x900F, (byte) 0x3c);
+  }
 
-    assertEquals(255, gpu.getAlphaChannelAtPixel(159, 143) & 0xFF);
-    assertEquals(192, gpu.getRedChannelAtPixel(159, 143) & 0xFF);
-    assertEquals(192, gpu.getGreenChannelAtPixel(159, 143) & 0xFF);
-    assertEquals(192, gpu.getBlueChannelAtPixel(159, 143) & 0xFF);
+  private void configureMapToUseAlwaysTileZero() {
+    for (int i = 0x9800; i < 0x9bff; i++) {
+      mmu.writeByte(i, (byte) 0);
+    }
   }
 
   private void assertAllPixelsChannelAre(byte channelValue, GPU gpu) {
