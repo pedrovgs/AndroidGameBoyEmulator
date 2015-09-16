@@ -170,10 +170,6 @@ public class GameBoyBIOSTest {
     tickUntilThirdStageFinished(gameBoy);
 
     assertNintendoLogoIsLoadedIntoMemory();
-
-    dumpVRAMMemory();
-    System.out.println("\n\n\n\n\nSCREEN IN CHARS");
-    dumpGPUScreenMemory();
   }
 
   @Test public void shouldPutTheNintendoRLogoIntoMemoryDuringTheThirdStage() throws IOException {
@@ -203,7 +199,8 @@ public class GameBoyBIOSTest {
     assertEquals(0, z80.get8BitRegisterValue(Register.A));
   }
 
-  @Test public void shouldIndicateTheBIOSHasBeenLoadedUnlockingTheRomMapping() throws IOException {
+  @Test public void shouldIndicateTheBIOSHasBeenLoadedUnlockingTheRomMapping()
+      throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilBIOSLoaded(gameBoy);
@@ -303,6 +300,17 @@ public class GameBoyBIOSTest {
 
   private void tickUntilChecksumFinished(GameBoy gameBoy) {
     tickUntilPCEqualsTo(gameBoy, 0xFA);
+  }
+
+  private void dumpMemory() {
+    for (int i = 0; i < 0xFFFF; i++) {
+      int value = mmu.readByte(i) & 0xFF;
+      if (value != 0) {
+        String hexAddress = Integer.toHexString(i);
+        String hexValue = Integer.toHexString(value);
+        System.out.println(hexAddress + " --> " + hexValue);
+      }
+    }
   }
 
   private void dumpVRAMMemory() {

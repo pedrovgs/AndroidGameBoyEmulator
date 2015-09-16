@@ -53,7 +53,8 @@ public class GameLoaderTest extends UnitTest {
 
     gameLoader.load(ANY_GAME_URI, mmu);
 
-    assertEquals(0xF5, mmu.readByte(LAST_ROM_BYTE_ADDRESS) & 0xFF);
+    assertEquals(0x69, mmu.readByte(LAST_ROM_BYTE_ADDRESS - 10) & 0xFF);
+    assertEquals(0x00, mmu.readByte(LAST_ROM_BYTE_ADDRESS) & 0xFF);
   }
 
   private GameLoader givenAGameLoader(FakeGameReader fakeGameReader) {
