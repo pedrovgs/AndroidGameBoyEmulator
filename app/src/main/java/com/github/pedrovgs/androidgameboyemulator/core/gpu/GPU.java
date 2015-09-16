@@ -17,7 +17,6 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
-import android.util.Log;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMUListener;
 
@@ -28,7 +27,6 @@ import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.VERTIC
 
 public class GPU implements MMUListener {
 
-  private static final String LOGTAG = "GPU";
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
   private static final int BG_MAP_BIT_INDEX = 3;
   private static final int BG_TILE_BIT_INDEX = 4;
@@ -81,7 +79,6 @@ public class GPU implements MMUListener {
   }
 
   public void tick(int cyclesElapsed) {
-    Log.d(LOGTAG, "New tick with cyclesElapsed = " + cyclesElapsed);
     this.currentModeClock += cyclesElapsed;
     switch (currentGPUMode) {
       case HORIZONTAL_BLANK:
@@ -170,7 +167,6 @@ public class GPU implements MMUListener {
   }
 
   private void setGPUMode(GPUMode currentGPUMode) {
-    Log.d(LOGTAG, "GPU mode changed to = " + currentGPUMode);
     this.currentGPUMode = currentGPUMode;
   }
 

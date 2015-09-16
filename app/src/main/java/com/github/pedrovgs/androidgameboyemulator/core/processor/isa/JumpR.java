@@ -17,14 +17,11 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 
-import android.util.Log;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 public class JumpR extends Instruction {
-
-  private static final String LOGTAG = "JumpR";
 
   private final int condition;
   private final int flag;
@@ -45,8 +42,6 @@ public class JumpR extends Instruction {
       if (flag != GBZ80.JUMP && condition != GBZ80.JUMP) {
         z80.setLastInstructionExecutionTime(3);
       }
-    } else {
-      Log.d(LOGTAG, "Do not jump");
     }
     z80.setLastInstructionExecutionTime(2);
   }

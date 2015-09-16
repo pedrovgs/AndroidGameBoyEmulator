@@ -17,7 +17,6 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core;
 
-import android.util.Log;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
@@ -28,10 +27,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.isa.Instruction
 import java.io.IOException;
 
 public class GameBoy {
-
-  private static final String PC_LOGTAG = "ProgramCounter";
-  private static final String INSTRUCTION_LOGTAG = "Instruction";
-  private static final String TICK_LOGTAG = "TickCounter";
 
   private static final int BIOS_LIMIT = 0x0100;
   private static final int EXTENDED_OPERATION_CODE = 0xCB;
@@ -67,7 +62,6 @@ public class GameBoy {
 
   void tick() {
     int programCounter = z80.getProgramCounter();
-    Log.d(PC_LOGTAG, "Program Counter = " + programCounter);
     int instructionCode = mmu.readByte(programCounter) & 0xFF;
     z80.incrementProgramCounter();
     Instruction instruction;
@@ -75,12 +69,8 @@ public class GameBoy {
       int extendedInstructionCode = mmu.readByte(z80.getProgramCounter()) & 0xFF;
       z80.incrementProgramCounter();
       instruction = instructionsPool.getExtendedInstruction(extendedInstructionCode);
-      Log.d(INSTRUCTION_LOGTAG,
-          "Extended instruction fetched = " + instruction.getClass().getSimpleName());
     } else {
       instruction = instructionsPool.getNormalInstruction(instructionCode);
-      Log.d(INSTRUCTION_LOGTAG,
-          "Normal instruction fetched = " + instruction.getClass().getSimpleName());
     }
     instruction.execute();
     z80.adjustProgramCounter();
@@ -94,7 +84,6 @@ public class GameBoy {
   }
 
   private void incrementTickCounter() {
-    Log.d(TICK_LOGTAG, "Instruction executed number = " + tickCounter);
     tickCounter++;
   }
 
