@@ -37,6 +37,7 @@ public class LCD extends View implements GPUListener {
   private Paint paint;
   private Rect lcdSize;
   private Rect lcdScaledSize;
+  private boolean alreadyInvalidated;
 
   public LCD(Context context) {
     this(context, null);
@@ -63,6 +64,7 @@ public class LCD extends View implements GPUListener {
       canvas.save();
       canvas.drawBitmap(bitmap, lcdSize, lcdScaledSize, paint);
       canvas.restore();
+      alreadyInvalidated = false;
     }
   }
 
@@ -78,6 +80,13 @@ public class LCD extends View implements GPUListener {
         invalidate();
       }
     });
+  }
+
+  @Override public void invalidate() {
+      if (!alreadyInvalidated) {
+      alreadyInvalidated = true;
+      super.invalidate();
+    }
   }
 
   private void initializeLCD() {

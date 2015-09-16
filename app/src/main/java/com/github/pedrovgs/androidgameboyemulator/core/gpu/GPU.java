@@ -123,7 +123,7 @@ public class GPU implements MMUListener {
   }
 
   @Override public void onVRAMUpdated(int address, byte value) {
-    //notifyListener();
+    notifyListener();
   }
 
   private TileColor getTileColor(int x, int y) {
