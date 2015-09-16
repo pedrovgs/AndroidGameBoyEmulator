@@ -147,11 +147,15 @@ public class GPU implements MMUListener {
   }
 
   private int getTileSetAddress() {
-    return isUsingMap0() ? TILE_SET_0_ADDRESS : TILE_SET_1_ADDRESS;
+    return isUsingTileSet0() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
   }
 
   private boolean isUsingMap0() {
     return getBackgroundMap() == 1;
+  }
+
+  private boolean isUsingTileSet0() {
+    return getBackgroundTile() == 1;
   }
 
   private TileColor getTileColorByTileId(int tileId, int x, int y) {
