@@ -105,8 +105,8 @@ public class GPUTest extends UnitTest {
     mmu.writeByte(0x9007, (byte) 0xa5);
     mmu.writeByte(0x9008, (byte) 0xb9);
     mmu.writeByte(0x9009, (byte) 0xb9);
-    mmu.writeByte(0x900A, (byte) 0xA2);
-    mmu.writeByte(0x900B, (byte) 0xA2);
+    mmu.writeByte(0x900A, (byte) 0xA5);
+    mmu.writeByte(0x900B, (byte) 0xA5);
     mmu.writeByte(0x900C, (byte) 0x42);
     mmu.writeByte(0x900D, (byte) 0x42);
     mmu.writeByte(0x900E, (byte) 0x3c);
