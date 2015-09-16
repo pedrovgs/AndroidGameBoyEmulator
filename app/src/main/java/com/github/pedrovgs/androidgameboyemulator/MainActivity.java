@@ -39,10 +39,10 @@ public class MainActivity extends Activity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-    LCD lcd = (LCD) findViewById(R.id.lcd);
-    MMU mmu = new MMU();
+    final LCD lcd = (LCD) findViewById(R.id.lcd);
+    final MMU mmu = new MMU();
     GBZ80 z80 = new GBZ80();
-    GPU gpu = new GPU(mmu);
+    final GPU gpu = new GPU(mmu);
     GameReader gameReader = new AndroidGameReader();
     GameLoader gameLoader = new GameLoader(gameReader);
     final GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader);
@@ -53,7 +53,11 @@ public class MainActivity extends Activity {
         super.run();
         try {
           gameBoy.loadGame(TEST_ROM_URI);
-          gameBoy.start();
+          while (!mmu.isSystemReady()) {
+            gameBoy.tick();
+          }
+          fillMemoryWithTrash(mmu);
+          lcd.onGPUUpdated(gpu);
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
@@ -65,5 +69,27 @@ public class MainActivity extends Activity {
       }
     };
     gameBoyThread.start();
+  }
+
+  private void fillMemoryWithTrash(MMU mmu) {
+    mmu.writeByte(0x8000, (byte) 0x3c);
+    mmu.writeByte(0x8001, (byte) 0x3c);
+    mmu.writeByte(0x8002, (byte) 0x42);
+    mmu.writeByte(0x8003, (byte) 0x42);
+    mmu.writeByte(0x8004, (byte) 0xb9);
+    mmu.writeByte(0x8005, (byte) 0xb9);
+    mmu.writeByte(0x8006, (byte) 0xa5);
+    mmu.writeByte(0x8007, (byte) 0xa5);
+    mmu.writeByte(0x8008, (byte) 0xb9);
+    mmu.writeByte(0x8009, (byte) 0xb9);
+    mmu.writeByte(0x800A, (byte) 0xA2);
+    mmu.writeByte(0x800B, (byte) 0xA2);
+    mmu.writeByte(0x800C, (byte) 0x42);
+    mmu.writeByte(0x800D, (byte) 0x42);
+    mmu.writeByte(0x800E, (byte) 0x3c);
+    mmu.writeByte(0x800F, (byte) 0x3c);
+    for (int i = 0x9c00; i < 0x9fff; i++) {
+      mmu.writeByte(i, (byte) 0);
+    }
   }
 }

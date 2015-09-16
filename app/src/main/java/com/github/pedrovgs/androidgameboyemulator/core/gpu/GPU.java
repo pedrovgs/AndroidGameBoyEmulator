@@ -140,18 +140,18 @@ public class GPU implements MMUListener {
   }
 
   private int getMapAddress() {
-    return isUsingMap0() ? MAP_0_ADDRESS : MAP_1_ADDRESS;
+    return isUsingMap1() ? MAP_1_ADDRESS : MAP_0_ADDRESS;
   }
 
   private int getTileSetAddress() {
-    return isUsingTileSet0() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
+    return isUsingTileSet1() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
   }
 
-  private boolean isUsingMap0() {
+  private boolean isUsingMap1() {
     return getBackgroundMap() == 1;
   }
 
-  private boolean isUsingTileSet0() {
+  private boolean isUsingTileSet1() {
     return getBackgroundTile() == 1;
   }
 
@@ -187,7 +187,7 @@ public class GPU implements MMUListener {
     return mmu.readByte(SCROLL_X_ADDRESS) & 0xFF;
   }
 
-  private int getScrollY() {
+  public int getScrollY() {
     return mmu.readByte(SCROLL_Y_ADDRESS) & 0xFF;
   }
 

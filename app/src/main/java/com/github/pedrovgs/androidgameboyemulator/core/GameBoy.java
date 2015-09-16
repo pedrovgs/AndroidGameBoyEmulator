@@ -60,7 +60,7 @@ public class GameBoy {
     }
   }
 
-  void tick() {
+  public void tick() {
     int programCounter = z80.getProgramCounter();
     int instructionCode = mmu.readByte(programCounter) & 0xFF;
     z80.incrementProgramCounter();
