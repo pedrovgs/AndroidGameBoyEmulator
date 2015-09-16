@@ -170,6 +170,10 @@ public class GameBoyBIOSTest {
     tickUntilThirdStageFinished(gameBoy);
 
     assertNintendoLogoIsLoadedIntoMemory();
+
+    dumpVRAMMemory();
+    System.out.println("\n\n\n\n\nSCREEN IN CHARS");
+    dumpGPUScreenMemory();
   }
 
   @Test public void shouldPutTheNintendoRLogoIntoMemoryDuringTheThirdStage() throws IOException {
@@ -299,5 +303,27 @@ public class GameBoyBIOSTest {
 
   private void tickUntilChecksumFinished(GameBoy gameBoy) {
     tickUntilPCEqualsTo(gameBoy, 0xFA);
+  }
+
+  private void dumpVRAMMemory() {
+    for (int i = VRAM_BOTTOM_ADDRESS; i < VRAM_TOP_ADDRESS; i++) {
+      int value = mmu.readByte(i) & 0xFF;
+      if (value != 0) {
+        String hexAddress = Integer.toHexString(i);
+        String hexValue = Integer.toHexString(value);
+        System.out.println(hexAddress + " --> " + hexValue);
+      }
+    }
+  }
+
+  private void dumpGPUScreenMemory() {
+    for (int i = 0; i < 144; i++) {
+      for (int j = 0; j < 160; j++) {
+        int value = gpu.getRedChannelAtPixel(i, j);
+        String color = value == 0 ? "#" : " ";
+        System.out.print(color);
+      }
+      System.out.println();
+    }
   }
 }
