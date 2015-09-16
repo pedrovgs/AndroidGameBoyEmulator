@@ -24,7 +24,7 @@ public class GameBoyBIOSTest {
   private static final String ANY_GAME_URI = "AnyGame.gb";
   private static final int VRAM_BOTTOM_ADDRESS = 0X8000;
   private static final int COLOR_PALETTE_ADDRESS = 0xFF47;
-  private static final int NINTENDO_LOGO_ADDRESS = 0x104;
+  private static final int NINTENDO_LOGO_ADDRESS_IN_VRAM = 0x8100;
   private static final int UNLOCK_ROM_ADDRESS = 0xFF50;
   private static final int VRAM_TOP_ADDRESS = 0x9FFF;
   private static final int NINTENDO_LOGO_END_ADDRESS = 0x133;
@@ -119,7 +119,7 @@ public class GameBoyBIOSTest {
     tickUntilSecondBiosStageFinished(gameBoy);
     tickGameBoy(gameBoy, 3);
 
-    assertEquals(NINTENDO_LOGO_ADDRESS, z80.get16BitRegisterValue(Register.DE));
+    assertEquals(NINTENDO_LOGO_ADDRESS_IN_VRAM, z80.get16BitRegisterValue(Register.DE));
   }
 
   @Test public void shouldPointHLRegisterToAPortionOfTheVRAMDuringTheThirdStage()
@@ -170,6 +170,7 @@ public class GameBoyBIOSTest {
     tickUntilThirdStageFinished(gameBoy);
 
     assertNintendoLogoIsLoadedIntoMemory();
+    dumpVRAMMemory();
   }
 
   @Test public void shouldPutTheNintendoRLogoIntoMemoryDuringTheThirdStage() throws IOException {
@@ -199,8 +200,7 @@ public class GameBoyBIOSTest {
     assertEquals(0, z80.get8BitRegisterValue(Register.A));
   }
 
-  @Test public void shouldIndicateTheBIOSHasBeenLoadedUnlockingTheRomMapping()
-      throws IOException {
+  @Test public void shouldIndicateTheBIOSHasBeenLoadedUnlockingTheRomMapping() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilBIOSLoaded(gameBoy);
@@ -276,7 +276,7 @@ public class GameBoyBIOSTest {
             0xe6, 0xdd, 0xdd, 0xd9, 0x99, 0xbb, 0xbb, 0x67, 0x63, 0x6e, 0x0e, 0xec, 0xcc, 0xdd,
             0xdc, 0x99, 0x9f, 0xbb, 0xb9, 0x33, 0x3e);
 
-    for (int i = NINTENDO_LOGO_ADDRESS, j = 0; i < NINTENDO_LOGO_END_ADDRESS; i++, j++) {
+    for (int i = NINTENDO_LOGO_ADDRESS_IN_VRAM, j = 0; j < nintendoLogo.size(); i++, j++) {
       assertEquals((int) nintendoLogo.get(j), mmu.readByte(i) & 0xFF);
     }
   }
