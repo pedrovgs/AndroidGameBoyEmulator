@@ -32,17 +32,11 @@ public class GameLoader {
 
   public void load(String uri, MMU mmu) throws IOException {
 
+    byte[] gameInBytes = gameReader.readGame(uri);
     int address = ROM_START_MEMORY_ADDRESS;
-    try {
-      gameReader.load(uri);
-      int gameByte = gameReader.getByte();
-      while (gameByte != -1) {
-        mmu.writeByte(address, (byte) gameByte);
-        gameByte = gameReader.getByte();
-        address++;
-      }
-    } finally {
-      gameReader.closeGame();
+    for (int i = 0; i < gameInBytes.length; i++) {
+      mmu.writeByte(address, gameInBytes[i]);
+      address++;
     }
   }
 }

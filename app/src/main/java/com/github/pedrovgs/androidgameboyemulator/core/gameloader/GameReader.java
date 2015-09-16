@@ -19,12 +19,9 @@ package com.github.pedrovgs.androidgameboyemulator.core.gameloader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public interface GameReader {
 
-  void load(String gameUri) throws FileNotFoundException;
-
-  int getByte() throws IOException;
-
-  void closeGame() throws IOException;
+  byte[] readGame(String uri) throws IOException;
 }
