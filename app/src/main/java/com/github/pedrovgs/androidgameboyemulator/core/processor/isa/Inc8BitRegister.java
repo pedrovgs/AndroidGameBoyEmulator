@@ -39,8 +39,8 @@ public class Inc8BitRegister extends Instruction {
     z80.enableFlagCY();
     if (result == 0) {
       z80.enableFlagZ();
-      z80.enableFlagH();
-    } else if ((result & 0xF) == 0) {
+    }
+    if ((result & 0xF) == 0xF) {
       z80.enableFlagH();
     }
   }
