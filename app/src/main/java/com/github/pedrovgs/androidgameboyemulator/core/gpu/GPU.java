@@ -139,11 +139,11 @@ public class GPU implements MMUListener {
     return mmu.readByte(mapAddress) & 0xFF;
   }
 
-  private int getMapAddress() {
+  public int getMapAddress() {
     return isUsingMap1() ? MAP_1_ADDRESS : MAP_0_ADDRESS;
   }
 
-  private int getTileSetAddress() {
+  public int getTileSetAddress() {
     return isUsingTileSet1() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
   }
 
@@ -183,7 +183,7 @@ public class GPU implements MMUListener {
     return mmu.readByte(CURRENT_LINE_ADDRESS) & 0xFF;
   }
 
-  private int getScrollX() {
+  public int getScrollX() {
     return mmu.readByte(SCROLL_X_ADDRESS) & 0xFF;
   }
 

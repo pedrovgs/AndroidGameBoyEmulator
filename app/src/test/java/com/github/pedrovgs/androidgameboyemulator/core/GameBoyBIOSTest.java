@@ -187,14 +187,44 @@ public class GameBoyBIOSTest {
   @Test public void shouldShowNintendoLogoOnBIOSLoaded() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilScrollGreaterThanTen(gameBoy);
+    tickUntilScrollProcessIsDone(gameBoy);
 
+    dumpScrollState();
+    dumpTileAndMapAddress();
     dumpVRAMMemory();
-    dumpGPUScreenMemory();
+    dumpMap0VRAM();
   }
 
-  private void tickUntilScrollGreaterThanTen(GameBoy gameBoy) {
-    while (gpu.getScrollY() < 100) {
+  private void dumpMap0VRAM() {
+    System.out.println("MAP 0 MEMORY DUMP");
+    System.out.println("_________________");
+    int baseAddress = 0x9800;
+    for (int i = 0; i < 32; i++) {
+      for (int j = 0; j < 32; j++) {
+        String memoryValue = mmu.readByte(baseAddress) == 0 ? "·" : "#";
+        System.out.print(memoryValue);
+        baseAddress++;
+      }
+      System.out.println();
+    }
+    System.out.println("_________________");
+    System.out.println("END OF THE MAP 0 MEMORY DUMP");
+  }
+
+  private void dumpScrollState() {
+    System.out.println("Scroll X = " + gpu.getScrollX());
+    System.out.println("Scroll Y = " + gpu.getScrollY());
+  }
+
+  private void dumpTileAndMapAddress() {
+    String mapAddress = Integer.toHexString(gpu.getMapAddress());
+    System.out.println("The map address used is: " + mapAddress);
+    String tileAddress = Integer.toHexString(gpu.getTileSetAddress());
+    System.out.println("The tile address used is: " + tileAddress);
+  }
+
+  private void tickUntilScrollProcessIsDone(GameBoy gameBoy) {
+    while (gpu.getScrollY() != 100) {
       gameBoy.tick();
     }
   }
@@ -261,8 +291,6 @@ public class GameBoyBIOSTest {
 
     for (int i = NINTENDO_LOGO_ADDRESS_IN_CARTRIDGE, j = 0; j < nintendoLogo.size(); i++, j++) {
       assertEquals((int) nintendoLogo.get(j), mmu.readByte(i) & 0xFF);
-      //int byteValue = nintendoLogo.get(j);
-      //mmu.writeByte(i, (byte) byteValue);
     }
   }
 
@@ -284,7 +312,7 @@ public class GameBoyBIOSTest {
   }
 
   private void tickUntilChecksumFinished(GameBoy gameBoy) {
-    tickUntilPCEqualsTo(gameBoy, 0xFA);
+    tickUntilPCEqualsTo(gameBoy, 0xE0);
   }
 
   private void dumpMemory() {
