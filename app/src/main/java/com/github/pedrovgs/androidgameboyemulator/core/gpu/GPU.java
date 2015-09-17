@@ -36,12 +36,10 @@ public class GPU implements MMUListener {
   private static final int MAP_0_ADDRESS = 0x9800;
   private static final int MAP_1_ADDRESS = 0x9C00;
   private static final int SCREEN_WIDTH_IN_PX = 160;
-  private static final int SCREEN_HEIGHT_IN_PX = 144;
-  private static final int SCREEN_WIDTH_IN_TILES = 20;
   private static final int TILE_SIZE_IN_PX = 8;
   private static final int TILE_SET_0_ADDRESS = 0x9000;
   private static final int TILE_SET_1_ADDRESS = 0x8000;
-  private static final int MAP_SIZE_IN_PX = 256;
+  private static final int MAP_SIZE_IN_TILES = 20;
 
   public final MMU mmu;
 
@@ -137,7 +135,7 @@ public class GPU implements MMUListener {
     int tileIndexX = x / TILE_SIZE_IN_PX;
     int tileIndexY = y / TILE_SIZE_IN_PX;
     int mapAddress = getMapAddress();
-    mapAddress += tileIndexX + (tileIndexY * MAP_SIZE_IN_PX);
+    mapAddress += tileIndexX + (tileIndexY * MAP_SIZE_IN_TILES);
     return mmu.readByte(mapAddress) & 0xFF;
   }
 

@@ -58,8 +58,6 @@ public class MainActivity extends Activity {
           }
           fillMemoryWithTrash(mmu);
           lcd.onGPUUpdated(gpu);
-          byte color = gpu.getBlueChannelAtPixel(6, 6);
-          color = color;
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
@@ -75,26 +73,27 @@ public class MainActivity extends Activity {
 
   private void fillMemoryWithTrash(MMU mmu) {
     //Configure tile0 in tile set 1
-    mmu.writeByte(0x8000, (byte) 0x3c);
-    mmu.writeByte(0x8001, (byte) 0x3c);
-    mmu.writeByte(0x8002, (byte) 0x42);
-    mmu.writeByte(0x8003, (byte) 0x42);
-    mmu.writeByte(0x8004, (byte) 0xb9);
-    mmu.writeByte(0x8005, (byte) 0xb9);
-    mmu.writeByte(0x8006, (byte) 0xa5);
-    mmu.writeByte(0x8007, (byte) 0xa5);
-    mmu.writeByte(0x8008, (byte) 0xb9);
-    mmu.writeByte(0x8009, (byte) 0xb9);
-    mmu.writeByte(0x800A, (byte) 0xA2);
-    mmu.writeByte(0x800B, (byte) 0xA2);
-    mmu.writeByte(0x800C, (byte) 0x42);
-    mmu.writeByte(0x800D, (byte) 0x42);
-    mmu.writeByte(0x800E, (byte) 0x3c);
-    mmu.writeByte(0x800F, (byte) 0x3c);
-    for (int i = 0x9c00; i < 0x9fff; i++) {
-      mmu.writeByte(i, (byte) 0);
+    mmu.writeByte(0x8010, (byte) 0x3c);
+    mmu.writeByte(0x8011, (byte) 0x3c);
+    mmu.writeByte(0x8012, (byte) 0x42);
+    mmu.writeByte(0x8013, (byte) 0x42);
+    mmu.writeByte(0x8014, (byte) 0xb9);
+    mmu.writeByte(0x8015, (byte) 0xb9);
+    mmu.writeByte(0x8016, (byte) 0xa5);
+    mmu.writeByte(0x8017, (byte) 0xa5);
+    mmu.writeByte(0x8018, (byte) 0xb9);
+    mmu.writeByte(0x8019, (byte) 0xb9);
+    mmu.writeByte(0x801A, (byte) 0xA5);
+    mmu.writeByte(0x801B, (byte) 0xA5);
+    mmu.writeByte(0x801C, (byte) 0x42);
+    mmu.writeByte(0x801D, (byte) 0x42);
+    mmu.writeByte(0x801E, (byte) 0x3c);
+    mmu.writeByte(0x801F, (byte) 0x3c);
+    int address = 0x9800;
+    for (int i = 0; i < 1024; i++) {
+      mmu.writeByte(address + i, (byte) 1);
     }
-    //Scroll x & y = 0
+
     mmu.writeByte(0xff42, (byte) 0);
     mmu.writeByte(0xff43, (byte) 0);
   }
