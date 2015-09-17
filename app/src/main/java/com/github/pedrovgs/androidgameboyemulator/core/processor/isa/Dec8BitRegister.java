@@ -45,7 +45,8 @@ public class Dec8BitRegister extends Instruction {
     }
     if (result == 0) {
       z80.enableFlagZ();
-    } else if ((result & 0xF) == 0xF) {
+    }
+    if ((result & 0xF) == 0xF) {
       z80.enableFlagH();
     }
   }
