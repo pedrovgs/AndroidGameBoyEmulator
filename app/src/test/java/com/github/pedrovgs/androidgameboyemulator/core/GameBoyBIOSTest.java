@@ -192,23 +192,8 @@ public class GameBoyBIOSTest {
     dumpScrollState();
     dumpTileAndMapAddress();
     dumpVRAMMemory();
+    dumpGPUScreenMemory();
     dumpMap0VRAM();
-  }
-
-  private void dumpMap0VRAM() {
-    System.out.println("MAP 0 MEMORY DUMP");
-    System.out.println("_________________");
-    int baseAddress = 0x9800;
-    for (int i = 0; i < 32; i++) {
-      for (int j = 0; j < 32; j++) {
-        String memoryValue = mmu.readByte(baseAddress) == 0 ? "·" : "#";
-        System.out.print(memoryValue);
-        baseAddress++;
-      }
-      System.out.println();
-    }
-    System.out.println("_________________");
-    System.out.println("END OF THE MAP 0 MEMORY DUMP");
   }
 
   private void dumpScrollState() {
@@ -224,7 +209,7 @@ public class GameBoyBIOSTest {
   }
 
   private void tickUntilScrollProcessIsDone(GameBoy gameBoy) {
-    while (gpu.getScrollY() != 100) {
+    while (z80.getProgramCounter() < 0xE0) {
       gameBoy.tick();
     }
   }
@@ -340,11 +325,27 @@ public class GameBoyBIOSTest {
   private void dumpGPUScreenMemory() {
     for (int i = 0; i < 160; i++) {
       for (int j = 0; j < 144; j++) {
-        int value = gpu.getRedChannelAtPixel(i, j);
+        int value = gpu.getBlueChannelAtPixel(i, j);
         String color = value == 0 ? "#" : " ";
         System.out.print(color);
       }
       System.out.println();
     }
+  }
+
+  private void dumpMap0VRAM() {
+    System.out.println("MAP 0 MEMORY DUMP");
+    System.out.println("_________________");
+    int baseAddress = 0x9800;
+    for (int i = 0; i < 32; i++) {
+      for (int j = 0; j < 32; j++) {
+        String memoryValue = mmu.readByte(baseAddress) == 0 ? "·" : "#";
+        System.out.print(memoryValue);
+        baseAddress++;
+      }
+      System.out.println();
+    }
+    System.out.println("_________________");
+    System.out.println("END OF THE MAP 0 MEMORY DUMP");
   }
 }
