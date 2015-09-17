@@ -9,7 +9,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,10 +24,9 @@ public class GameBoyBIOSTest {
   private static final String ANY_GAME_URI = "AnyGame.gb";
   private static final int VRAM_BOTTOM_ADDRESS = 0X8000;
   private static final int COLOR_PALETTE_ADDRESS = 0xFF47;
-  private static final int NINTENDO_LOGO_ADDRESS_IN_VRAM = 0x8100;
+  private static final int NINTENDO_LOGO_ADDRESS_IN_CARTRIDGE = 0x104;
   private static final int UNLOCK_ROM_ADDRESS = 0xFF50;
   private static final int VRAM_TOP_ADDRESS = 0x9FFF;
-  private static final int NINTENDO_LOGO_END_ADDRESS = 0x133;
 
   private GBZ80 z80;
   private MMU mmu;
@@ -135,15 +133,12 @@ public class GameBoyBIOSTest {
     assertEquals(expectedMemoryValue, z80.get8BitRegisterValue(Register.A));
   }
 
-  @Ignore @Test public void shouldPutTheNintendoLogoIntoMemoryDuringTheThirdStage()
-      throws IOException {
+  @Test public void shouldPutTheNintendoLogoIntoMemoryDuringTheThirdStage() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
     tickUntilThirdStageFinished(gameBoy);
 
-    dumpVRAMMemory();
-    dumpGPUScreenMemory();
-    assertNintendoLogoIsLoadedIntoMemory();
+    assertNintendoLogoIsInTheCartridge();
   }
 
   @Test public void shouldPutTheNintendoRLogoIntoMemoryDuringTheThirdStage() throws IOException {
@@ -242,14 +237,14 @@ public class GameBoyBIOSTest {
     }
   }
 
-  private void assertNintendoLogoIsLoadedIntoMemory() {
+  private void assertNintendoLogoIsInTheCartridge() {
     List<Integer> nintendoLogo =
         Arrays.asList(0xce, 0xed, 0x66, 0x66, 0xcc, 0x0d, 0x00, 0x0b, 0x03, 0x73, 0x00, 0x83, 0x00,
             0x0c, 0x00, 0x0d, 0x00, 0x08, 0x11, 0x1f, 0x88, 0x89, 0x00, 0x0e, 0xdc, 0xcc, 0x6e,
             0xe6, 0xdd, 0xdd, 0xd9, 0x99, 0xbb, 0xbb, 0x67, 0x63, 0x6e, 0x0e, 0xec, 0xcc, 0xdd,
             0xdc, 0x99, 0x9f, 0xbb, 0xb9, 0x33, 0x3e);
 
-    for (int i = NINTENDO_LOGO_ADDRESS_IN_VRAM, j = 0; j < nintendoLogo.size(); i++, j++) {
+    for (int i = NINTENDO_LOGO_ADDRESS_IN_CARTRIDGE, j = 0; j < nintendoLogo.size(); i++, j++) {
       assertEquals((int) nintendoLogo.get(j), mmu.readByte(i) & 0xFF);
       //int byteValue = nintendoLogo.get(j);
       //mmu.writeByte(i, (byte) byteValue);
