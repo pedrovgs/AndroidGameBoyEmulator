@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
     setContentView(R.layout.main_activity);
     final LCD lcd = (LCD) findViewById(R.id.lcd);
     final MMU mmu = new MMU();
-    GBZ80 z80 = new GBZ80();
+    final GBZ80 z80 = new GBZ80();
     final GPU gpu = new GPU(mmu);
     GameReader gameReader = new AndroidGameReader();
     GameLoader gameLoader = new GameLoader(gameReader);
@@ -53,7 +53,10 @@ public class MainActivity extends Activity {
         super.run();
         try {
           gameBoy.loadGame(TEST_ROM_URI);
-          gameBoy.start();
+          while (z80.getProgramCounter() < 0xE0) {
+            gameBoy.tick();
+          }
+          //fillMemoryWithTrash(mmu);
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
