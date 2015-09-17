@@ -31,15 +31,17 @@ abstract class RotateLeft8Bit extends Instruction {
   }
 
   @Override public void execute() {
+    boolean wasCyEnabled = z80.isFlagCYEnabled();
+    z80.resetFlagF();
     byte registerValue = loadByte();
-    registerValue = (byte) (registerValue << 1);
-    if (z80.isFlagCYEnabled()) {
-      registerValue |= 0x1;
+    byte newRegisterValue = (byte) (registerValue << 1);
+    if (wasCyEnabled) {
+      newRegisterValue |= 0x1;
     }
-    storeValue(registerValue);
-    z80.disableFlagH();
-    z80.disableFlagN();
-    z80.disableFlagZ();
+    if ((registerValue >> 7 & 0x1) == 0x1) {
+      z80.enableFlagCY();
+    }
+    storeValue(newRegisterValue);
     setLastInstructionExecutionTime();
   }
 
