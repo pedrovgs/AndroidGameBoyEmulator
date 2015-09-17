@@ -39,7 +39,7 @@ public class GPU implements MMUListener {
   private static final int TILE_SIZE_IN_PX = 8;
   private static final int TILE_SET_0_ADDRESS = 0x9000;
   private static final int TILE_SET_1_ADDRESS = 0x8000;
-  private static final int MAP_SIZE_IN_TILES = 20;
+  private static final int MAP_SIZE_IN_TILES = 32;
 
   public final MMU mmu;
 
