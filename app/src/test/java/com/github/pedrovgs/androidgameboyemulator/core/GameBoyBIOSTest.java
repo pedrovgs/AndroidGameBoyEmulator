@@ -184,6 +184,21 @@ public class GameBoyBIOSTest {
     assertTrue(mmu.isSystemReady());
   }
 
+  @Test public void shouldShowNintendoLogoOnBIOSLoaded() throws IOException {
+    GameBoy gameBoy = givenAGameBoy();
+
+    tickUntilScrollGreaterThanTen(gameBoy);
+
+    dumpVRAMMemory();
+    dumpGPUScreenMemory();
+  }
+
+  private void tickUntilScrollGreaterThanTen(GameBoy gameBoy) {
+    while (gpu.getScrollY() < 100) {
+      gameBoy.tick();
+    }
+  }
+
   private GameBoy givenAGameBoy() throws IOException {
     z80 = new GBZ80();
     mmu = new MMU();
@@ -295,8 +310,8 @@ public class GameBoyBIOSTest {
   }
 
   private void dumpGPUScreenMemory() {
-    for (int i = 0; i < 144; i++) {
-      for (int j = 0; j < 160; j++) {
+    for (int i = 0; i < 160; i++) {
+      for (int j = 0; j < 144; j++) {
         int value = gpu.getRedChannelAtPixel(i, j);
         String color = value == 0 ? "#" : " ";
         System.out.print(color);
