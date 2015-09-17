@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class Load8BitRegisterAIntoTheImmPCAddressTest extends InstructionTest {
 
@@ -45,6 +46,7 @@ public class Load8BitRegisterAIntoTheImmPCAddressTest extends InstructionTest {
 
   @Test public void shouldLoadTheValueOfTheRegisterAIntoTheMemoryAddressPointedByThePC() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
+    when(mmu.readWord(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_16BIT_REGISTER_VALUE);
     z80.set8BitRegisterValue(Register.A, ANY_8BIT_REGISTER_VALUE);
     Instruction instruction = new Load8BitRegisterAIntoTheImmPCAddress(z80, mmu);
 
