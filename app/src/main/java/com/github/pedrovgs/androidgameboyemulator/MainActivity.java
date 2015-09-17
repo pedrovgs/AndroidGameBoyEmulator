@@ -53,11 +53,7 @@ public class MainActivity extends Activity {
         super.run();
         try {
           gameBoy.loadGame(TEST_ROM_URI);
-          while (!mmu.isSystemReady()) {
-            gameBoy.tick();
-          }
-          fillMemoryWithTrash(mmu);
-          lcd.onGPUUpdated(gpu);
+          gameBoy.start();
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
