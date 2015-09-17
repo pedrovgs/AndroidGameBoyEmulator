@@ -23,7 +23,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class RotateLeft8BitRegisterATest extends InstructionTest {
 
@@ -45,13 +44,13 @@ public class RotateLeft8BitRegisterATest extends InstructionTest {
     assertFalse(z80.isFlagZEnabled());
   }
 
-  @Test public void shouldNotModifyTheValueOfTheCarryFlag() {
+  @Test public void shouldModifyTheValueOfTheCarryFlagWithTheLastPixelValue() {
     z80.enableFlagCY();
     Instruction instruction = new RotateLeft8BitRegisterA(z80);
 
     instruction.execute();
 
-    assertTrue(z80.isFlagCYEnabled());
+    assertFalse(z80.isFlagCYEnabled());
   }
 
   @Test public void shouldShiftRegisterAValueToTheLeft() {
