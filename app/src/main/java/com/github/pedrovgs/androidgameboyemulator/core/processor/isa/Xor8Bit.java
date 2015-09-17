@@ -42,8 +42,6 @@ public abstract class Xor8Bit extends Instruction {
     z80.resetFlagF();
     if (result == 0) {
       z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
     }
   }
 
