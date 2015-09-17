@@ -29,7 +29,7 @@ public class Load8BitRegisterAIntoTheImmPCAddress extends Instruction {
 
   @Override public void execute() {
     byte registerValue = z80.get8BitRegisterValue(Register.A);
-    int address = z80.getProgramCounter();
+    int address = mmu.readWord(z80.getProgramCounter());
     mmu.writeByte(address, registerValue);
     z80.incrementProgramCounterTwice();
     z80.setLastInstructionExecutionTime(4);
