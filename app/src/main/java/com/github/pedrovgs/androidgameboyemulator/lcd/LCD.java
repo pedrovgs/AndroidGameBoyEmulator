@@ -54,8 +54,8 @@ public class LCD extends View implements GPUListener {
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
     if (isGPUReady()) {
-      for (int x = 0; x < LCD_WIDTH; x++) {
-        for (int y = 0; y < LCD_HEIGHT; y++) {
+      for (int y = 0; y < LCD_HEIGHT; y++) {
+        for (int x = 0; x < LCD_WIDTH; x++) {
           int pixelColor = getGPUPixelColor(x, y);
           bitmap.setPixel(x, y, pixelColor);
         }
