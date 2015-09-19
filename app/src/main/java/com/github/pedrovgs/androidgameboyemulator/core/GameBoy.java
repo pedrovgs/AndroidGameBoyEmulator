@@ -46,7 +46,6 @@ public class GameBoy {
     this.gpu = gpu;
     this.gameLoader = gameLoader;
     this.instructionsPool = new InstructionsPool(z80, mmu);
-    this.mmu.setListener(gpu);
   }
 
   public void loadGame(String uri) throws IOException {
