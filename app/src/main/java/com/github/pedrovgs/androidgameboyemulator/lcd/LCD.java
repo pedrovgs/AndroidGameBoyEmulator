@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
+import com.github.pedrovgs.androidgameboyemulator.core.gpu.TileColor;
 
 public class LCD extends View implements GPUListener {
 
@@ -92,10 +93,11 @@ public class LCD extends View implements GPUListener {
   }
 
   private int getGPUPixelColor(int x, int y) {
-    int alpha = gpu.getAlphaChannelAtPixel(x, y) & 0xFF;
-    int red = gpu.getRedChannelAtPixel(x, y) & 0xFF;
-    int green = gpu.getGreenChannelAtPixel(x, y) & 0xFF;
-    int blue = gpu.getBlueChannelAtPixel(x, y) & 0xFF;
+    TileColor tileColor = gpu.getTileColorAtPixel(x, y);
+    int alpha = tileColor.getAlpha();
+    int red = tileColor.getRed();
+    int green = tileColor.getGreen();
+    int blue = tileColor.getBlue();
     int color = (alpha << 24) | (red << 16) | (green << 8) | blue;
     return color;
   }

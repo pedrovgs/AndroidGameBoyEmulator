@@ -62,20 +62,8 @@ public class GPU implements MMUListener {
     this.currentModeClock = 0;
   }
 
-  public byte getRedChannelAtPixel(int x, int y) {
-    return (byte) getTileColor(x, y).getRed();
-  }
-
-  public byte getGreenChannelAtPixel(int x, int y) {
-    return (byte) getTileColor(x, y).getGreen();
-  }
-
-  public byte getBlueChannelAtPixel(int x, int y) {
-    return (byte) getTileColor(x, y).getBlue();
-  }
-
-  public byte getAlphaChannelAtPixel(int x, int y) {
-    return (byte) getTileColor(x, y).getAlpha();
+  public TileColor getTileColorAtPixel(int x, int y) {
+    return getTileColor(x, y);
   }
 
   public void tick(int cyclesElapsed) {
