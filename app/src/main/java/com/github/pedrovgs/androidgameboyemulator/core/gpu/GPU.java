@@ -18,14 +18,13 @@
 package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
-import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMUListener;
 
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.HORIZONTAL_BLANK;
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.SCANLINE_OAM;
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.SCANLINE_VRAM;
 import static com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUMode.VERTICAL_BLANK;
 
-public class GPU implements MMUListener {
+public class GPU {
 
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
   private static final int BG_MAP_BIT_INDEX = 3;
@@ -106,10 +105,6 @@ public class GPU implements MMUListener {
         break;
       default:
     }
-  }
-
-  @Override public void onVRAMUpdated(int address, byte value) {
-    notifyListener();
   }
 
   private TileColor getTileColor(int x, int y) {

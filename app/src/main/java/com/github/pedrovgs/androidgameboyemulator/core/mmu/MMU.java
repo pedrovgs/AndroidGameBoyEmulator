@@ -18,28 +18,20 @@ package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
 public class MMU {
 
-  private static final int VRAM_BOTTOM_LIMIT = 0x8000;
-  private static final int VRAM_TOP_LIMIT = 0xA000;
-  private static final int BIOS_LIMIT = 0x100;
-  private static final int MEMORY_SPACE = 65536;
+  private static final int BIOS_TOP_LIMIT_ADDRESS = 0x100;
+  private static final int TOTAL_MEMORY_IN_BYTES = 65536;
 
   private final byte[] memory;
-
   private boolean systemReady;
-  private MMUListener listener;
 
   public MMU() {
-    this.memory = new byte[MEMORY_SPACE];
+    this.memory = new byte[TOTAL_MEMORY_IN_BYTES];
     reset();
   }
 
-  public void setListener(MMUListener listener) {
-    this.listener = listener;
-  }
-
   public byte readByte(int address) {
-    byte value = 0;
-    if (!systemReady && address < BIOS_LIMIT) {
+    byte value;
+    if (!systemReady && address < BIOS_TOP_LIMIT_ADDRESS) {
       int biosValue = BIOS.ROM[address];
       value = (byte) biosValue;
     } else {
@@ -58,9 +50,6 @@ public class MMU {
 
   public void writeByte(int address, byte value) {
     memory[address] = value;
-    if (address >= VRAM_BOTTOM_LIMIT && address < VRAM_TOP_LIMIT) {
-      notifyVRAMUpdated(address, value);
-    }
   }
 
   public void writeWord(int address, int value) {
@@ -83,11 +72,5 @@ public class MMU {
 
   public void setSystemReady(boolean systemReady) {
     this.systemReady = systemReady;
-  }
-
-  private void notifyVRAMUpdated(int address, byte value) {
-    if (listener != null) {
-      listener.onVRAMUpdated(address, value);
-    }
   }
 }
