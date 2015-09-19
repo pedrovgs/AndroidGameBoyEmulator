@@ -92,6 +92,6 @@ public class LCD extends View implements GPUListener {
   }
 
   private int getGPUPixelColor(int x, int y) {
-    return gpu.getTileColorAtPixel(x, y);
+    return gpu.getColorAtPixel(x, y);
   }
 }

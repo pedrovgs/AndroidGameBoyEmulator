@@ -28,13 +28,14 @@ public class GPUTest extends UnitTest {
 
   private static final int SCREEN_HEIGHT = 144;
   private static final int SCREEN_WIDTH = 160;
+  private static final int ON_COLOR = -16777216;
 
   private MMU mmu;
 
   @Test public void shouldInitializeGPUWithEveryPixelConfiguredTo255InEveryChannel() {
     GPU gpu = givenAGPU();
 
-    assertAllPixelsChannelAre((byte) 0xFF, gpu);
+    assertAllPixelsAre((byte) 0xFF, gpu);
   }
 
   @Test public void shouldRenderTheCopyRightImageCloseToTheOrigin() {
@@ -86,11 +87,11 @@ public class GPUTest extends UnitTest {
   }
 
   private void assertPixelHasColor(GPU gpu, int x, int y, boolean hasColor) {
-    int channel = gpu.getBlueChannelAtPixel(x, y) & 0xFF;
+    int color = gpu.getColorAtPixel(x, y);
     if (hasColor) {
-      assertEquals(0, channel);
+      assertEquals(ON_COLOR, color);
     } else {
-      assertFalse(channel == 0);
+      assertFalse(color == ON_COLOR);
     }
   }
 
@@ -119,13 +120,10 @@ public class GPUTest extends UnitTest {
     }
   }
 
-  private void assertAllPixelsChannelAre(byte channelValue, GPU gpu) {
+  private void assertAllPixelsAre(byte color, GPU gpu) {
     for (int x = 0; x < SCREEN_WIDTH; x++) {
       for (int y = 0; y < SCREEN_HEIGHT; y++) {
-        assertEquals(channelValue, gpu.getRedChannelAtPixel(x, y));
-        assertEquals(channelValue, gpu.getGreenChannelAtPixel(x, y));
-        assertEquals(channelValue, gpu.getBlueChannelAtPixel(x, y));
-        assertEquals(channelValue, gpu.getAlphaChannelAtPixel(x, y));
+        assertEquals(color, gpu.getColorAtPixel(x, y));
       }
     }
   }

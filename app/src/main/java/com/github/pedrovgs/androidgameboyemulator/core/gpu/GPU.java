@@ -61,7 +61,7 @@ public class GPU {
     this.currentModeClock = 0;
   }
 
-  public int getTileColorAtPixel(int x, int y) {
+  public int getColorAtPixel(int x, int y) {
     TileColor tileColor = getTileColor(x, y);
     return tileColor.getRGBA();
   }
