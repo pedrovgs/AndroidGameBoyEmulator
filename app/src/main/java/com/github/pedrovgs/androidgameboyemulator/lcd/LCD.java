@@ -26,7 +26,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
-import com.github.pedrovgs.androidgameboyemulator.core.gpu.TileColor;
 
 public class LCD extends View implements GPUListener {
 
@@ -93,7 +92,6 @@ public class LCD extends View implements GPUListener {
   }
 
   private int getGPUPixelColor(int x, int y) {
-    TileColor tileColor = gpu.getTileColorAtPixel(x, y);
-    return tileColor.getRGBA();
+    return gpu.getTileColorAtPixel(x, y);
   }
 }

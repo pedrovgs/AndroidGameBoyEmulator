@@ -62,8 +62,9 @@ public class GPU implements MMUListener {
     this.currentModeClock = 0;
   }
 
-  public TileColor getTileColorAtPixel(int x, int y) {
-    return getTileColor(x, y);
+  public int getTileColorAtPixel(int x, int y) {
+    TileColor tileColor = getTileColor(x, y);
+    return tileColor.getRGBA();
   }
 
   public void tick(int cyclesElapsed) {
