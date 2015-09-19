@@ -25,12 +25,14 @@ public enum TileColor {
   private final int red;
   private final int green;
   private final int blue;
+  private final int rgba;
 
   TileColor(int alpha, int red, int green, int blue) {
     this.alpha = alpha;
     this.red = red;
     this.green = green;
     this.blue = blue;
+    this.rgba = (alpha << 24) | (red << 16) | (green << 8) | blue;
   }
 
   public int getAlpha() {
@@ -47,5 +49,9 @@ public enum TileColor {
 
   public int getBlue() {
     return blue;
+  }
+
+  public int getRGBA() {
+    return rgba;
   }
 }

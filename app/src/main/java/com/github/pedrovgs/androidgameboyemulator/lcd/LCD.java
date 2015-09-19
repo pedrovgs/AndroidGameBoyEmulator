@@ -94,11 +94,6 @@ public class LCD extends View implements GPUListener {
 
   private int getGPUPixelColor(int x, int y) {
     TileColor tileColor = gpu.getTileColorAtPixel(x, y);
-    int alpha = tileColor.getAlpha();
-    int red = tileColor.getRed();
-    int green = tileColor.getGreen();
-    int blue = tileColor.getBlue();
-    int color = (alpha << 24) | (red << 16) | (green << 8) | blue;
-    return color;
+    return tileColor.getRGBA();
   }
 }
