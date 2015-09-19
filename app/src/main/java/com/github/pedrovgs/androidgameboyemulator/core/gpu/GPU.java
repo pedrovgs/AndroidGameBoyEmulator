@@ -146,7 +146,24 @@ public class GPU {
     int firstValue = ((mmu.readByte(tileAddress) & 0xFF) >> x & 1) != 0 ? 1 : 0;
     int secondValue = ((mmu.readByte(tileAddress + 1) & 0xFF) >> x & 1) != 0 ? 2 : 0;
     int ordinalTileColor = firstValue + secondValue;
-    TileColor tileColor = TileColor.values()[ordinalTileColor];
+    return getTileColor(ordinalTileColor);
+  }
+
+  private TileColor getTileColor(int ordinalTileColor) {
+    TileColor tileColor;
+    switch (ordinalTileColor) {
+      case 0:
+        tileColor = TileColor.OFF;
+        break;
+      case 1:
+        tileColor = TileColor.GRAY1;
+        break;
+      case 2:
+        tileColor = TileColor.GRAY2;
+        break;
+      default:
+        tileColor = TileColor.ON;
+    }
     return tileColor;
   }
 

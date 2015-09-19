@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         super.run();
         try {
           gameBoy.loadGame(TEST_ROM_URI);
-          while (z80.getProgramCounter() < 0xE0) {
+          while (true) {
             gameBoy.tick();
           }
           //fillMemoryWithTrash(mmu);
