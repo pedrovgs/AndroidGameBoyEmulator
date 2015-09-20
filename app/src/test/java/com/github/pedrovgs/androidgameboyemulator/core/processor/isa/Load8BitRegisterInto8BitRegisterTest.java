@@ -53,6 +53,17 @@ public class Load8BitRegisterInto8BitRegisterTest extends InstructionTest {
     assertEquals(ANY_8BIT_REGISTER_VALUE, z80.get8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER));
   }
 
+  @Test public void shouldNotModifyTheSourceRegister() {
+    z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, ANY_8BIT_REGISTER_VALUE);
+    Instruction load8BitRegister =
+        new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER,
+            ANY_8BIT_SOURCE_REGISTER);
+
+    load8BitRegister.execute();
+
+    assertEquals(ANY_8BIT_REGISTER_VALUE, z80.get8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER));
+  }
+
   @Test public void shouldUseOneCycleAsExecutionTime() {
     Instruction load8BitRegister =
         new Load8BitRegisterInto8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER,
