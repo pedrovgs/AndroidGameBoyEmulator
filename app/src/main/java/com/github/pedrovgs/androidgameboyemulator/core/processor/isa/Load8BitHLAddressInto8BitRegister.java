@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitHLAddressInto8BitRegister extends Instruction {
+class Load8BitHLAddressInto8BitRegister extends Instruction {
 
   private final Register destinyRegister;
 
