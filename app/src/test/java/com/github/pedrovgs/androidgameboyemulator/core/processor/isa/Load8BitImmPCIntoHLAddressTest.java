@@ -26,12 +26,12 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class Load8BitImmIntoHLAddressTest extends InstructionTest {
+public class Load8BitImmPCIntoHLAddressTest extends InstructionTest {
 
   @Test public void shouldStoreProgramCounterAddressMemoryValueIntoHlAddress() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
     when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
-    Instruction instruction = new Load8BitImmIntoHLAddress(z80, mmu);
+    Instruction instruction = new Load8BitImmPCIntoHLAddress(z80, mmu);
 
     instruction.execute();
 
@@ -41,18 +41,18 @@ public class Load8BitImmIntoHLAddressTest extends InstructionTest {
   @Test public void shouldIncrementProgramCounter() {
     int originalProgramCounter = z80.getProgramCounter();
     when(mmu.readByte(anyInt())).thenReturn(ANY_MEMORY_BYTE_VALUE);
-    Instruction instruction = new Load8BitImmIntoHLAddress(z80, mmu);
+    Instruction instruction = new Load8BitImmPCIntoHLAddress(z80, mmu);
 
     instruction.execute();
 
     assertEquals(originalProgramCounter + 1, z80.getProgramCounter());
   }
 
-  @Test public void shouldUseThreeCyclesAsLastExecutionTime() {
-    Instruction instruction = new Load8BitImmIntoHLAddress(z80, mmu);
+  @Test public void shouldUseTwoCyclesAsLastExecutionTime() {
+    Instruction instruction = new Load8BitImmPCIntoHLAddress(z80, mmu);
 
     instruction.execute();
 
-    assertEquals(3, z80.getLastInstructionExecutionTime());
+    assertEquals(2, z80.getLastInstructionExecutionTime());
   }
 }
