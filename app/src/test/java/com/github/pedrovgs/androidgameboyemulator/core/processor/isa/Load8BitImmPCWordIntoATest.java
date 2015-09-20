@@ -43,8 +43,9 @@ public class Load8BitImmPCWordIntoATest extends InstructionTest {
     assertEquals(ANY_16BIT_REGISTER_VALUE + 2, z80.getProgramCounter());
   }
 
-  @Test public void shouldLoad16BitPortAddressPointedByTheProgramCounterIntoTheRegisterA() {
-    z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
+  @Test public void shouldLoadTheBytePointedByTheWordPointedByThePCIntoRegisterA() {
+    z80.setProgramCounter(ANY_PROGRAM_COUNTER);
+    when(mmu.readWord(ANY_PROGRAM_COUNTER)).thenReturn(ANY_16BIT_REGISTER_VALUE);
     when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction instruction = new Load8BitImmPCWordIntoA(z80, mmu);
 
