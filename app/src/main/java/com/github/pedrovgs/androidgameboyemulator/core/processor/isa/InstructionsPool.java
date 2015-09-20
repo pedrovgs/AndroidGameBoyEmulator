@@ -126,7 +126,7 @@ public class InstructionsPool {
     normalInstructions[0x0A] = new Load8BitBCAddressIntoA(z80, mmu);
     normalInstructions[0x1A] = new Load8BitDEAddressIntoA(z80, mmu);
     normalInstructions[0x7E] = new Load8BitHLAddressInto8BitRegister(z80, mmu, Register.A);
-    normalInstructions[0xFA] = new Load16BitImmPCIntoA(z80, mmu);
+    normalInstructions[0xFA] = new Load8BitImmPCWordIntoA(z80, mmu);
     normalInstructions[0x3E] = new Load8BitImmPCInto8BitRegister(z80, mmu, Register.A);
     normalInstructions[0x47] = new Load8BitRegisterInto8BitRegister(z80, Register.B, Register.A);
     normalInstructions[0x4F] = new Load8BitRegisterInto8BitRegister(z80, Register.C, Register.A);

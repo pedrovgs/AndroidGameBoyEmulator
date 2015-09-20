@@ -24,10 +24,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class Load16BitAddressImmPCIntoATest extends InstructionTest {
+public class Load8BitImmPCWordIntoATest extends InstructionTest {
 
   @Test public void shouldUseFourCyclesAsLastInstructionExecutionTime() {
-    Instruction instruction = new Load16BitImmPCIntoA(z80, mmu);
+    Instruction instruction = new Load8BitImmPCWordIntoA(z80, mmu);
 
     instruction.execute();
 
@@ -36,7 +36,7 @@ public class Load16BitAddressImmPCIntoATest extends InstructionTest {
 
   @Test public void shouldIncrementProgramCounterTwice() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
-    Instruction instruction = new Load16BitImmPCIntoA(z80, mmu);
+    Instruction instruction = new Load8BitImmPCWordIntoA(z80, mmu);
 
     instruction.execute();
 
@@ -46,7 +46,7 @@ public class Load16BitAddressImmPCIntoATest extends InstructionTest {
   @Test public void shouldLoad16BitPortAddressPointedByTheProgramCounterIntoTheRegisterA() {
     z80.setProgramCounter(ANY_16BIT_REGISTER_VALUE);
     when(mmu.readByte(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_BYTE_VALUE);
-    Instruction instruction = new Load16BitImmPCIntoA(z80, mmu);
+    Instruction instruction = new Load8BitImmPCWordIntoA(z80, mmu);
 
     instruction.execute();
 
