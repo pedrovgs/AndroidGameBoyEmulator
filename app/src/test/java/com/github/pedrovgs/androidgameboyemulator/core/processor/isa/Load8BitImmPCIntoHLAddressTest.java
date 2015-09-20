@@ -53,6 +53,6 @@ public class Load8BitImmPCIntoHLAddressTest extends InstructionTest {
 
     instruction.execute();
 
-    assertEquals(2, z80.getLastInstructionExecutionTime());
+    assertEquals(3, z80.getLastInstructionExecutionTime());
   }
 }

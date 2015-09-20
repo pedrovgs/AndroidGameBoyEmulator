@@ -32,6 +32,6 @@ class Load8BitImmPCIntoHLAddress extends Instruction {
     int address = z80.get16BitRegisterValue(Register.HL);
     mmu.writeByte(address, value);
     z80.incrementProgramCounter();
-    z80.setLastInstructionExecutionTime(2);
+    z80.setLastInstructionExecutionTime(3);
   }
 }
