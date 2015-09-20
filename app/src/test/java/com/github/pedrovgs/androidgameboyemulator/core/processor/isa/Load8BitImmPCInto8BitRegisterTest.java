@@ -33,7 +33,7 @@ public class Load8BitImmPCInto8BitRegisterTest extends InstructionTest {
     load8BitImm.execute();
   }
 
-  @Test public void shouldLoadProgramCounterPlusOneAddressByteIntoTheDestinyRegister() {
+  @Test public void shouldLoadProgramCounterAddressIntoTheDestinyRegister() {
     int programCounter = z80.getProgramCounter();
     when(mmu.readByte(programCounter)).thenReturn(ANY_MEMORY_BYTE_VALUE);
     Instruction load8BitImm =
@@ -45,7 +45,7 @@ public class Load8BitImmPCInto8BitRegisterTest extends InstructionTest {
     assertEquals(ANY_MEMORY_BYTE_VALUE, destinyRegisterValue);
   }
 
-  @Test public void shouldIncrementProgramCounterInOneAfterTheInstructionExecution() {
+  @Test public void shouldIncrementProgramCounterOnceAfterTheInstructionExecution() {
     int originalProgramCounter = z80.getProgramCounter();
     Instruction load8BitImm =
         new Load8BitImmPCInto8BitRegister(z80, mmu, ANY_8BIT_DESTINY_REGISTER);
