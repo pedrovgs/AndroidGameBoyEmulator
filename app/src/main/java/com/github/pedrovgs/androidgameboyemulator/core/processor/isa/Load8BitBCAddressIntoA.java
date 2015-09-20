@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitBCAddressIntoA extends Instruction {
+class Load8BitBCAddressIntoA extends Instruction {
 
   Load8BitBCAddressIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
