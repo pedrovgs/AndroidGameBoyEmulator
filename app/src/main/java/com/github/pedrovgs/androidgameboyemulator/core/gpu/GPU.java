@@ -180,7 +180,7 @@ public class GPU {
     mmu.writeByte(CURRENT_LINE_ADDRESS, (byte) currentLine);
   }
 
-  private int getCurrentLine() {
+  public int getCurrentLine() {
     return mmu.readByte(CURRENT_LINE_ADDRESS) & 0xFF;
   }
 

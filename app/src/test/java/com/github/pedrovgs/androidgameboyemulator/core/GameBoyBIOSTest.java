@@ -181,6 +181,13 @@ public class GameBoyBIOSTest {
 
     tickUntilBIOSLoaded(gameBoy);
 
+    //for (int i = 0; i < 16030; i++) {
+    for (int i = 0; i < 17030; i++) {
+      gameBoy.tick();
+      System.out.println(z80.getProgramCounter());
+      System.out.println(gpu.getCurrentLine());
+    }
+
     assertTrue(mmu.isSystemReady());
   }
 
