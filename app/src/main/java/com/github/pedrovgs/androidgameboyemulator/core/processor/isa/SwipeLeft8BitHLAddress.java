@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class SwipeLeft8BitHLAddress extends SwipeLeft8Bit {
+class SwipeLeft8BitHLAddress extends SwipeLeft8Bit {
 
   SwipeLeft8BitHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
