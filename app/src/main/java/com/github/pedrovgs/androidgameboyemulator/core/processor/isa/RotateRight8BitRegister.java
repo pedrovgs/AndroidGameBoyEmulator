@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class RotateRight8BitRegister extends RotateRight8Bit {
+class RotateRight8BitRegister extends RotateRight8Bit {
 
   private final Register register;
 
