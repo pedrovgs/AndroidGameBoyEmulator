@@ -45,4 +45,13 @@ public class Add8BitImmPCPlusAIntoATest extends InstructionTest {
 
     assertEquals(2, z80.getLastInstructionExecutionTime());
   }
+
+  @Test public void shouldIncrementProgramCounter() {
+    z80.setProgramCounter(ANY_PROGRAM_COUNTER);
+    Instruction instruction = new Add8BitImmPCPlusAIntoA(z80, mmu);
+
+    instruction.execute();
+
+    assertEquals(ANY_PROGRAM_COUNTER + 1, z80.getProgramCounter());
+  }
 }
