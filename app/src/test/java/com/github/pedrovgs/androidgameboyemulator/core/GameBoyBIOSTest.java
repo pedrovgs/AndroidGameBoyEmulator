@@ -495,7 +495,7 @@ public class GameBoyBIOSTest {
     assertEquals(0xb9, mmu.readByte(0x8198) & 0xFF);
     assertEquals(0xa5, mmu.readByte(0x819a) & 0xFF);
     assertEquals(0x42, mmu.readByte(0x819c) & 0xFF);
-    assertEquals(0x4c, mmu.readByte(0x819e) & 0xFF);
+    assertEquals(0x3c, mmu.readByte(0x819e) & 0xFF);
     assertEquals(0x1, mmu.readByte(0x9904) & 0xFF);
     assertEquals(0x2, mmu.readByte(0x9905) & 0xFF);
     assertEquals(0x3, mmu.readByte(0x9906) & 0xFF);
