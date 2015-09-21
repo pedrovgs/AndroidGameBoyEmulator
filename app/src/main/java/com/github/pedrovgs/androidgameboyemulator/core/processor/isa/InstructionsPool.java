@@ -332,7 +332,7 @@ public class InstructionsPool {
     extendedInstructions[0x14] = new RotateLeft8BitRegister(z80, Register.H);
     extendedInstructions[0x15] = new RotateLeft8BitRegister(z80, Register.L);
     extendedInstructions[0x16] = new RotateLeft8BitHLAddress(z80, mmu);
-    extendedInstructions[0x0F] = new RotateRightCarry8BitRegisterA(z80);
+    extendedInstructions[0x0F] = new RotateRightCarry8BitRegister(z80, Register.A);
     extendedInstructions[0x08] = new RotateRightCarry8BitRegister(z80, Register.B);
     extendedInstructions[0x09] = new RotateRightCarry8BitRegister(z80, Register.C);
     extendedInstructions[0x0A] = new RotateRightCarry8BitRegister(z80, Register.D);
