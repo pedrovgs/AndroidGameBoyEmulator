@@ -32,6 +32,7 @@ class Add16BitStackPointerToHLIntoHL extends Instruction {
     z80.set16BitRegisterValue(Register.HL, sum);
     z80.setLastInstructionExecutionTime(2);
 
+    z80.disableFlagN();
     if ((value & 0xFFF) + (registerHLValue & 0xFFF) > 0xFFF) {
       z80.enableFlagH();
     } else {
