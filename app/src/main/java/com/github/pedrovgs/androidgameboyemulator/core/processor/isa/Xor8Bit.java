@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Xor8Bit extends Instruction {
+abstract class Xor8Bit extends Instruction {
 
   Xor8Bit(GBZ80 z80) {
     super(z80);
