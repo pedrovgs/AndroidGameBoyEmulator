@@ -13,7 +13,7 @@ public class Load16BitImmPcIntoStackPointerTest extends InstructionTest {
 
     instruction.execute();
 
-    assertEquals(3, z80.getLastInstructionExecutionTime());
+    assertEquals(5, z80.getLastInstructionExecutionTime());
   }
 
   @Test public void shouldLoadTheContentOfTheMemoryPointedByPCIntoTheStackPointer() {

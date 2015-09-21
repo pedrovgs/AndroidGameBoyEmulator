@@ -31,6 +31,6 @@ class Load16BitImmPcIntoStackPointer extends Instruction {
     int value = mmu.readWord(programCounter);
     z80.setStackPointer(value);
     z80.incrementProgramCounterTwice();
-    z80.setLastInstructionExecutionTime(3);
+    z80.setLastInstructionExecutionTime(5);
   }
 }
