@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public class Rst extends Instruction {
+class Rst extends Instruction {
 
   private final int pc;
 
@@ -33,6 +33,6 @@ public class Rst extends Instruction {
     int programCounter = z80.getProgramCounter();
     pushTwice(programCounter);
     z80.setProgramCounter(pc);
-    z80.setLastInstructionExecutionTime(4);
+    z80.setLastInstructionExecutionTime(8);
   }
 }
