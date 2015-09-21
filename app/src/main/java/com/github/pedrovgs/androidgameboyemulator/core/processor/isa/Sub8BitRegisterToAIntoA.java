@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Sub8BitRegisterToAIntoA extends Instruction {
+class Sub8BitRegisterToAIntoA extends Instruction {
 
   private final Register sourceRegister;
 
@@ -36,22 +36,16 @@ public class Sub8BitRegisterToAIntoA extends Instruction {
     z80.set8BitRegisterValue(Register.A, result);
     z80.setLastInstructionExecutionTime(1);
 
+    z80.resetFlagF();
+    z80.enableFlagN();
     if (result == 0) {
       z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
     }
-    z80.enableFlagN();
     if (((result & 0xF) < (sourceValue & 0xF))) {
       z80.enableFlagH();
-    } else {
-      z80.disableFlagH();
     }
-
     if ((result & 0xff) < (sourceValue & 0xff)) {
       z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
     }
   }
 }
