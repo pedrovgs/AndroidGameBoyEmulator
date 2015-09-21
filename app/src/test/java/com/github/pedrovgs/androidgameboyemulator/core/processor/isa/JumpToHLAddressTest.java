@@ -22,7 +22,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 public class JumpToHLAddressTest extends InstructionTest {
 
@@ -34,13 +33,12 @@ public class JumpToHLAddressTest extends InstructionTest {
     assertEquals(1, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldUpdateProgramCounterWithTheMemoryPointedByTheHLRegisterValue() {
+  @Test public void shouldUpdateProgramCounterWithTheHLRegisterValue() {
     z80.set16BitRegisterValue(Register.HL, ANY_16BIT_REGISTER_VALUE);
-    when(mmu.readWord(ANY_16BIT_REGISTER_VALUE)).thenReturn(ANY_MEMORY_WORD_VALUE);
     Instruction instruction = new JumpToHLAddress(z80, mmu);
 
     instruction.execute();
 
-    assertEquals(ANY_MEMORY_WORD_VALUE, z80.getProgramCounter());
+    assertEquals(ANY_16BIT_REGISTER_VALUE, z80.getProgramCounter());
   }
 }

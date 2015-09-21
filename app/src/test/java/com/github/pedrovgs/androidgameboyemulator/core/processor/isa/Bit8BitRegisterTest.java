@@ -35,14 +35,6 @@ public class Bit8BitRegisterTest extends InstructionTest {
     assertEquals(2, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldEnableFlagC() {
-    Instruction instruction = new Bit8BitRegister(z80, ANY_BIT_VALUE, ANY_8BIT_SOURCE_REGISTER);
-
-    instruction.execute();
-
-    assertTrue(z80.isFlagCYEnabled());
-  }
-
   @Test public void shouldEnableFlagH() {
     Instruction instruction = new Bit8BitRegister(z80, ANY_BIT_VALUE, ANY_8BIT_SOURCE_REGISTER);
 
