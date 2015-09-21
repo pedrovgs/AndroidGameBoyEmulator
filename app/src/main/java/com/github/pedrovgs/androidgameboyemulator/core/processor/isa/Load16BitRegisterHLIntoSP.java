@@ -20,15 +20,15 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load16BitRegisterHLIntoSP extends Instruction {
+class Load16BitRegisterHLIntoSP extends Instruction {
 
   Load16BitRegisterHLIntoSP(GBZ80 z80) {
     super(z80);
   }
 
   @Override public void execute() {
-    int hlValue = z80.get16BitRegisterValue(Register.HL);
-    z80.setStackPointer(hlValue);
+    int registerValue = z80.get16BitRegisterValue(Register.HL);
+    z80.setStackPointer(registerValue);
     z80.setLastInstructionExecutionTime(2);
   }
 }
