@@ -187,7 +187,6 @@ public class GameBoyBIOSTest {
   @Test public void shouldShowNintendoLogoOnBIOSLoaded() throws IOException {
     GameBoy gameBoy = givenAGameBoy();
 
-    tickUntilPCEqualsTo(gameBoy, 0x34);
     tickUntilScrollProcessIsDone(gameBoy);
 
     assertVRAMContainsNintendoLogo();
