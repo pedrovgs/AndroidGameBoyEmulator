@@ -21,6 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
 class CPL extends Instruction {
+
   CPL(GBZ80 z80) {
     super(z80);
   }
