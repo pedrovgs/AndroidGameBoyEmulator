@@ -76,4 +76,13 @@ public class Sub8BitImmPCToAIntoATest extends InstructionTest {
 
     assertTrue(z80.isFlagNEnabled());
   }
+
+  @Test public void shouldIncrementProgramCounter() {
+    z80.setProgramCounter(ANY_PROGRAM_COUNTER);
+    Instruction instruction = new Sub8BitImmPCToAIntoA(z80, mmu);
+
+    instruction.execute();
+
+    assertEquals(ANY_PROGRAM_COUNTER + 1, z80.getProgramCounter());
+  }
 }
