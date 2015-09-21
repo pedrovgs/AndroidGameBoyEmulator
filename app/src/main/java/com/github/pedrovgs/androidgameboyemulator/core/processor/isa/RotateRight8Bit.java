@@ -39,7 +39,11 @@ public abstract class RotateRight8Bit extends Instruction {
     storeValue(registerAValue);
     z80.disableFlagH();
     z80.disableFlagN();
-    z80.disableFlagZ();
+    if (registerAValue == 0) {
+      z80.enableFlagZ();
+    } else {
+      z80.disableFlagZ();
+    }
     setLastInstructionExecutionTime();
   }
 
