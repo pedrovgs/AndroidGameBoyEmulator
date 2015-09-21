@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public abstract class RotateLeftCarry8Bit extends Instruction {
+abstract class RotateLeftCarry8Bit extends Instruction {
 
   RotateLeftCarry8Bit(GBZ80 z80) {
     super(z80);
@@ -41,9 +41,14 @@ public abstract class RotateLeftCarry8Bit extends Instruction {
       z80.disableFlagCY();
     }
     storeResult(value);
+
     z80.disableFlagH();
     z80.disableFlagN();
-    z80.disableFlagZ();
+    if (value == 0) {
+      z80.enableFlagZ();
+    } else {
+      z80.disableFlagZ();
+    }
     setLastInstructionExecutionTime();
   }
 
