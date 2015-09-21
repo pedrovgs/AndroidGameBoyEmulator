@@ -21,15 +21,14 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class JumpToHLAddress extends Instruction {
+class JumpToHLAddress extends Instruction {
 
   JumpToHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
   }
 
   @Override public void execute() {
-    int address = z80.get16BitRegisterValue(Register.HL);
-    int value = mmu.readWord(address);
+    int value = z80.get16BitRegisterValue(Register.HL);
     z80.setProgramCounter(value);
     z80.setLastInstructionExecutionTime(1);
   }
