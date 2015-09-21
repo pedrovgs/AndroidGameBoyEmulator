@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public abstract class Swap8Bit extends Instruction {
+abstract class Swap8Bit extends Instruction {
 
   Swap8Bit(GBZ80 z80) {
     super(z80);
@@ -32,13 +32,14 @@ public abstract class Swap8Bit extends Instruction {
 
   @Override public void execute() {
     byte value = loadValue();
-    z80.resetFlagF();
     value = (byte) ((value << 4 & 0xF0) | (value >> 4 & 0xF));
+    storeValue(value);
+    setLastInstructionExecutionTime();
+
+    z80.resetFlagF();
     if (value == 0) {
       z80.enableFlagZ();
     }
-    storeValue(value);
-    setLastInstructionExecutionTime();
   }
 
   protected abstract byte loadValue();

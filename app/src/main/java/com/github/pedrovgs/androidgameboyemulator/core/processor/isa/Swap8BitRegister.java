@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Swap8BitRegister extends Swap8Bit {
+class Swap8BitRegister extends Swap8Bit {
 
   private final Register register;
 
