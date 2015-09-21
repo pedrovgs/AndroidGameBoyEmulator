@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Add16BitRegisterToHLIntoHL extends Instruction {
+class Add16BitRegisterToHLIntoHL extends Instruction {
 
   private final Register sourceRegister;
 
@@ -36,6 +36,7 @@ public class Add16BitRegisterToHLIntoHL extends Instruction {
     z80.set16BitRegisterValue(Register.HL, sum);
     z80.setLastInstructionExecutionTime(2);
 
+    z80.disableFlagN();
     if ((registerValue & 0xFFF) + (registerHLValue & 0xFFF) > 0xFFF) {
       z80.enableFlagH();
     } else {
