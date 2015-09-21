@@ -35,14 +35,6 @@ public class Or8BitRegisterToAIntoATest extends InstructionTest {
     assertEquals(1, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldEnableFlagN() {
-    Instruction instruction = new Or8BitRegisterToAIntoA(z80, ANY_8BIT_SOURCE_REGISTER);
-
-    instruction.execute();
-
-    assertTrue(z80.isFlagNEnabled());
-  }
-
   @Test public void shouldEnableFlagZIfResultIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_SOURCE_REGISTER, (byte) 0);
     z80.set8BitRegisterValue(Register.A, (byte) 0);
