@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Set8BitHLAddress extends Set8Bit {
+class Set8BitHLAddress extends Set8Bit {
 
   Set8BitHLAddress(GBZ80 z80, MMU mmu, int bit) {
     super(z80, mmu, bit);
