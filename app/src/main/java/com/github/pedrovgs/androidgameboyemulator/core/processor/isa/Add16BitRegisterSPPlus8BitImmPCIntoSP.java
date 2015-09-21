@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public class Add16BitRegisterSPPlus8BitImmPCIntoSP extends Instruction {
+class Add16BitRegisterSPPlus8BitImmPCIntoSP extends Instruction {
 
   Add16BitRegisterSPPlus8BitImmPCIntoSP(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -35,6 +35,8 @@ public class Add16BitRegisterSPPlus8BitImmPCIntoSP extends Instruction {
     z80.incrementProgramCounter();
     z80.setLastInstructionExecutionTime(4);
 
+    z80.disableFlagZ();
+    z80.disableFlagN();
     int check = stackPointerValue ^ memoryValue ^ ((stackPointerValue + memoryValue) & 0xFFFF);
     if ((check & 0x100) == 0x100) {
       z80.enableFlagCY();
