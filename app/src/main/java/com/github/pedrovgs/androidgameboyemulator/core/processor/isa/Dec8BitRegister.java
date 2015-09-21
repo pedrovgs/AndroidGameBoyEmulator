@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Dec8BitRegister extends Instruction {
+class Dec8BitRegister extends Instruction {
 
   private final Register sourceRegister;
 
@@ -40,8 +40,6 @@ public class Dec8BitRegister extends Instruction {
     z80.enableFlagN();
     if (wasCEnabled) {
       z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
     }
     if (result == 0) {
       z80.enableFlagZ();
