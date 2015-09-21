@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load8BitImmPCPlusSPIntoHL extends Instruction {
+class Load8BitImmPCPlusSPIntoHL extends Instruction {
 
   Load8BitImmPCPlusSPIntoHL(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -36,17 +36,12 @@ public class Load8BitImmPCPlusSPIntoHL extends Instruction {
     z80.set16BitRegisterValue(Register.HL, registerValue);
 
     int check = stackPointer ^ (memoryValue) ^ ((stackPointer + memoryValue) & 0xFFFF);
-    z80.disableFlagZ();
-    z80.disableFlagN();
+    z80.resetFlagF();
     if ((check & 0x100) == 0x100) {
       z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
     }
     if ((check & 0x10) == 0x10) {
       z80.enableFlagH();
-    } else {
-      z80.disableFlagH();
     }
     z80.setLastInstructionExecutionTime(3);
   }
