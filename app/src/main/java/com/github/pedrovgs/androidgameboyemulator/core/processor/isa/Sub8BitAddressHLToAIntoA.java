@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Sub8BitAddressHLToAIntoA extends Instruction {
+class Sub8BitAddressHLToAIntoA extends Instruction {
 
   Sub8BitAddressHLToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -35,22 +35,16 @@ public class Sub8BitAddressHLToAIntoA extends Instruction {
     z80.set8BitRegisterValue(Register.A, result);
     z80.setLastInstructionExecutionTime(2);
 
+   z80.resetFlagF();
+    z80.enableFlagN();
     if (result == 0) {
       z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
     }
-    z80.enableFlagN();
     if (((result & 0xF) < (memoryValue & 0xF))) {
       z80.enableFlagH();
-    } else {
-      z80.disableFlagH();
     }
-
     if ((result & 0xff) < (memoryValue & 0xff)) {
       z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
     }
   }
 }
