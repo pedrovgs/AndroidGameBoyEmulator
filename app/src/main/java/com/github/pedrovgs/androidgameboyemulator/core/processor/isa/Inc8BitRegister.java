@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Inc8BitRegister extends Instruction {
+class Inc8BitRegister extends Instruction {
 
   private final Register sourceRegister;
 
@@ -35,8 +35,11 @@ public class Inc8BitRegister extends Instruction {
     z80.set8BitRegisterValue(sourceRegister, result);
     z80.setLastInstructionExecutionTime(1);
 
+    boolean wasCyEnabled = z80.isFlagCYEnabled();
     z80.resetFlagF();
-    z80.enableFlagCY();
+    if (wasCyEnabled) {
+      z80.enableFlagCY();
+    }
     if (result == 0) {
       z80.enableFlagZ();
     }
