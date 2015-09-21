@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Bit8BitHLAddress extends Bit8Bit {
+class Bit8BitHLAddress extends Bit8Bit {
 
   Bit8BitHLAddress(GBZ80 z80, MMU mmu, int bit) {
     super(z80, mmu, bit);
@@ -33,6 +33,6 @@ public class Bit8BitHLAddress extends Bit8Bit {
   }
 
   @Override protected void setLastInstructionExecutionTime() {
-    z80.setLastInstructionExecutionTime(3);
+    z80.setLastInstructionExecutionTime(4);
   }
 }
