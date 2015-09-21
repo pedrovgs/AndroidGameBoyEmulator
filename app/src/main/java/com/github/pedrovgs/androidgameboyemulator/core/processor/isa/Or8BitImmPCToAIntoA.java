@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public class Or8BitImmPCToAIntoA extends Or8Bit {
+class Or8BitImmPCToAIntoA extends Or8Bit {
 
   Or8BitImmPCToAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -32,6 +32,7 @@ public class Or8BitImmPCToAIntoA extends Or8Bit {
 
   @Override protected byte getValue() {
     int address = z80.getProgramCounter();
+    z80.incrementProgramCounter();
     return mmu.readByte(address);
   }
 }
