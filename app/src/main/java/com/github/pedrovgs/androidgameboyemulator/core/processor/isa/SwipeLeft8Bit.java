@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public abstract class SwipeLeft8Bit extends Instruction {
+abstract class SwipeLeft8Bit extends Instruction {
 
   SwipeLeft8Bit(GBZ80 z80) {
     super(z80);
@@ -35,15 +35,9 @@ public abstract class SwipeLeft8Bit extends Instruction {
     boolean shouldEnableCY = (value & 0x80) == 0x80;
     value <<= 1;
     storeValue(value);
-    boolean wasZEnabled = z80.isFlagZEnabled();
     z80.resetFlagF();
     if (shouldEnableCY) {
       z80.enableFlagCY();
-    }
-    if (wasZEnabled) {
-      z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
     }
     if (value == 0) {
       z80.enableFlagZ();

@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class SwipeLeft8BitRegister extends SwipeLeft8Bit {
+class SwipeLeft8BitRegister extends SwipeLeft8Bit {
 
   private final Register register;
 
