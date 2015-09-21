@@ -20,6 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 class SCF extends Instruction {
+
   SCF(GBZ80 z80) {
     super(z80);
   }
