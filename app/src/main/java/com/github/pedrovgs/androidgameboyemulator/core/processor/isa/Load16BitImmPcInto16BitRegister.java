@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Load16BitImmPcInto16BitRegister extends Instruction {
+class Load16BitImmPcInto16BitRegister extends Instruction {
 
   private final Register destinyRegister;
 
