@@ -36,7 +36,7 @@ class Add8BitRegisterPlusAIntoA extends Instruction {
     z80.set8BitRegisterValue(Register.A, sum);
     z80.setLastInstructionExecutionTime(1);
 
-    z80.disableFlagN();
+    z80.resetFlagF();
     if (sum == 0) {
       z80.enableFlagZ();
     }

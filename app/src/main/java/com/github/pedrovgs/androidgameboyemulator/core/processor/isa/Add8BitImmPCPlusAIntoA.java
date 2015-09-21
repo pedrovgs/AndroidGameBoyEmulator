@@ -36,6 +36,7 @@ class Add8BitImmPCPlusAIntoA extends Instruction {
     z80.incrementProgramCounter();
     z80.setLastInstructionExecutionTime(2);
 
+    z80.resetFlagF();
     if (sum == 0) {
       z80.enableFlagZ();
     }

@@ -34,7 +34,8 @@ class Add8BitAddressHLPlusAIntoA extends Instruction {
     byte sum = (byte) (memoryValue + registerAValue);
     z80.set8BitRegisterValue(Register.A, sum);
     z80.setLastInstructionExecutionTime(2);
-    z80.disableFlagN();
+
+    z80.resetFlagF();
     if (sum == 0) {
       z80.enableFlagZ();
     }
