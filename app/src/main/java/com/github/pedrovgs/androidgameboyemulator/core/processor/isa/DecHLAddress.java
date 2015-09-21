@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class DecHLAddress extends Instruction {
+class DecHLAddress extends Instruction {
 
   DecHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -39,12 +39,11 @@ public class DecHLAddress extends Instruction {
     z80.enableFlagN();
     if (wasCEnabled) {
       z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
     }
     if (result == 0) {
       z80.enableFlagZ();
-    } else if ((result & 0xF) == 0xF) {
+    }
+    if ((result & 0xF) == 0xF) {
       z80.enableFlagH();
     }
   }
