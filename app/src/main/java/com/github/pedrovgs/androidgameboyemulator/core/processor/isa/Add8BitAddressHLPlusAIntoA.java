@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Add8BitAddressHLPlusAIntoA extends Instruction {
+class Add8BitAddressHLPlusAIntoA extends Instruction {
 
   Add8BitAddressHLPlusAIntoA(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -34,5 +34,15 @@ public class Add8BitAddressHLPlusAIntoA extends Instruction {
     byte sum = (byte) (memoryValue + registerAValue);
     z80.set8BitRegisterValue(Register.A, sum);
     z80.setLastInstructionExecutionTime(2);
+    z80.disableFlagN();
+    if (sum == 0) {
+      z80.enableFlagZ();
+    }
+    if ((sum & 0x100) == 0x100) {
+      z80.enableFlagCY();
+    }
+    if ((sum & 0x10) == 0x10) {
+      z80.enableFlagH();
+    }
   }
 }
