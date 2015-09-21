@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public abstract class Bit8Bit extends Instruction {
+abstract class Bit8Bit extends Instruction {
 
   private final int bit;
 
@@ -37,7 +37,6 @@ public abstract class Bit8Bit extends Instruction {
   @Override public void execute() {
     byte n = loadValue();
     z80.resetFlagF();
-    z80.enableFlagCY();
     z80.enableFlagH();
     if ((n >> bit & 1) == 0) {
       z80.enableFlagZ();
