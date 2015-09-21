@@ -246,7 +246,7 @@ public class InstructionsPool {
     normalInstructions[0x0D] = new Dec8BitRegister(z80, Register.C);
     normalInstructions[0x15] = new Dec8BitRegister(z80, Register.D);
     normalInstructions[0x1D] = new Dec8BitRegister(z80, Register.E);
-    normalInstructions[0x25] = new Dec8BitRegister(z80, Register.L);
+    normalInstructions[0x25] = new Dec8BitRegister(z80, Register.H);
     normalInstructions[0x2D] = new Dec8BitRegister(z80, Register.L);
     normalInstructions[0x35] = new DecHLAddress(z80, mmu);
     normalInstructions[0x09] = new Add16BitRegisterToHLIntoHL(z80, Register.BC);
