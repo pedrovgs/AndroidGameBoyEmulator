@@ -30,6 +30,7 @@ public class GameBoy {
 
   private static final int BIOS_LIMIT = 0x0100;
   private static final int EXTENDED_OPERATION_CODE = 0xCB;
+  private static final int CYCLES_PER_FRAME = 70224;
 
   private final GBZ80 z80;
   private final MMU mmu;
@@ -73,13 +74,18 @@ public class GameBoy {
     }
     instruction.execute();
     z80.adjustProgramCounter();
-    z80.updateClock();
     int cyclesElapsed = z80.getLastInstructionExecutionTime();
     gpu.tick(cyclesElapsed);
     if (!mmu.isSystemReady() && z80.getProgramCounter() == BIOS_LIMIT) {
       mmu.setSystemReady(true);
     }
     incrementTickCounter();
+  }
+
+  public void frame() {
+    for (int i = 0; i < CYCLES_PER_FRAME; i++) {
+      tick();
+    }
   }
 
   private void incrementTickCounter() {

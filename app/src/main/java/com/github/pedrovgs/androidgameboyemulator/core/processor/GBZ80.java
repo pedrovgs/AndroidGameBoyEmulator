@@ -23,8 +23,6 @@ public class GBZ80 {
   private static final int INITIAL_REGISTER_VALUE = 0x0;
   private static final int NUMBER_OF_8BIT_REGISTERS = 8;
 
-  private final Clock clock;
-
   private final byte[] registers;
 
   private int programCounter;
@@ -35,7 +33,6 @@ public class GBZ80 {
   private boolean halt;
 
   public GBZ80() {
-    this.clock = new Clock();
     this.registers = new byte[NUMBER_OF_8BIT_REGISTERS];
     reset();
   }
@@ -76,10 +73,6 @@ public class GBZ80 {
     byte secondRegisterValue = (byte) (value & 0xFF);
     registers[register.getRegisterIndex()] = firstRegisterValue;
     registers[register.getRegisterIndex() + 1] = secondRegisterValue;
-  }
-
-  public void updateClock() {
-    clock.incrementClockM(lastInstructionExecutionTime);
   }
 
   public int getProgramCounter() {

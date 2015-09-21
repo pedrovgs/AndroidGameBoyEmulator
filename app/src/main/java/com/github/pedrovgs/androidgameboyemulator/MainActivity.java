@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
         try {
           gameBoy.loadGame(TEST_ROM_URI);
           while (true) {
-            gameBoy.tick();
+            gameBoy.frame();
           }
           //fillMemoryWithTrash(mmu);
         } catch (IOException e) {
