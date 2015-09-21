@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Or8Bit extends Instruction {
+abstract class Or8Bit extends Instruction {
 
   Or8Bit(GBZ80 z80) {
     super(z80);
@@ -36,15 +36,13 @@ public abstract class Or8Bit extends Instruction {
     byte registerAValue = z80.get8BitRegisterValue(Register.A);
     byte result = (byte) (registerAValue | value);
     z80.set8BitRegisterValue(Register.A, result);
-    z80.resetFlagF();
-    z80.enableFlagN();
-    if (result == 0) {
-      z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
-    }
     int lastInstructionExecutionTime = getLastInstructionExecutionTime();
     z80.setLastInstructionExecutionTime(lastInstructionExecutionTime);
+
+    z80.resetFlagF();
+    if (result == 0) {
+      z80.enableFlagZ();
+    }
   }
 
   protected abstract int getLastInstructionExecutionTime();
