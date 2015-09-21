@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class And8BitRegisterToAIntoA extends And8Bit {
+class And8BitRegisterToAIntoA extends And8Bit {
 
   private final Register sourceRegister;
 
