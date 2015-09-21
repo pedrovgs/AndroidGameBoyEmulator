@@ -20,6 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
 class EI extends Instruction {
+
   EI(GBZ80 z80) {
     super(z80);
   }
