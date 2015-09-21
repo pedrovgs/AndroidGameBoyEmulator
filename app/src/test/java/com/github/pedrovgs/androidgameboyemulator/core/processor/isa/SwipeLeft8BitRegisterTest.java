@@ -71,16 +71,6 @@ public class SwipeLeft8BitRegisterTest extends InstructionTest {
     assertFalse(z80.isFlagZEnabled());
   }
 
-  @Test public void shouldNotEnableFlagZIfResultIsNotZeroAndWasPreviouslyEnabled() {
-    z80.enableFlagZ();
-    z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 1);
-    Instruction instruction = new SwipeLeft8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
-
-    instruction.execute();
-
-    assertTrue(z80.isFlagZEnabled());
-  }
-
   @Test public void shouldNotEnableFlagCYIfTheValueOfTheFirstBitIsZero() {
     z80.set8BitRegisterValue(ANY_8BIT_DESTINY_REGISTER, (byte) 1);
     Instruction instruction = new SwipeLeft8BitRegister(z80, ANY_8BIT_DESTINY_REGISTER);
