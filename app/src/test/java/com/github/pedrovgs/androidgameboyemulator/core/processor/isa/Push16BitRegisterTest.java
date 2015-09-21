@@ -33,7 +33,7 @@ public class Push16BitRegisterTest extends InstructionTest {
     instruction.execute();
   }
 
-  @Test public void shouldUse4CyclesAsLastInstructionExecutionTime() {
+  @Test public void shouldUseFourCyclesAsLastInstructionExecutionTime() {
     Instruction instruction = new Push16BitRegister(z80, mmu, ANY_16BIT_SOURCE_REGISTER);
 
     instruction.execute();
