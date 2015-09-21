@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public abstract class Cp8Bit extends Instruction {
+abstract class Cp8Bit extends Instruction {
 
   Cp8Bit(GBZ80 z80) {
     super(z80);
@@ -41,8 +41,6 @@ public abstract class Cp8Bit extends Instruction {
     z80.enableFlagN();
     if (result) {
       z80.enableFlagZ();
-    } else {
-      z80.disableFlagZ();
     }
     if ((registerAValue & 0xF) < (sourceValue & 0xF)) {
       z80.enableFlagH();
