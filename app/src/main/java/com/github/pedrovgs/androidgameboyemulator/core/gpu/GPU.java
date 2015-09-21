@@ -153,16 +153,16 @@ public class GPU {
     TileColor tileColor;
     switch (ordinalTileColor) {
       case 0:
-        tileColor = TileColor.OFF;
+        tileColor = TileColor.ON;
         break;
       case 1:
-        tileColor = TileColor.GRAY1;
+        tileColor = TileColor.OFF;
         break;
       case 2:
-        tileColor = TileColor.GRAY2;
+        tileColor = TileColor.GRAY1;
         break;
       default:
-        tileColor = TileColor.ON;
+        tileColor = TileColor.GRAY2;
     }
     return tileColor;
   }
