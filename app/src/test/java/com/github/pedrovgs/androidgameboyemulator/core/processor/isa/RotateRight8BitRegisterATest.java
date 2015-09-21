@@ -22,7 +22,6 @@ import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class RotateRight8BitRegisterATest extends InstructionTest {
 
@@ -32,16 +31,6 @@ public class RotateRight8BitRegisterATest extends InstructionTest {
     instruction.execute();
 
     assertEquals(1, z80.getLastInstructionExecutionTime());
-  }
-
-  @Test public void shouldDisableAllFlagsExceptTheCYOne() {
-    Instruction instruction = new RotateRight8BitRegisterA(z80);
-
-    instruction.execute();
-
-    assertFalse(z80.isFlagHEnabled());
-    assertFalse(z80.isFlagNEnabled());
-    assertFalse(z80.isFlagZEnabled());
   }
 
   @Test public void shouldRotateRegisterAToTheRightWithoutUseTheCarryFlag() {

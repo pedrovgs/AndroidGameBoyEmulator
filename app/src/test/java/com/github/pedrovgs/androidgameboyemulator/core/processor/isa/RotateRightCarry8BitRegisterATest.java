@@ -35,16 +35,6 @@ public class RotateRightCarry8BitRegisterATest extends InstructionTest {
     assertEquals(1, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldDisableFlagsExceptTheCYOne() {
-    Instruction instruction = new RotateRightCarry8BitRegisterA(z80);
-
-    instruction.execute();
-
-    assertFalse(z80.isFlagHEnabled());
-    assertFalse(z80.isFlagNEnabled());
-    assertFalse(z80.isFlagZEnabled());
-  }
-
   @Test public void shouldRotateRegisterAValueWithoutUpdateCarryAndStoreTheResultIntoRegisterA() {
     z80.set8BitRegisterValue(Register.A, (byte) 2);
     Instruction instruction = new RotateRightCarry8BitRegisterA(z80);

@@ -34,16 +34,6 @@ public class RotateLeft8BitRegisterATest extends InstructionTest {
     assertEquals(1, z80.getLastInstructionExecutionTime());
   }
 
-  @Test public void shouldDisableAllFlagsExceptTheCarryOne() {
-    Instruction instruction = new RotateLeft8BitRegisterA(z80);
-
-    instruction.execute();
-
-    assertFalse(z80.isFlagHEnabled());
-    assertFalse(z80.isFlagNEnabled());
-    assertFalse(z80.isFlagZEnabled());
-  }
-
   @Test public void shouldModifyTheValueOfTheCarryFlagWithTheLastPixelValue() {
     z80.enableFlagCY();
     Instruction instruction = new RotateLeft8BitRegisterA(z80);

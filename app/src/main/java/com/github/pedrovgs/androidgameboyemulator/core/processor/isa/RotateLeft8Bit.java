@@ -42,7 +42,7 @@ abstract class RotateLeft8Bit extends Instruction {
     if ((registerValue >> 7 & 0x1) == 0x1) {
       z80.enableFlagCY();
     }
-    if(newRegisterValue == 0){
+    if (newRegisterValue == 0) {
       z80.enableFlagZ();
     }
     storeValue(newRegisterValue);
