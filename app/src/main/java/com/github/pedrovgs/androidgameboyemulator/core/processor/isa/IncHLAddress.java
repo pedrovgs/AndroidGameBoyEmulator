@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class IncHLAddress extends Instruction {
+class IncHLAddress extends Instruction {
 
   IncHLAddress(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -34,17 +34,15 @@ public class IncHLAddress extends Instruction {
     mmu.writeByte(address, result);
     z80.setLastInstructionExecutionTime(3);
 
-    boolean wasCEnabled = z80.isFlagCYEnabled();
+    boolean wasCyEnabled = z80.isFlagCYEnabled();
     z80.resetFlagF();
-    if (wasCEnabled) {
+    if (wasCyEnabled) {
       z80.enableFlagCY();
-    } else {
-      z80.disableFlagCY();
     }
     if (result == 0) {
       z80.enableFlagZ();
-      z80.enableFlagH();
-    } else if ((result & 0xF) == 0) {
+    }
+    if ((result & 0xF) == 0xF) {
       z80.enableFlagH();
     }
   }
