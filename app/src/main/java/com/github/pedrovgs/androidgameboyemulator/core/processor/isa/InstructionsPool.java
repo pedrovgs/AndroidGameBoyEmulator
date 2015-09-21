@@ -276,10 +276,10 @@ public class InstructionsPool {
     normalInstructions[0x0F] = new RotateRightCarry8BitRegisterA(z80);
     normalInstructions[0x1F] = new RotateRight8BitRegisterA(z80);
     normalInstructions[0xC3] = new Jump(z80, mmu, JUMP_ALWAYS, JUMP_ALWAYS);
-    normalInstructions[0xC2] = new Jump(z80, mmu, JUMP_NON_ZERO, FLAG_Z);
-    normalInstructions[0xCA] = new Jump(z80, mmu, JUMP_ZERO, FLAG_Z);
-    normalInstructions[0xD2] = new Jump(z80, mmu, JUMP_NON_CARRY, FLAG_C);
-    normalInstructions[0xDA] = new Jump(z80, mmu, JUMP_CARRY, FLAG_C);
+    normalInstructions[0xC2] = new Jump(z80, mmu, FLAG_Z, JUMP_NON_ZERO);
+    normalInstructions[0xCA] = new Jump(z80, mmu, FLAG_Z, JUMP_ZERO);
+    normalInstructions[0xD2] = new Jump(z80, mmu, FLAG_C, JUMP_NON_CARRY);
+    normalInstructions[0xDA] = new Jump(z80, mmu, FLAG_C, JUMP_CARRY);
     normalInstructions[0xE9] = new JumpToHLAddress(z80, mmu);
     normalInstructions[0x18] = new JumpR(z80, mmu, JUMP_ALWAYS, JUMP_ALWAYS);
     normalInstructions[0x20] = new JumpR(z80, mmu, JUMP_NON_ZERO, FLAG_Z);
