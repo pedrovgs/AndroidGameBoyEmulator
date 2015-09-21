@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class LoadHLAddressIntoAAndDecrementHL extends Instruction {
+class LoadHLAddressIntoAAndDecrementHL extends Instruction {
 
   LoadHLAddressIntoAAndDecrementHL(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -31,8 +31,8 @@ public class LoadHLAddressIntoAAndDecrementHL extends Instruction {
     int address = z80.get16BitRegisterValue(Register.HL);
     byte memoryValue = mmu.readByte(address);
     z80.set8BitRegisterValue(Register.A, memoryValue);
-    z80.setLastInstructionExecutionTime(2);
     int newHLRegisterValue = z80.get16BitRegisterValue(Register.HL) - 1;
     z80.set16BitRegisterValue(Register.HL, newHLRegisterValue);
+    z80.setLastInstructionExecutionTime(2);
   }
 }
