@@ -21,7 +21,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
 
-public class Ret extends Instruction {
+class Ret extends Instruction {
 
   private final int flag;
   private final int condition;
