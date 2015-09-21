@@ -20,7 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.processor.isa;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 
-public class Reti extends Instruction {
+class Reti extends Instruction {
 
   Reti(GBZ80 z80, MMU mmu) {
     super(z80, mmu);
@@ -29,6 +29,6 @@ public class Reti extends Instruction {
   @Override public void execute() {
     z80.setProgramCounter(popTwice());
     z80.enableInterruptMasterFlag();
-    z80.setLastInstructionExecutionTime(4);
+    z80.setLastInstructionExecutionTime(2);
   }
 }
