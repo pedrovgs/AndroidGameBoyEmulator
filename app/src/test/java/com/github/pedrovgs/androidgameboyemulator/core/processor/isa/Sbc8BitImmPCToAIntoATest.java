@@ -46,4 +46,13 @@ public class Sbc8BitImmPCToAIntoATest extends InstructionTest {
 
     assertEquals(1, z80.get8BitRegisterValue(Register.A));
   }
+
+  @Test public void shouldIncrementProgramCounter() {
+    z80.setProgramCounter(ANY_PROGRAM_COUNTER);
+    Instruction instruction = new Sbc8BitImmPCToAIntoA(z80, mmu);
+
+    instruction.execute();
+
+    assertEquals(ANY_PROGRAM_COUNTER + 1, z80.getProgramCounter());
+  }
 }
