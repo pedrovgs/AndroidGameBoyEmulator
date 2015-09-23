@@ -120,7 +120,7 @@ public class GPU {
   public int getTileSetAddress() {
     return isUsingTileSet1() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
   }
-  
+
   public int getCurrentLine() {
     return mmu.readByte(CURRENT_LINE_ADDRESS) & 0xFF;
   }
