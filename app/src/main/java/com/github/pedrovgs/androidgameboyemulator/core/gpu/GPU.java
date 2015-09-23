@@ -135,7 +135,8 @@ public class GPU {
   }
 
   private boolean isLCDActive() {
-    return mmu.readByte(LCD_GPU_CONTROL_ADDRESS) != 0;
+    byte lcdRegisters = mmu.readByte(LCD_GPU_CONTROL_ADDRESS);
+    return (lcdRegisters & 0x80) == 0x80;
   }
 
   private TileColor getTileColor(int x, int y) {

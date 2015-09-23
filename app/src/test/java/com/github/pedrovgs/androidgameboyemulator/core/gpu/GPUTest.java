@@ -30,6 +30,7 @@ public class GPUTest extends UnitTest {
   private static final int SCREEN_WIDTH = 160;
   private static final int OFF_COLOR = -10461088;
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
+  private static final int LCD_ACTIVE_FLAG = 0x80;
 
   private MMU mmu;
 
@@ -136,7 +137,7 @@ public class GPUTest extends UnitTest {
 
   private GPU givenAEnabledGPU() {
     GPU gpu = givenAGPU();
-    mmu.writeByte(LCD_GPU_CONTROL_ADDRESS, (byte) 11);
+    mmu.writeByte(LCD_GPU_CONTROL_ADDRESS, (byte) LCD_ACTIVE_FLAG);
     return gpu;
   }
 }
