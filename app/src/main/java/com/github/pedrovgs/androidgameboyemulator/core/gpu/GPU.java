@@ -34,11 +34,12 @@ public class GPU {
   private static final int CURRENT_LINE_ADDRESS = 0xFF44;
   private static final int MAP_0_ADDRESS = 0x9800;
   private static final int MAP_1_ADDRESS = 0x9C00;
-  private static final int SCREEN_HEIGHT_IN_PX = 144;
+  private static final int NUMBER_OF_LINES = 144;
   private static final int TILE_SIZE_IN_PX = 8;
   private static final int TILE_SET_0_ADDRESS = 0x9000;
   private static final int TILE_SET_1_ADDRESS = 0x8000;
   private static final int MAP_SIZE_IN_TILES = 32;
+  private static final int VERTICAL_BLANK_PERIOD_LINES = 10;
 
   public final MMU mmu;
 
@@ -79,7 +80,7 @@ public class GPU {
         if (currentModeClock >= HORIZONTAL_BLANK.getClocks()) {
           resetCurrentModeClock();
           incrementCurrentLine();
-          if (getCurrentLine() == SCREEN_HEIGHT_IN_PX - 1) {
+          if (getCurrentLine() == NUMBER_OF_LINES - 1) {
             setGPUMode(VERTICAL_BLANK);
             notifyListener();
           } else {
@@ -91,7 +92,7 @@ public class GPU {
         if (currentModeClock >= VERTICAL_BLANK.getClocks()) {
           resetCurrentModeClock();
           incrementCurrentLine();
-          if (getCurrentLine() > 153) {
+          if (getCurrentLine() > NUMBER_OF_LINES + VERTICAL_BLANK_PERIOD_LINES - 1) {
             setGPUMode(SCANLINE_OAM);
             setCurrentLine(0);
           }
