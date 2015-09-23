@@ -113,6 +113,26 @@ public class GPU {
     }
   }
 
+  public int getMapAddress() {
+    return isUsingMap1() ? MAP_1_ADDRESS : MAP_0_ADDRESS;
+  }
+
+  public int getTileSetAddress() {
+    return isUsingTileSet1() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
+  }
+  
+  public int getCurrentLine() {
+    return mmu.readByte(CURRENT_LINE_ADDRESS) & 0xFF;
+  }
+
+  public int getScrollX() {
+    return mmu.readByte(SCROLL_X_ADDRESS) & 0xFF;
+  }
+
+  public int getScrollY() {
+    return mmu.readByte(SCROLL_Y_ADDRESS) & 0xFF;
+  }
+
   private boolean isLCDActive() {
     return mmu.readByte(LCD_GPU_CONTROL_ADDRESS) != 0;
   }
@@ -131,14 +151,6 @@ public class GPU {
     int mapAddress = getMapAddress();
     mapAddress += tileIndexX + (tileIndexY * MAP_SIZE_IN_TILES);
     return mmu.readByte(mapAddress) & 0xFF;
-  }
-
-  public int getMapAddress() {
-    return isUsingMap1() ? MAP_1_ADDRESS : MAP_0_ADDRESS;
-  }
-
-  public int getTileSetAddress() {
-    return isUsingTileSet1() ? TILE_SET_1_ADDRESS : TILE_SET_0_ADDRESS;
   }
 
   private boolean isUsingMap1() {
@@ -188,18 +200,6 @@ public class GPU {
 
   private void setCurrentLine(int currentLine) {
     mmu.writeByte(CURRENT_LINE_ADDRESS, (byte) currentLine);
-  }
-
-  public int getCurrentLine() {
-    return mmu.readByte(CURRENT_LINE_ADDRESS) & 0xFF;
-  }
-
-  public int getScrollX() {
-    return mmu.readByte(SCROLL_X_ADDRESS) & 0xFF;
-  }
-
-  public int getScrollY() {
-    return mmu.readByte(SCROLL_Y_ADDRESS) & 0xFF;
   }
 
   private int getBackgroundMap() {
