@@ -28,7 +28,8 @@ public class GPUTest extends UnitTest {
 
   private static final int SCREEN_HEIGHT = 144;
   private static final int SCREEN_WIDTH = 160;
-  private static final int ON_COLOR = -16777216;
+  private static final int OFF_COLOR = -10461088;
+  private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
 
   private MMU mmu;
 
@@ -39,7 +40,7 @@ public class GPUTest extends UnitTest {
   }
 
   @Test public void shouldRenderTheCopyRightImageCloseToTheOrigin() {
-    GPU gpu = givenAGPU();
+    GPU gpu = givenAEnabledGPU();
     configureTileZeroWithTheCopyrightTile();
     configureMapToUseAlwaysTileZero();
 
@@ -63,7 +64,7 @@ public class GPUTest extends UnitTest {
   }
 
   @Test public void shouldRenderTheCopyRightImageFartherThanTheOrigin() {
-    GPU gpu = givenAGPU();
+    GPU gpu = givenAEnabledGPU();
     configureTileZeroWithTheCopyrightTile();
     configureMapToUseAlwaysTileZero();
 
@@ -89,9 +90,9 @@ public class GPUTest extends UnitTest {
   private void assertPixelHasColor(GPU gpu, int x, int y, boolean hasColor) {
     int color = gpu.getColorAtPixel(x, y);
     if (hasColor) {
-      assertEquals(ON_COLOR, color);
+      assertEquals(OFF_COLOR, color);
     } else {
-      assertFalse(color == ON_COLOR);
+      assertFalse(color == OFF_COLOR);
     }
   }
 
@@ -131,5 +132,11 @@ public class GPUTest extends UnitTest {
   private GPU givenAGPU() {
     mmu = new MMU();
     return new GPU(mmu);
+  }
+
+  private GPU givenAEnabledGPU() {
+    GPU gpu = givenAGPU();
+    mmu.writeByte(LCD_GPU_CONTROL_ADDRESS, (byte) 11);
+    return gpu;
   }
 }
