@@ -62,11 +62,17 @@ public class GPU {
   }
 
   public int getColorAtPixel(int x, int y) {
-    TileColor tileColor = getTileColor(x, y);
+    TileColor tileColor = TileColor.OFF;
+    if (isLCDActive()) {
+      tileColor = getTileColor(x, y);
+    }
     return tileColor.getRGBA();
   }
 
   public void tick(int cyclesElapsed) {
+    if (!isLCDActive()) {
+      return;
+    }
     this.currentModeClock += cyclesElapsed;
     switch (currentGPUMode) {
       case HORIZONTAL_BLANK:
@@ -105,6 +111,10 @@ public class GPU {
         break;
       default:
     }
+  }
+
+  private boolean isLCDActive() {
+    return mmu.readByte(LCD_GPU_CONTROL_ADDRESS) != 0;
   }
 
   private TileColor getTileColor(int x, int y) {
