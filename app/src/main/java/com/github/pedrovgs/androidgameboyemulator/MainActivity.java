@@ -23,6 +23,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
@@ -42,12 +44,12 @@ public class MainActivity extends Activity {
   private static final float LCD_HEIGHT = 144;
   private static final float LCD_ASPECT_RATIO = LCD_WIDTH / LCD_HEIGHT;
 
-  private LCD lcd;
+  @Bind(R.id.lcd) LCD lcd;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-    lcd = (LCD) findViewById(R.id.lcd);
+    ButterKnife.bind(this);
     adjustLCDSize();
     initializeGameBoy();
   }
