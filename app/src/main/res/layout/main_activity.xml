@@ -27,6 +27,6 @@
       android:layout_height="288dp"
       android:layout_marginTop="40dp"
       android:layout_centerHorizontal="true"
-      android:background="@android:color/black"/>
+      android:background="@color/lcd_background_color"/>
 
 </RelativeLayout>

@@ -18,5 +18,6 @@
 
 <resources>
 
+  <color name="lcd_background_color">#FF77B858</color>
 
 </resources>
