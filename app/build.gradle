@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-  compile 'com.android.support:appcompat-v7:22.1.1'
+  compile 'com.android.support:appcompat-v7:23.0.1'
   compile 'com.google.guava:guava:18.0'
   testCompile 'org.mockito:mockito-all:1.9.5'
   testCompile 'junit:junit:4.10'
