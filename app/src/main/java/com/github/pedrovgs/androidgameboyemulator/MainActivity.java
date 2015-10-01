@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
@@ -52,6 +53,30 @@ public class MainActivity extends Activity {
     ButterKnife.bind(this);
     adjustLCDSize();
     initializeGameBoy();
+  }
+
+  @OnClick(R.id.bt_a) public void onButtonAClick() {
+
+  }
+
+  @OnClick(R.id.bt_b) public void onButtonBClick() {
+
+  }
+
+  @OnClick(R.id.bt_up) public void onButtonUpClick() {
+
+  }
+
+  @OnClick(R.id.bt_down) public void onButtonDownClick() {
+
+  }
+
+  @OnClick(R.id.bt_left) public void onButtonLeftClick() {
+
+  }
+
+  @OnClick(R.id.bt_right) public void onButtonRightClick() {
+
   }
 
   private void adjustLCDSize() {
