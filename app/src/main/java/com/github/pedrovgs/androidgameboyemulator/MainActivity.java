@@ -19,7 +19,9 @@ package com.github.pedrovgs.androidgameboyemulator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Toast;
 import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameReader;
@@ -34,17 +36,38 @@ import java.io.IOException;
 public class MainActivity extends Activity {
 
   private static final String LOGTAG = "AndroidGameBoyEmulator";
+  private static final float LCD_WIDTH_SCREEN_RATIO = 0.55f;
   private static final String TEST_ROM_URI = "/sdcard/Download/test.gb";
+  private static final float LCD_WIDTH = 160;
+  private static final float LCD_HEIGHT = 144;
+  private static final float LCD_ASPECT_RATIO = LCD_WIDTH / LCD_HEIGHT;
+
+  private LCD lcd;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-
+    lcd = (LCD) findViewById(R.id.lcd);
+    adjustLCDSize();
     initializeGameBoy();
   }
 
+  private void adjustLCDSize() {
+    int screenWidth = getScreenWidth();
+    int lcdWidth = (int) (screenWidth * LCD_WIDTH_SCREEN_RATIO);
+    int lcdHeight = (int) (lcdWidth / LCD_ASPECT_RATIO);
+    ViewGroup.LayoutParams layoutParams = lcd.getLayoutParams();
+    layoutParams.height = lcdHeight;
+    layoutParams.width = lcdWidth;
+  }
+
+  private int getScreenWidth() {
+    DisplayMetrics displayMetrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+    return displayMetrics.widthPixels;
+  }
+
   private void initializeGameBoy() {
-    final LCD lcd = (LCD) findViewById(R.id.lcd);
     final MMU mmu = new MMU();
     final GBZ80 z80 = new GBZ80();
     final GPU gpu = new GPU(mmu);
