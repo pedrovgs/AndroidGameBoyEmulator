@@ -19,7 +19,7 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 
 enum TileColor {
 
-  ON(255, 0, 0, 0), GRAY1(255, 192, 192, 192), GRAY2(255, 96, 96, 96), OFF(255, 255, 255, 255);
+  OFF(0, 0, 0, 0), GRAY1(255, 121, 180, 89), GRAY2(255, 38, 86, 60), ON(255, 7, 18, 24);
 
   private final int alpha;
   private final int red;

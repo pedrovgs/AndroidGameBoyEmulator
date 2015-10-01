@@ -28,7 +28,7 @@ public class GPUTest extends UnitTest {
 
   private static final int SCREEN_HEIGHT = 144;
   private static final int SCREEN_WIDTH = 160;
-  private static final int OFF_COLOR = -10461088;
+  private static final int ON_COLOR = TileColor.ON.getRGBA();
   private static final int LCD_GPU_CONTROL_ADDRESS = 0xFF40;
   private static final int LCD_ACTIVE_FLAG = 0x80;
 
@@ -37,7 +37,7 @@ public class GPUTest extends UnitTest {
   @Test public void shouldInitializeGPUWithEveryPixelConfiguredTo255InEveryChannel() {
     GPU gpu = givenAGPU();
 
-    assertAllPixelsAre((byte) 0xFF, gpu);
+    assertAllPixelsAre((byte) 0, gpu);
   }
 
   @Test public void shouldRenderTheCopyRightImageCloseToTheOrigin() {
@@ -91,9 +91,9 @@ public class GPUTest extends UnitTest {
   private void assertPixelHasColor(GPU gpu, int x, int y, boolean hasColor) {
     int color = gpu.getColorAtPixel(x, y);
     if (hasColor) {
-      assertEquals(OFF_COLOR, color);
+      assertEquals(ON_COLOR, color);
     } else {
-      assertFalse(color == OFF_COLOR);
+      assertFalse(color == ON_COLOR);
     }
   }
 
