@@ -21,11 +21,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.OnTouch;
 import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
@@ -55,28 +57,58 @@ public class MainActivity extends Activity {
     initializeGameBoy();
   }
 
-  @OnClick(R.id.bt_a) public void onButtonAClick() {
+  @OnTouch(R.id.bt_a) public boolean onButtonATouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
 
+    } else if (isActionUpMotionEvent(event)) {
+
+    }
+    return true;
   }
 
-  @OnClick(R.id.bt_b) public void onButtonBClick() {
+  @OnTouch(R.id.bt_b) public boolean onButtonBTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
 
+    } else if (isActionUpMotionEvent(event)) {
+
+    }
+    return true;
   }
 
-  @OnClick(R.id.bt_up) public void onButtonUpClick() {
+  @OnTouch(R.id.bt_up) public boolean onButtonUpTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
 
+    } else if (isActionUpMotionEvent(event)) {
+
+    }
+    return true;
   }
 
-  @OnClick(R.id.bt_down) public void onButtonDownClick() {
+  @OnTouch(R.id.bt_down) public boolean onButtonDownTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
 
+    } else if (isActionUpMotionEvent(event)) {
+
+    }
+    return true;
   }
 
-  @OnClick(R.id.bt_left) public void onButtonLeftClick() {
+  @OnTouch(R.id.bt_left) public boolean onButtonLeftTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
 
+    } else if (isActionUpMotionEvent(event)) {
+
+    }
+    return true;
   }
 
-  @OnClick(R.id.bt_right) public void onButtonRightClick() {
+  @OnTouch(R.id.bt_right) public boolean onButtonRightTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
 
+    } else if (isActionUpMotionEvent(event)) {
+
+    }
+    return true;
   }
 
   private void adjustLCDSize() {
@@ -123,5 +155,13 @@ public class MainActivity extends Activity {
       }
     };
     gameBoyThread.start();
+  }
+
+  private boolean isActionDownMotionEvent(MotionEvent event) {
+    return event.getAction() == MotionEvent.ACTION_DOWN;
+  }
+
+  private boolean isActionUpMotionEvent(MotionEvent event) {
+    return event.getAction() == MotionEvent.ACTION_UP;
   }
 }
