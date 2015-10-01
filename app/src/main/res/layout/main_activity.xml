@@ -19,7 +19,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    >
 
   <com.github.pedrovgs.androidgameboyemulator.lcd.LCD
       android:id="@+id/lcd"
@@ -27,6 +28,61 @@
       android:layout_height="288dp"
       android:layout_marginTop="40dp"
       android:layout_centerHorizontal="true"
-      android:background="@color/lcd_background_color"/>
+      android:background="@color/lcd_background_color"
+      />
+
+  <Button
+      android:id="@+id/bt_a"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="A"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+      />
+
+  <Button
+      android:id="@+id/bt_b"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="B"
+      android:layout_alignParentBottom="true"
+      android:layout_toLeftOf="@id/bt_a"
+      />
+
+  <FrameLayout
+      android:layout_width="200dp"
+      android:layout_height="200dp"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentBottom="true"
+      >
+    <Button
+        android:id="@+id/bt_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UP"
+        android:layout_gravity="center_horizontal|top"
+        />
+    <Button
+        android:id="@+id/bt_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DW"
+        android:layout_gravity="center_horizontal|bottom"
+        />
+    <Button
+        android:id="@+id/bt_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LF"
+        android:layout_gravity="center_vertical|left"
+        />
+    <Button
+        android:id="@+id/bt_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RG"
+        android:layout_gravity="center_vertical|right"
+        />
+  </FrameLayout>
 
 </RelativeLayout>
