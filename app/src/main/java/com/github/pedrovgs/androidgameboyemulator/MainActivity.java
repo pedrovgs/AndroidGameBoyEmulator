@@ -39,6 +39,11 @@ public class MainActivity extends Activity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
+
+    initializeGameBoy();
+  }
+
+  private void initializeGameBoy() {
     final LCD lcd = (LCD) findViewById(R.id.lcd);
     final MMU mmu = new MMU();
     final GBZ80 z80 = new GBZ80();
@@ -68,32 +73,5 @@ public class MainActivity extends Activity {
       }
     };
     gameBoyThread.start();
-  }
-
-  private void fillMemoryWithTrash(MMU mmu) {
-    //Configure tile0 in tile set 1
-    mmu.writeByte(0x8010, (byte) 0x3c);
-    mmu.writeByte(0x8011, (byte) 0x3c);
-    mmu.writeByte(0x8012, (byte) 0x42);
-    mmu.writeByte(0x8013, (byte) 0x42);
-    mmu.writeByte(0x8014, (byte) 0xb9);
-    mmu.writeByte(0x8015, (byte) 0xb9);
-    mmu.writeByte(0x8016, (byte) 0xa5);
-    mmu.writeByte(0x8017, (byte) 0xa5);
-    mmu.writeByte(0x8018, (byte) 0xb9);
-    mmu.writeByte(0x8019, (byte) 0xb9);
-    mmu.writeByte(0x801A, (byte) 0xA5);
-    mmu.writeByte(0x801B, (byte) 0xA5);
-    mmu.writeByte(0x801C, (byte) 0x42);
-    mmu.writeByte(0x801D, (byte) 0x42);
-    mmu.writeByte(0x801E, (byte) 0x3c);
-    mmu.writeByte(0x801F, (byte) 0x3c);
-    int address = 0x9800;
-    for (int i = 0; i < 1024; i++) {
-      mmu.writeByte(address + i, (byte) 1);
-    }
-
-    mmu.writeByte(0xff42, (byte) 0);
-    mmu.writeByte(0xff43, (byte) 0);
   }
 }
