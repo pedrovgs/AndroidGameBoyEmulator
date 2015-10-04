@@ -223,7 +223,7 @@ public class GameBoyBIOSTest {
     mmu = new MMU();
     gpu = new GPU(mmu);
     GameLoader gameLoader = new GameLoader(new FakeGameReader());
-    Keypad keypad = new Keypad();
+    Keypad keypad = new Keypad(mmu);
     GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
     gameBoy.loadGame(ANY_GAME_URI);
     return gameBoy;

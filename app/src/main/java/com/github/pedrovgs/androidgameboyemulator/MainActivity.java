@@ -136,7 +136,7 @@ public class MainActivity extends Activity {
     final GPU gpu = new GPU(mmu);
     GameReader gameReader = new AndroidGameReader();
     GameLoader gameLoader = new GameLoader(gameReader);
-    Keypad keypad = new Keypad();
+    Keypad keypad = new Keypad(mmu);
     gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
     gameBoy.setGPUListener(lcd);
 

@@ -17,13 +17,29 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.keypad;
 
+import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
+
 public class Keypad {
 
-  public void keyUp(Key key) {
+  private static final int KEYPAD_ADDRESS = 0xFF00;
 
+  private final MMU mmu;
+
+  public Keypad(MMU mmu) {
+    this.mmu = mmu;
+  }
+
+  public void keyUp(Key key) {
+    byte keypadValue = getKeypadValue(key);
+    mmu.writeByte(KEYPAD_ADDRESS, keypadValue);
   }
 
   public void keyDown(Key key) {
+    byte keypadValue = getKeypadValue(key);
+    mmu.writeByte(KEYPAD_ADDRESS, keypadValue);
+  }
 
+  private byte getKeypadValue(Key key) {
+    return 0;
   }
 }
