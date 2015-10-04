@@ -22,6 +22,8 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 public class Keypad {
 
   private static final int KEYPAD_ADDRESS = 0xFF00;
+  private static final byte[] keyUpValues = {};
+  private static final byte[] keyDownValues = {};
 
   private final MMU mmu;
 
@@ -30,16 +32,20 @@ public class Keypad {
   }
 
   public void keyUp(Key key) {
-    byte keypadValue = getKeypadValue(key);
+    byte keypadValue = getKeypadUpValue(key);
     mmu.writeByte(KEYPAD_ADDRESS, keypadValue);
   }
 
   public void keyDown(Key key) {
-    byte keypadValue = getKeypadValue(key);
+    byte keypadValue = getKeypadDownValue(key);
     mmu.writeByte(KEYPAD_ADDRESS, keypadValue);
   }
 
-  private byte getKeypadValue(Key key) {
-    return 0;
+  private byte getKeypadUpValue(Key key) {
+    return keyUpValues[key.ordinal()];
+  }
+
+  private byte getKeypadDownValue(Key key) {
+    return keyDownValues[key.ordinal()];
   }
 }
