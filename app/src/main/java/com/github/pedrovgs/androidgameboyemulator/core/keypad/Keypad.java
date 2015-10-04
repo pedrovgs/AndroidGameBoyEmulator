@@ -39,12 +39,14 @@ public class Keypad {
     byte keyUpValue = getKeypadUpValue(key);
     byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF & keyUpValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
+    updateColumn(key);
   }
 
   public void keyDown(Key key) {
     byte keyDownValue = getKeypadDownValue(key);
     byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF | keyDownValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
+    updateColumn(key);
   }
 
   private byte getKeypadUpValue(Key key) {
@@ -80,5 +82,9 @@ public class Keypad {
     keyDownValues.put(Key.B, (byte) 0x2);
     keyDownValues.put(Key.SELECT, (byte) 0x4);
     keyDownValues.put(Key.START, (byte) 0x8);
+  }
+
+  private void updateColumn(Key key) {
+
   }
 }
