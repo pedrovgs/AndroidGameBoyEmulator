@@ -19,4 +19,11 @@ package com.github.pedrovgs.androidgameboyemulator.core.keypad;
 
 public class Keypad {
 
+  public void keyUp(Key key) {
+
+  }
+
+  public void keyDown(Key key) {
+
+  }
 }

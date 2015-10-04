@@ -20,6 +20,7 @@ package com.github.pedrovgs.androidgameboyemulator.core;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPUListener;
+import com.github.pedrovgs.androidgameboyemulator.core.keypad.Key;
 import com.github.pedrovgs.androidgameboyemulator.core.keypad.Keypad;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
@@ -91,12 +92,12 @@ public class GameBoy {
     }
   }
 
-  private void incrementTickCounter() {
-    tickCounter++;
+  public void keyDown(Key key) {
+    keypad.keyDown(key);
   }
 
-  private boolean isExtendedInstruction(int instructionCode) {
-    return instructionCode == EXTENDED_OPERATION_CODE;
+  public void keyUp(Key key) {
+    keypad.keyUp(key);
   }
 
   public void reset() throws IOException {
@@ -111,5 +112,13 @@ public class GameBoy {
 
   public void setGPUListener(GPUListener listener) {
     gpu.setListener(listener);
+  }
+
+  private void incrementTickCounter() {
+    tickCounter++;
+  }
+
+  private boolean isExtendedInstruction(int instructionCode) {
+    return instructionCode == EXTENDED_OPERATION_CODE;
   }
 }

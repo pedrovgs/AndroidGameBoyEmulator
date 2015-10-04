@@ -33,6 +33,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameRea
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.core.keypad.Key;
 import com.github.pedrovgs.androidgameboyemulator.core.keypad.Keypad;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
@@ -50,6 +51,8 @@ public class MainActivity extends Activity {
 
   @Bind(R.id.lcd) LCD lcd;
 
+  private GameBoy gameBoy;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
@@ -60,54 +63,54 @@ public class MainActivity extends Activity {
 
   @OnTouch(R.id.bt_a) public boolean onButtonATouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
-
+      gameBoy.keyDown(Key.A);
     } else if (isActionUpMotionEvent(event)) {
-
+      gameBoy.keyUp(Key.B);
     }
     return true;
   }
 
   @OnTouch(R.id.bt_b) public boolean onButtonBTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
-
+      gameBoy.keyDown(Key.B);
     } else if (isActionUpMotionEvent(event)) {
-
+      gameBoy.keyUp(Key.B);
     }
     return true;
   }
 
   @OnTouch(R.id.bt_up) public boolean onButtonUpTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
-
+      gameBoy.keyDown(Key.UP);
     } else if (isActionUpMotionEvent(event)) {
-
+      gameBoy.keyUp(Key.UP);
     }
     return true;
   }
 
   @OnTouch(R.id.bt_down) public boolean onButtonDownTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
-
+      gameBoy.keyDown(Key.DOWN);
     } else if (isActionUpMotionEvent(event)) {
-
+      gameBoy.keyUp(Key.DOWN);
     }
     return true;
   }
 
   @OnTouch(R.id.bt_left) public boolean onButtonLeftTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
-
+      gameBoy.keyDown(Key.LEFT);
     } else if (isActionUpMotionEvent(event)) {
-
+      gameBoy.keyUp(Key.LEFT);
     }
     return true;
   }
 
   @OnTouch(R.id.bt_right) public boolean onButtonRightTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
-
+      gameBoy.keyDown(Key.RIGHT);
     } else if (isActionUpMotionEvent(event)) {
-
+      gameBoy.keyUp(Key.RIGHT);
     }
     return true;
   }
@@ -134,7 +137,7 @@ public class MainActivity extends Activity {
     GameReader gameReader = new AndroidGameReader();
     GameLoader gameLoader = new GameLoader(gameReader);
     Keypad keypad = new Keypad();
-    final GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
+    gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
     gameBoy.setGPUListener(lcd);
 
     Thread gameBoyThread = new Thread() {
