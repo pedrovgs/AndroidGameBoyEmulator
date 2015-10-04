@@ -18,17 +18,21 @@
 package com.github.pedrovgs.androidgameboyemulator.core.keypad;
 
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Keypad {
 
   private static final int KEYPAD_ADDRESS = 0xFF00;
-  private static final byte[] keyUpValues = {};
-  private static final byte[] keyDownValues = {};
+
+  private final Map<Key, Byte> keyUpValues = new HashMap<Key, Byte>();
+  private final Map<Key, Byte> keyDownValues = new HashMap<Key, Byte>();
 
   private final MMU mmu;
 
   public Keypad(MMU mmu) {
     this.mmu = mmu;
+    initializeKeypadValues();
   }
 
   public void keyUp(Key key) {
@@ -42,10 +46,14 @@ public class Keypad {
   }
 
   private byte getKeypadUpValue(Key key) {
-    return keyUpValues[key.ordinal()];
+    return keyUpValues.get(key);
   }
 
   private byte getKeypadDownValue(Key key) {
-    return keyDownValues[key.ordinal()];
+    return keyDownValues.get(key);
+  }
+
+  private void initializeKeypadValues() {
+
   }
 }
