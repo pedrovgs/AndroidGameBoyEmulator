@@ -3,6 +3,7 @@ package com.github.pedrovgs.androidgameboyemulator.core;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.FakeGameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.core.keypad.Keypad;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.Register;
@@ -222,7 +223,8 @@ public class GameBoyBIOSTest {
     mmu = new MMU();
     gpu = new GPU(mmu);
     GameLoader gameLoader = new GameLoader(new FakeGameReader());
-    GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader);
+    Keypad keypad = new Keypad();
+    GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
     gameBoy.loadGame(ANY_GAME_URI);
     return gameBoy;
   }

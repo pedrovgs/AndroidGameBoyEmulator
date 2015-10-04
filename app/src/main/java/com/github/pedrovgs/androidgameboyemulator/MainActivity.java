@@ -33,6 +33,7 @@ import com.github.pedrovgs.androidgameboyemulator.core.gameloader.AndroidGameRea
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameLoader;
 import com.github.pedrovgs.androidgameboyemulator.core.gameloader.GameReader;
 import com.github.pedrovgs.androidgameboyemulator.core.gpu.GPU;
+import com.github.pedrovgs.androidgameboyemulator.core.keypad.Keypad;
 import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import com.github.pedrovgs.androidgameboyemulator.core.processor.GBZ80;
 import com.github.pedrovgs.androidgameboyemulator.lcd.LCD;
@@ -132,7 +133,8 @@ public class MainActivity extends Activity {
     final GPU gpu = new GPU(mmu);
     GameReader gameReader = new AndroidGameReader();
     GameLoader gameLoader = new GameLoader(gameReader);
-    final GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader);
+    Keypad keypad = new Keypad();
+    final GameBoy gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
     gameBoy.setGPUListener(lcd);
 
     Thread gameBoyThread = new Thread() {
