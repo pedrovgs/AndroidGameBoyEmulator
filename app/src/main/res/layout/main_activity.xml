@@ -49,6 +49,24 @@
       android:layout_toLeftOf="@id/bt_a"
       />
 
+  <Button
+      android:id="@+id/bt_start"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="START"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentRight="true"
+      />
+
+  <Button
+      android:id="@+id/bt_select"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="SELECT"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentLeft="true"
+      />
+
   <FrameLayout
       android:layout_width="200dp"
       android:layout_height="200dp"

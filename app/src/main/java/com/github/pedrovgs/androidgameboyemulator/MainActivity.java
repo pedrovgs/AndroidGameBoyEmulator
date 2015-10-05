@@ -115,6 +115,24 @@ public class MainActivity extends Activity {
     return true;
   }
 
+  @OnTouch(R.id.bt_start) public boolean onButtonStartTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
+      gameBoy.keyDown(Key.START);
+    } else if (isActionUpMotionEvent(event)) {
+      gameBoy.keyUp(Key.START);
+    }
+    return true;
+  }
+
+  @OnTouch(R.id.bt_select) public boolean onButtonSelectTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
+      gameBoy.keyDown(Key.SELECT);
+    } else if (isActionUpMotionEvent(event)) {
+      gameBoy.keyUp(Key.SELECT);
+    }
+    return true;
+  }
+
   private void adjustLCDSize() {
     int screenWidth = getScreenWidth();
     int lcdWidth = (int) (screenWidth * LCD_WIDTH_SCREEN_RATIO);
