@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
     initializeGameBoy();
   }
 
-  @OnTouch(R.id.bt_a) public boolean onButtonATouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_a) public boolean onAButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.A);
     } else if (isActionUpMotionEvent(event)) {
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_b) public boolean onButtonBTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_b) public boolean onBButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.B);
     } else if (isActionUpMotionEvent(event)) {
@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_up) public boolean onButtonUpTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_up) public boolean onUpButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.UP);
     } else if (isActionUpMotionEvent(event)) {
@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_down) public boolean onButtonDownTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_down) public boolean onDownButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.DOWN);
     } else if (isActionUpMotionEvent(event)) {
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_left) public boolean onButtonLeftTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_left) public boolean onLeftButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.LEFT);
     } else if (isActionUpMotionEvent(event)) {
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_right) public boolean onButtonRightTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_right) public boolean onRightButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.RIGHT);
     } else if (isActionUpMotionEvent(event)) {
@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_start) public boolean onButtonStartTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_start) public boolean onStartButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.START);
     } else if (isActionUpMotionEvent(event)) {
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
     return true;
   }
 
-  @OnTouch(R.id.bt_select) public boolean onButtonSelectTouch(View view, MotionEvent event) {
+  @OnTouch(R.id.bt_select) public boolean onSelectButtonTouch(View view, MotionEvent event) {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.SELECT);
     } else if (isActionUpMotionEvent(event)) {
