@@ -193,6 +193,17 @@ public class KeypadTest extends UnitTest {
     assertEquals(0x20, mmu.readByte(KEYPAD_ADDRESS) & 0x20);
   }
 
+  @Test public void shouldSupportMoreThanOneKeyPressedInDifferentColumns() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyUp(Key.DOWN);
+    keypad.keyDown(Key.UP);
+    keypad.keyDown(Key.B);
+    keypad.keyUp(Key.A);
+
+    assertEquals(0x39, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+  }
+
   private void pressAllKeysDown(Keypad keypad) {
     keypad.keyDown(Key.LEFT);
     keypad.keyDown(Key.RIGHT);
