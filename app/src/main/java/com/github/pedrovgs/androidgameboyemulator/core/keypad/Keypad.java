@@ -25,8 +25,8 @@ public class Keypad {
 
   private static final int KEYPAD_ADDRESS = 0xFF00;
 
-  private final Map<Key, Byte> keyUpValues = new HashMap<Key, Byte>();
   private final Map<Key, Byte> keyDownValues = new HashMap<Key, Byte>();
+  private final Map<Key, Byte> keyUpValues = new HashMap<Key, Byte>();
 
   private final MMU mmu;
 
@@ -36,25 +36,25 @@ public class Keypad {
   }
 
   public void keyUp(Key key) {
-    byte keyUpValue = getKeypadUpValue(key);
-    byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF & keyUpValue);
-    mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
-    updateColumn(key);
-  }
-
-  public void keyDown(Key key) {
-    byte keyDownValue = getKeypadDownValue(key);
+    byte keyDownValue = getKeypadUpValue(key);
     byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF | keyDownValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
     updateColumn(key);
   }
 
-  private byte getKeypadUpValue(Key key) {
-    return keyUpValues.get(key);
+  public void keyDown(Key key) {
+    byte keyUpValue = getKeyDownValue(key);
+    byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF & keyUpValue);
+    mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
+    updateColumn(key);
   }
 
-  private byte getKeypadDownValue(Key key) {
+  private byte getKeyDownValue(Key key) {
     return keyDownValues.get(key);
+  }
+
+  private byte getKeypadUpValue(Key key) {
+    return keyUpValues.get(key);
   }
 
   private void initializeKeypadValues() {
@@ -63,25 +63,25 @@ public class Keypad {
   }
 
   private void initializeKeyUpValues() {
-    keyUpValues.put(Key.RIGHT, (byte) 0xE);
-    keyUpValues.put(Key.LEFT, (byte) 0xD);
-    keyUpValues.put(Key.UP, (byte) 0xB);
-    keyUpValues.put(Key.DOWN, (byte) 0x7);
-    keyUpValues.put(Key.A, (byte) 0xE);
-    keyUpValues.put(Key.B, (byte) 0xD);
-    keyUpValues.put(Key.SELECT, (byte) 0xB);
-    keyUpValues.put(Key.START, (byte) 0x7);
+    keyDownValues.put(Key.RIGHT, (byte) 0xE);
+    keyDownValues.put(Key.LEFT, (byte) 0xD);
+    keyDownValues.put(Key.UP, (byte) 0xB);
+    keyDownValues.put(Key.DOWN, (byte) 0x7);
+    keyDownValues.put(Key.A, (byte) 0xE);
+    keyDownValues.put(Key.B, (byte) 0xD);
+    keyDownValues.put(Key.SELECT, (byte) 0xB);
+    keyDownValues.put(Key.START, (byte) 0x7);
   }
 
   private void initializeKeyDownValues() {
-    keyDownValues.put(Key.RIGHT, (byte) 0x1);
-    keyDownValues.put(Key.LEFT, (byte) 0x2);
-    keyDownValues.put(Key.UP, (byte) 0x4);
-    keyDownValues.put(Key.DOWN, (byte) 0x8);
-    keyDownValues.put(Key.A, (byte) 0x1);
-    keyDownValues.put(Key.B, (byte) 0x2);
-    keyDownValues.put(Key.SELECT, (byte) 0x4);
-    keyDownValues.put(Key.START, (byte) 0x8);
+    keyUpValues.put(Key.RIGHT, (byte) 0x1);
+    keyUpValues.put(Key.LEFT, (byte) 0x2);
+    keyUpValues.put(Key.UP, (byte) 0x4);
+    keyUpValues.put(Key.DOWN, (byte) 0x8);
+    keyUpValues.put(Key.A, (byte) 0x1);
+    keyUpValues.put(Key.B, (byte) 0x2);
+    keyUpValues.put(Key.SELECT, (byte) 0x4);
+    keyUpValues.put(Key.START, (byte) 0x8);
   }
 
   private void updateColumn(Key key) {

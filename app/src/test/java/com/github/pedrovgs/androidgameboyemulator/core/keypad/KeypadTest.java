@@ -34,7 +34,7 @@ public class KeypadTest extends UnitTest {
 
     keypad.keyDown(Key.A);
 
-    assertEquals(0x1, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+    assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
   }
 
   @Test public void shouldResetAButtonOnKeyButtonAUp() {
@@ -43,7 +43,24 @@ public class KeypadTest extends UnitTest {
     keypad.keyDown(Key.A);
     keypad.keyUp(Key.A);
 
+    assertEquals(0x1, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+  }
+
+  @Test public void shouldEnableBButtonOnKeyButtonBDown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.B);
+
     assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+  }
+
+  @Test public void shouldResetbButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.B);
+    keypad.keyUp(Key.B);
+
+    assertEquals(0x2, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
   }
 
   private Keypad givenAKeypad() {
