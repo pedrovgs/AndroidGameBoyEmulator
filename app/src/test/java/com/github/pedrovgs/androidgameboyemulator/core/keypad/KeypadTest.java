@@ -63,6 +63,109 @@ public class KeypadTest extends UnitTest {
     assertEquals(2, mmu.readByte(KEYPAD_ADDRESS) & 0x2);
   }
 
+  @Test public void shouldEnableRightButtonOnKeyButtonADown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.RIGHT);
+
+    assertEquals(0, mmu.readByte(KEYPAD_ADDRESS) & 0x1);
+  }
+
+  @Test public void shouldResetRightButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.RIGHT);
+    keypad.keyUp(Key.RIGHT);
+
+    assertEquals(1, mmu.readByte(KEYPAD_ADDRESS) & 0x1);
+  }
+
+  @Test public void shouldEnableLeftButtonOnKeyButtonBDown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.LEFT);
+
+    assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0x2);
+  }
+
+  @Test public void shouldResetLeftButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.LEFT);
+    keypad.keyUp(Key.LEFT);
+
+    assertEquals(2, mmu.readByte(KEYPAD_ADDRESS) & 0x2);
+  }
+
+  @Test public void shouldEnableSelectButtonOnKeyButtonADown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.SELECT);
+
+    assertEquals(0, mmu.readByte(KEYPAD_ADDRESS) & 0x4);
+  }
+
+  @Test public void shouldResetSelectButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.SELECT);
+    keypad.keyUp(Key.SELECT);
+
+    assertEquals(4, mmu.readByte(KEYPAD_ADDRESS) & 0x4);
+  }
+
+  @Test public void shouldEnableUpButtonOnKeyButtonBDown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.UP);
+
+    assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0x4);
+  }
+
+  @Test public void shouldResetUpButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.UP);
+    keypad.keyUp(Key.UP);
+
+    assertEquals(4, mmu.readByte(KEYPAD_ADDRESS) & 0x4);
+  }
+
+  //
+  @Test public void shouldEnableStartButtonOnKeyButtonADown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.START);
+
+    assertEquals(0, mmu.readByte(KEYPAD_ADDRESS) & 0x8);
+  }
+
+  @Test public void shouldResetStartButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.START);
+    keypad.keyUp(Key.START);
+
+    assertEquals(8, mmu.readByte(KEYPAD_ADDRESS) & 0x8);
+  }
+
+  @Test public void shouldEnableDownButtonOnKeyButtonBDown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.DOWN);
+
+    assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0x8);
+  }
+
+  @Test public void shouldResetDownButtonOnKeyButtonAUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.DOWN);
+    keypad.keyUp(Key.DOWN);
+
+    assertEquals(8, mmu.readByte(KEYPAD_ADDRESS) & 0x8);
+  }
+
   private Keypad givenAKeypad() {
     mmu = new MMU();
     return new Keypad(mmu);
