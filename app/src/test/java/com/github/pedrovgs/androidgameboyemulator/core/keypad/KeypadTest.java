@@ -166,6 +166,28 @@ public class KeypadTest extends UnitTest {
     assertEquals(8, mmu.readByte(KEYPAD_ADDRESS) & 0x8);
   }
 
+  @Test public void shouldEnableAllTheBitsRelatedToTheKeypad() {
+    Keypad keypad = givenAKeypad();
+    pressAllKeysDown(keypad);
+
+    keypad.keyUp(Key.DOWN);
+    keypad.keyUp(Key.RIGHT);
+
+    assertEquals(8, mmu.readByte(KEYPAD_ADDRESS) & 0x8);
+    assertEquals(1, mmu.readByte(KEYPAD_ADDRESS) & 0x1);
+  }
+
+  private void pressAllKeysDown(Keypad keypad) {
+    keypad.keyDown(Key.LEFT);
+    keypad.keyDown(Key.RIGHT);
+    keypad.keyDown(Key.UP);
+    keypad.keyDown(Key.DOWN);
+    keypad.keyDown(Key.START);
+    keypad.keyDown(Key.SELECT);
+    keypad.keyDown(Key.B);
+    keypad.keyDown(Key.A);
+  }
+
   private Keypad givenAKeypad() {
     mmu = new MMU();
     return new Keypad(mmu);
