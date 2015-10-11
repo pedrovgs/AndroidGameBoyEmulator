@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.B);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_b) public boolean onBButtonTouch(View view, MotionEvent event) {
@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.B);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_up) public boolean onUpButtonTouch(View view, MotionEvent event) {
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.UP);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_down) public boolean onDownButtonTouch(View view, MotionEvent event) {
@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.DOWN);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_left) public boolean onLeftButtonTouch(View view, MotionEvent event) {
@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.LEFT);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_right) public boolean onRightButtonTouch(View view, MotionEvent event) {
@@ -112,7 +112,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.RIGHT);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_start) public boolean onStartButtonTouch(View view, MotionEvent event) {
@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.START);
     }
-    return true;
+    return false;
   }
 
   @OnTouch(R.id.bt_select) public boolean onSelectButtonTouch(View view, MotionEvent event) {
@@ -130,7 +130,7 @@ public class MainActivity extends Activity {
     } else if (isActionUpMotionEvent(event)) {
       gameBoy.keyUp(Key.SELECT);
     }
-    return true;
+    return false;
   }
 
   private void adjustLCDSize() {
