@@ -24,7 +24,10 @@ import java.util.Map;
 public class Keypad {
 
   private static final int KEYPAD_ADDRESS = 0xFF00;
+  private static final int FIRST_COLUMN = 0x10;
+  private static final int SECOND_COLUMN = 0x20;
 
+  private final boolean[] pressedKeys = new boolean[8];
   private final Map<Key, Byte> keyDownValues = new HashMap<Key, Byte>();
   private final Map<Key, Byte> keyUpValues = new HashMap<Key, Byte>();
 
@@ -36,17 +39,19 @@ public class Keypad {
   }
 
   public void keyUp(Key key) {
-    byte keyDownValue = getKeypadUpValue(key);
-    byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF | keyDownValue);
+    pressedKeys[key.ordinal()] = false;
+    byte keyUpValue = getKeypadUpValue(key);
+    byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF | keyUpValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
-    updateColumn(key);
+    updateColumn();
   }
 
   public void keyDown(Key key) {
-    byte keyUpValue = getKeyDownValue(key);
-    byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF & keyUpValue);
+    pressedKeys[key.ordinal()] = true;
+    byte keyDownValue = getKeyDownValue(key);
+    byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF & keyDownValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
-    updateColumn(key);
+    updateColumn();
   }
 
   private byte getKeyDownValue(Key key) {
@@ -84,7 +89,29 @@ public class Keypad {
     keyUpValues.put(Key.START, (byte) 0x8);
   }
 
-  private void updateColumn(Key key) {
+  private void updateColumn() {
+    byte newKeyValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+    if (isFirstColumnEnabled()) {
+      newKeyValue |= FIRST_COLUMN;
+    } else {
+      newKeyValue &= ~FIRST_COLUMN;
+    }
 
+    if (isSecondColumnEnabled()) {
+      newKeyValue |= SECOND_COLUMN;
+    } else {
+      newKeyValue &= ~SECOND_COLUMN;
+    }
+    mmu.writeByte(KEYPAD_ADDRESS, newKeyValue);
+  }
+
+  private boolean isFirstColumnEnabled() {
+    return pressedKeys[Key.START.ordinal()] || pressedKeys[Key.SELECT.ordinal()]
+        || pressedKeys[Key.B.ordinal()] || pressedKeys[Key.A.ordinal()];
+  }
+
+  private boolean isSecondColumnEnabled() {
+    return pressedKeys[Key.DOWN.ordinal()] || pressedKeys[Key.UP.ordinal()]
+        || pressedKeys[Key.LEFT.ordinal()] || pressedKeys[Key.RIGHT.ordinal()];
   }
 }

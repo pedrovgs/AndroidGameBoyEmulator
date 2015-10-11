@@ -177,6 +177,22 @@ public class KeypadTest extends UnitTest {
     assertEquals(1, mmu.readByte(KEYPAD_ADDRESS) & 0x1);
   }
 
+  @Test public void shouldEnableFirstColumnIfAFirstColumnKeyIsDown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.A);
+
+    assertEquals(0x10, mmu.readByte(KEYPAD_ADDRESS) & 0x10);
+  }
+
+  @Test public void shouldEnableSecondColumnIfAFirstColumnKeyIsDown() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.LEFT);
+
+    assertEquals(0x20, mmu.readByte(KEYPAD_ADDRESS) & 0x20);
+  }
+
   private void pressAllKeysDown(Keypad keypad) {
     keypad.keyDown(Key.LEFT);
     keypad.keyDown(Key.RIGHT);
