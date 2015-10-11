@@ -182,13 +182,31 @@ public class KeypadTest extends UnitTest {
 
     keypad.keyDown(Key.A);
 
-    assertEquals(0x10, mmu.readByte(KEYPAD_ADDRESS) & 0x10);
+    assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0x10);
   }
 
   @Test public void shouldEnableSecondColumnIfAFirstColumnKeyIsDown() {
     Keypad keypad = givenAKeypad();
 
     keypad.keyDown(Key.LEFT);
+
+    assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0x20);
+  }
+
+  @Test public void shouldDisableFirstColumnIfAFirstColumnKeyIsUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.A);
+    keypad.keyUp(Key.A);
+
+    assertEquals(0x10, mmu.readByte(KEYPAD_ADDRESS) & 0x10);
+  }
+
+  @Test public void shouldDisableSecondColumnIfAFirstColumnKeyIsUp() {
+    Keypad keypad = givenAKeypad();
+
+    keypad.keyDown(Key.LEFT);
+    keypad.keyUp(Key.LEFT);
 
     assertEquals(0x20, mmu.readByte(KEYPAD_ADDRESS) & 0x20);
   }
@@ -201,7 +219,15 @@ public class KeypadTest extends UnitTest {
     keypad.keyDown(Key.B);
     keypad.keyUp(Key.A);
 
-    assertEquals(0x39, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+    assertEquals(0x9, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+  }
+
+  @Test public void shouldPressDownAndUpEveryKey() {
+    Keypad keypad = givenAKeypad();
+
+    pressAllKeyDownAndUp(keypad);
+
+    assertEquals(0x3F, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
   }
 
   private void pressAllKeysDown(Keypad keypad) {
@@ -213,6 +239,25 @@ public class KeypadTest extends UnitTest {
     keypad.keyDown(Key.SELECT);
     keypad.keyDown(Key.B);
     keypad.keyDown(Key.A);
+  }
+
+  private void pressAllKeyDownAndUp(Keypad keypad) {
+    keypad.keyDown(Key.LEFT);
+    keypad.keyDown(Key.RIGHT);
+    keypad.keyDown(Key.UP);
+    keypad.keyDown(Key.DOWN);
+    keypad.keyDown(Key.START);
+    keypad.keyDown(Key.SELECT);
+    keypad.keyDown(Key.B);
+    keypad.keyDown(Key.A);
+    keypad.keyUp(Key.LEFT);
+    keypad.keyUp(Key.RIGHT);
+    keypad.keyUp(Key.UP);
+    keypad.keyUp(Key.DOWN);
+    keypad.keyUp(Key.START);
+    keypad.keyUp(Key.SELECT);
+    keypad.keyUp(Key.B);
+    keypad.keyUp(Key.A);
   }
 
   private Keypad givenAKeypad() {

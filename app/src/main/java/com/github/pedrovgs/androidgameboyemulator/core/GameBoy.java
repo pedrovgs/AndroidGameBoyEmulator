@@ -114,7 +114,6 @@ public class GameBoy {
 
   public void keyUp(Key key) {
     keypad.keyUp(key);
-    sendKeypadInterrupt();
   }
 
   public void reset() throws IOException {

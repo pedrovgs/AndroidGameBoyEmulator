@@ -92,15 +92,15 @@ public class Keypad {
   private void updateColumn() {
     byte newKeyValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
     if (isFirstColumnEnabled()) {
-      newKeyValue |= FIRST_COLUMN;
-    } else {
       newKeyValue &= ~FIRST_COLUMN;
+    } else {
+      newKeyValue |= FIRST_COLUMN;
     }
 
     if (isSecondColumnEnabled()) {
-      newKeyValue |= SECOND_COLUMN;
-    } else {
       newKeyValue &= ~SECOND_COLUMN;
+    } else {
+      newKeyValue |= SECOND_COLUMN;
     }
     mmu.writeByte(KEYPAD_ADDRESS, newKeyValue);
   }
