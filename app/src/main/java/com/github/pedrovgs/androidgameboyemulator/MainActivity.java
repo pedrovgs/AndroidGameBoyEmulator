@@ -166,7 +166,6 @@ public class MainActivity extends Activity {
           while (true) {
             gameBoy.frame();
           }
-          //fillMemoryWithTrash(mmu);
         } catch (IOException e) {
           runOnUiThread(new Runnable() {
             @Override public void run() {
