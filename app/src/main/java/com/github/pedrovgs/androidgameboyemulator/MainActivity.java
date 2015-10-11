@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.A);
     } else if (isActionUpMotionEvent(event)) {
-      gameBoy.keyUp(Key.B);
+      gameBoy.keyUp(Key.A);
     }
     return false;
   }
