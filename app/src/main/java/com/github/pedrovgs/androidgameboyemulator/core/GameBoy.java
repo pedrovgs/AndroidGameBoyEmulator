@@ -79,7 +79,6 @@ public class GameBoy {
   }
 
   public void tick() {
-    checkInterruptions();
     int programCounter = z80.getProgramCounter();
     int instructionCode = mmu.readByte(programCounter) & 0xFF;
     z80.incrementProgramCounter();
@@ -99,6 +98,7 @@ public class GameBoy {
       mmu.setSystemReady(true);
     }
     incrementTickCounter();
+    checkInterruptions();
   }
 
   public void frame() {
@@ -109,13 +109,12 @@ public class GameBoy {
 
   public void keyDown(Key key) {
     keypad.keyDown(key);
-    z80.enableInterruptMasterFlag();
-    mmu.writeByte(INTERRUPT_FLAG, KEYPAD_INTERRUPT);
-    mmu.writeByte(INTERRUPT_ENABLE, KEYPAD_INTERRUPT);
+    sendKeypadInterrupt();
   }
 
   public void keyUp(Key key) {
     keypad.keyUp(key);
+    sendKeypadInterrupt();
   }
 
   public void reset() throws IOException {
@@ -249,5 +248,11 @@ public class GameBoy {
   private void push(byte value) {
     z80.setStackPointer((z80.getStackPointer() - 1) & 0xFFFF);
     mmu.writeByte(z80.getStackPointer(), value);
+  }
+
+  private void sendKeypadInterrupt() {
+    z80.enableInterruptMasterFlag();
+    mmu.writeByte(INTERRUPT_FLAG, KEYPAD_INTERRUPT);
+    mmu.writeByte(INTERRUPT_ENABLE, KEYPAD_INTERRUPT);
   }
 }
