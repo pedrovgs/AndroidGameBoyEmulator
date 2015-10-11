@@ -100,7 +100,7 @@ public class GPU {
           if (getCurrentLine() > NUMBER_OF_LINES + VERTICAL_BLANK_PERIOD_LINES - 1) {
             setGPUMode(SCANLINE_OAM);
             setCurrentLine(0);
-            notifyVBlankFinished();
+            //notifyVBlankFinished();
           }
         }
         break;
