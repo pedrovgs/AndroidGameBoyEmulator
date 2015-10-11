@@ -200,6 +200,10 @@ public class GBZ80 {
     this.interruptMasterFlag = false;
   }
 
+  public boolean isInterruptMasterFlageEnabled() {
+    return interruptMasterFlag;
+  }
+
   public void enableHalt() {
     this.halt = true;
   }

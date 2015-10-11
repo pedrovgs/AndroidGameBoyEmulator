@@ -47,6 +47,7 @@ public class GPU {
   private int currentModeClock;
 
   private GPUListener listener;
+  private VerticalBlankListener vBlankListener;
 
   public GPU(MMU mmu) {
     this.mmu = mmu;
@@ -55,6 +56,10 @@ public class GPU {
 
   public void setListener(GPUListener listener) {
     this.listener = listener;
+  }
+
+  public void setVerticalBlankListener(VerticalBlankListener vBlankListener) {
+    this.vBlankListener = vBlankListener;
   }
 
   public void reset() {
@@ -95,6 +100,7 @@ public class GPU {
           if (getCurrentLine() > NUMBER_OF_LINES + VERTICAL_BLANK_PERIOD_LINES - 1) {
             setGPUMode(SCANLINE_OAM);
             setCurrentLine(0);
+            notifyVBlankFinished();
           }
         }
         break;
@@ -215,6 +221,12 @@ public class GPU {
   private void notifyListener() {
     if (listener != null) {
       listener.onGPUUpdated(this);
+    }
+  }
+
+  private void notifyVBlankFinished() {
+    if (vBlankListener != null) {
+      vBlankListener.onVerticalBlankFinished();
     }
   }
 

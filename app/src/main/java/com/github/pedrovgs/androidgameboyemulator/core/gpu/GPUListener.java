@@ -20,4 +20,5 @@ package com.github.pedrovgs.androidgameboyemulator.core.gpu;
 public interface GPUListener {
 
   void onGPUUpdated(GPU gpu);
+
 }
