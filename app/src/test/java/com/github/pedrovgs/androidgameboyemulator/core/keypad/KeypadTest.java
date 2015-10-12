@@ -22,6 +22,8 @@ import com.github.pedrovgs.androidgameboyemulator.core.mmu.MMU;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class KeypadTest extends UnitTest {
 
@@ -212,6 +214,38 @@ public class KeypadTest extends UnitTest {
     pressAllKeyDownAndUp(keypad);
 
     assertEquals(0xF, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+  }
+
+  @Test public void shouldReturnTrueIfFirstColumnIsEnabled() {
+    Keypad keypad = givenAKeypad();
+
+    mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x0);
+
+    assertTrue(keypad.isFirstColumnEnabled());
+  }
+
+  @Test public void shouldReturnFalseIfFirstColumnIsDisabled() {
+    Keypad keypad = givenAKeypad();
+
+    mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x10);
+
+    assertFalse(keypad.isFirstColumnEnabled());
+  }
+
+  @Test public void shouldReturnTrueIfSecondColumnIsEnabled() {
+    Keypad keypad = givenAKeypad();
+
+    mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x0);
+
+    assertTrue(keypad.isSecondColumnEnabled());
+  }
+
+  @Test public void shouldReturnFalseIfSecondColumnIsDisabled() {
+    Keypad keypad = givenAKeypad();
+
+    mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x20);
+
+    assertFalse(keypad.isSecondColumnEnabled());
   }
 
   private void pressAllKeysDown(Keypad keypad) {

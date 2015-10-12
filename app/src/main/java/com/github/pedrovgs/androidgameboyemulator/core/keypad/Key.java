@@ -19,5 +19,20 @@ package com.github.pedrovgs.androidgameboyemulator.core.keypad;
 
 public enum Key {
 
-  RIGHT, LEFT, UP, DOWN, A, B, SELECT, START,
+  RIGHT(1), LEFT(1), UP(1), DOWN(1), A(2), B(2), SELECT(2), START(2);
+
+  private final int column;
+
+  Key(int column) {
+    this.column = column;
+  }
+
+  public boolean isInFirstColumn() {
+    return column == 1;
+  }
+
+  public boolean isInSecondColumn() {
+    return column == 2;
+  }
+
 }

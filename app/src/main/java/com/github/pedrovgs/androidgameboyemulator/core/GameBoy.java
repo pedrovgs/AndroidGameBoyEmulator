@@ -108,8 +108,13 @@ public class GameBoy {
   }
 
   public void keyDown(Key key) {
-    keypad.keyDown(key);
     sendKeypadInterrupt();
+    keypad.keyDown(key);
+    if (keypad.isFirstColumnEnabled() && key.isInFirstColumn()) {
+      sendKeypadInterrupt();
+    } else if (keypad.isSecondColumnEnabled() && key.isInSecondColumn()) {
+      sendKeypadInterrupt();
+    }
   }
 
   public void keyUp(Key key) {

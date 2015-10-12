@@ -23,6 +23,8 @@ public class Keypad {
 
   private static final int KEYPAD_ADDRESS = 0xFF00;
   private static final int MAX_REPRESENTABLE_KEY_INDEX = 4;
+  private static final int FIRST_COLUMN_MASK = 0x10;
+  private static final int SECOND_COLUMN_MASK = 0x20;
 
   private final MMU mmu;
   private final boolean[] pressedKeys;
@@ -40,6 +42,14 @@ public class Keypad {
   public void keyDown(Key key) {
     pressedKeys[key.ordinal()] = true;
     updateMMU();
+  }
+
+  public boolean isFirstColumnEnabled() {
+    return (mmu.readByte(KEYPAD_ADDRESS) & FIRST_COLUMN_MASK) == 0;
+  }
+
+  public boolean isSecondColumnEnabled() {
+    return (mmu.readByte(KEYPAD_ADDRESS) & SECOND_COLUMN_MASK) == 0;
   }
 
   private void updateMMU() {
