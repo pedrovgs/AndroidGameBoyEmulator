@@ -19,5 +19,5 @@ package com.github.pedrovgs.androidgameboyemulator.core.keypad;
 
 public enum Key {
 
-  UP, LEFT, DOWN, RIGHT, START, SELECT, A, B
+  RIGHT, LEFT, UP, DOWN, A, B, START, SELECT
 }
