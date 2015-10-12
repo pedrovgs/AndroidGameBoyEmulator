@@ -193,24 +193,6 @@ public class KeypadTest extends UnitTest {
     assertEquals(0x0, mmu.readByte(KEYPAD_ADDRESS) & 0x20);
   }
 
-  @Test public void shouldDisableFirstColumnIfAFirstColumnKeyIsUp() {
-    Keypad keypad = givenAKeypad();
-
-    keypad.keyDown(Key.A);
-    keypad.keyUp(Key.A);
-
-    assertEquals(0x10, mmu.readByte(KEYPAD_ADDRESS) & 0x10);
-  }
-
-  @Test public void shouldDisableSecondColumnIfAFirstColumnKeyIsUp() {
-    Keypad keypad = givenAKeypad();
-
-    keypad.keyDown(Key.LEFT);
-    keypad.keyUp(Key.LEFT);
-
-    assertEquals(0x20, mmu.readByte(KEYPAD_ADDRESS) & 0x20);
-  }
-
   @Test public void shouldSupportMoreThanOneKeyPressedInDifferentColumns() {
     Keypad keypad = givenAKeypad();
 
@@ -227,7 +209,7 @@ public class KeypadTest extends UnitTest {
 
     pressAllKeyDownAndUp(keypad);
 
-    assertEquals(0x3F, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
+    assertEquals(0xF, mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
   }
 
   private void pressAllKeysDown(Keypad keypad) {
