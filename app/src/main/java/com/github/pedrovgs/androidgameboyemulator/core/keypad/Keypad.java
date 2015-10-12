@@ -32,6 +32,11 @@ public class Keypad {
   public Keypad(MMU mmu) {
     this.mmu = mmu;
     this.pressedKeys = new boolean[8];
+    reset();
+  }
+
+  public void reset() {
+    mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x0F);
   }
 
   public void keyUp(Key key) {
