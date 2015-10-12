@@ -1,4 +1,4 @@
-Android Game Boy Emulator [![Build Status](https://travis-ci.org/pedrovgs/AndroidGameBoyEmulator.svg?branch=master)](https://travis-ci.org/pedrovgs/AndroidGameBoyEmulator)
+Android Game Boy Emulator [![Build Status](https://travis-ci.org/pedrovgs/AndroidGameBoyEmulator.svg?branch=master)](https://travis-ci.org/pedrovgs/AndroidGameBoyEmulator) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Game%20Boy%20Emulator-brightgreen.svg?style=flat)](http://android-arsenal.com/details/3/2623)
 =========================
 
 Android Game Boy Emulator written in Java. This project is under development.
