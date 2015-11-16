@@ -26,34 +26,115 @@ public class Keypad {
   private static final int KEYPAD_ADDRESS = 0xFF00;
   private static final int FIRST_COLUMN = 0x10;
   private static final int SECOND_COLUMN = 0x20;
+  public static int activecolumn = 0;
+
 
   private final boolean[] pressedKeys = new boolean[8];
   private final Map<Key, Byte> keyDownValues = new HashMap<Key, Byte>();
   private final Map<Key, Byte> keyUpValues = new HashMap<Key, Byte>();
+
+  private static byte[] rows;
+
 
   private final MMU mmu;
 
   public Keypad(MMU mmu) {
     this.mmu = mmu;
     initializeKeypadValues();
+    rows = new byte[2];
+    rows[0]=0x0F;
+    rows[1]=0x0F;
+  }
+  public void keyUp(Key key) {
+    pressedKeys[key.ordinal()] = false;
+    byte keyUpValue = getKeypadUpValue(key);
+    switch(key.ordinal())
+    {
+      case 3: rows[1] |= 0x1; break;
+      case 1: rows[1] |= 0x2; break;
+      case 0: rows[1] |= 0x4; break;
+      case 2: rows[1] |= 0x8; break;
+      case 6: rows[0] |= 0x1; break;
+      case 7: rows[0] |= 0x2; break;
+      case 5: rows[0] |= 0x4; break;
+      case 4: rows[0] |= 0x8; break;
+    }
+
+
+    switch(activecolumn)
+    {
+      case 0x10: mmu.writeByte(KEYPAD_ADDRESS, rows[0]); break;
+      case 0x20: mmu.writeByte(KEYPAD_ADDRESS, rows[1]); break;
+      default: mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x00); break;
+    }
   }
 
+  /*
   public void keyUp(Key key) {
     pressedKeys[key.ordinal()] = false;
     byte keyUpValue = getKeypadUpValue(key);
     byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF | keyUpValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
     updateColumn();
+
+  }
+*/
+
+  public static byte readInput(){
+    switch(activecolumn)
+    {
+      case 0x00:
+      case 0x10: return rows[0];
+      case 0x20: return rows[1];
+      default:return  (byte) 0x00;
+    }
   }
 
+
+  public void keyDown(Key key) {
+    pressedKeys[key.ordinal()] = true;
+    byte keyDownValue = getKeyDownValue(key);
+    switch(key.ordinal())
+    {
+      case 3: rows[1] &= 0xE; break;
+      case 1: rows[1] &= 0xD; break;
+      case 0: rows[1] &= 0xB; break;
+      case 2: rows[1] &= 0x7; break;
+      case 6: rows[0] &= 0xE; break;
+      case 7: rows[0] &= 0xD; break;
+      case 5: rows[0] &= 0xB; break;
+      case 4: rows[0] &= 0x7; break;
+    }
+
+    switch(activecolumn)
+    {
+      case 0x00:
+      case 0x10:
+        mmu.writeByte(KEYPAD_ADDRESS, rows[0]);
+        break;
+      case 0x20:
+        mmu.writeByte(KEYPAD_ADDRESS, rows[1]);
+        break;
+      default: mmu.writeByte(KEYPAD_ADDRESS, (byte) 0x00); break;
+    }
+
+
+
+
+  }
+  /*
   public void keyDown(Key key) {
     pressedKeys[key.ordinal()] = true;
     byte keyDownValue = getKeyDownValue(key);
     byte newKeypadValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF & keyDownValue);
     mmu.writeByte(KEYPAD_ADDRESS, newKeypadValue);
     updateColumn();
+
+
   }
 
+
+*/
   private byte getKeyDownValue(Key key) {
     return keyDownValues.get(key);
   }
@@ -90,6 +171,11 @@ public class Keypad {
   }
 
   private void updateColumn() {
+
+  }
+
+  /*
+  private void updateColumn() {
     byte newKeyValue = (byte) (mmu.readByte(KEYPAD_ADDRESS) & 0xFF);
     if (isFirstColumnEnabled()) {
       newKeyValue &= ~FIRST_COLUMN;
@@ -104,7 +190,7 @@ public class Keypad {
     }
     mmu.writeByte(KEYPAD_ADDRESS, newKeyValue);
   }
-
+*/
   private boolean isFirstColumnEnabled() {
     return pressedKeys[Key.START.ordinal()] || pressedKeys[Key.SELECT.ordinal()]
         || pressedKeys[Key.B.ordinal()] || pressedKeys[Key.A.ordinal()];
