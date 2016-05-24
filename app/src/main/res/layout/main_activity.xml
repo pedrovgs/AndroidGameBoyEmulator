@@ -103,4 +103,12 @@
         />
   </FrameLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select ROM"
+        android:id="@+id/bt_rom"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

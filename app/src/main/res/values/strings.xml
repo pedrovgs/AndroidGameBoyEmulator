@@ -19,5 +19,6 @@
 <resources>
 
   <string name="app_name">AndroidGameBoyEmulator</string>
+    <string name="title_activity_rom_selection">RomSelectionActivity</string>
 
 </resources>

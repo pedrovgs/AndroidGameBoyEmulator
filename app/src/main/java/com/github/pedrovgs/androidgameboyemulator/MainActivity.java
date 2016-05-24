@@ -18,6 +18,7 @@
 package com.github.pedrovgs.androidgameboyemulator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -44,10 +45,13 @@ public class MainActivity extends Activity {
 
   private static final String LOGTAG = "AndroidGameBoyEmulator";
   private static final float LCD_WIDTH_SCREEN_RATIO = 0.55f;
-  private static final String TEST_ROM_URI = "/sdcard/Download/test.gb";
+  private static final String TEST_ROM_URI = "/sdcard/rom.gb";
   private static final float LCD_WIDTH = 160;
   private static final float LCD_HEIGHT = 144;
   private static final float LCD_ASPECT_RATIO = LCD_WIDTH / LCD_HEIGHT;
+  private Thread gameBoyThread;
+  private boolean running = false;
+  private String rompath = "";
 
   @Bind(R.id.lcd) LCD lcd;
 
@@ -59,9 +63,13 @@ public class MainActivity extends Activity {
     ButterKnife.bind(this);
     adjustLCDSize();
     initializeGameBoy();
+
+
+
   }
 
   @OnTouch(R.id.bt_a) public boolean onAButtonTouch(View view, MotionEvent event) {
+
     if (isActionDownMotionEvent(event)) {
       gameBoy.keyDown(Key.A);
     } else if (isActionUpMotionEvent(event)) {
@@ -133,6 +141,35 @@ public class MainActivity extends Activity {
     return false;
   }
 
+
+  @OnTouch(R.id.bt_rom) public boolean onROMButtonTouch(View view, MotionEvent event) {
+    if (isActionDownMotionEvent(event)) {
+      if(gameBoyThread!=null){
+        stopThread();
+      }
+      Intent intent=new Intent(MainActivity.this,RomSelectionActivity.class);
+      startActivityForResult(intent, 1);
+    }
+    return false;
+  }
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data)
+  {
+    super.onActivityResult(requestCode, resultCode, data);
+    if(requestCode==1)
+    {
+      stopThread();
+
+        running = false;
+        if(data!=null)rompath = data.getStringExtra("filepath");
+        running = true;
+        initializeGameBoy();
+        initializeThread();
+        gameBoyThread.start();
+
+    }
+  }
+
   private void adjustLCDSize() {
     int screenWidth = getScreenWidth();
     int lcdWidth = (int) (screenWidth * LCD_WIDTH_SCREEN_RATIO);
@@ -148,22 +185,13 @@ public class MainActivity extends Activity {
     return displayMetrics.widthPixels;
   }
 
-  private void initializeGameBoy() {
-    final MMU mmu = new MMU();
-    final GBZ80 z80 = new GBZ80();
-    final GPU gpu = new GPU(mmu);
-    GameReader gameReader = new AndroidGameReader();
-    GameLoader gameLoader = new GameLoader(gameReader);
-    Keypad keypad = new Keypad(mmu);
-    gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
-    gameBoy.setGPUListener(lcd);
-
-    Thread gameBoyThread = new Thread() {
+  private void initializeThread(){
+    gameBoyThread = new Thread() {
       @Override public void run() {
         super.run();
         try {
-          gameBoy.loadGame(TEST_ROM_URI);
-          while (true) {
+          gameBoy.loadGame(rompath);
+          while (running) {
             gameBoy.frame();
           }
         } catch (IOException e) {
@@ -176,8 +204,35 @@ public class MainActivity extends Activity {
         }
       }
     };
-    gameBoyThread.start();
   }
+
+  private void initializeGameBoy() {
+    MMU mmu = new MMU();
+    GBZ80 z80 = new GBZ80();
+    GPU gpu = new GPU(mmu);
+    GameReader gameReader = new AndroidGameReader();
+    GameLoader gameLoader = new GameLoader(gameReader);
+    Keypad keypad = new Keypad(mmu);
+    gameBoy = new GameBoy(z80, mmu, gpu, gameLoader, keypad);
+    gameBoy.setGPUListener(lcd);
+
+
+
+  }
+
+  private synchronized void stopThread() {
+    if (gameBoyThread != null)
+    {
+      try {
+        running = false;
+        gameBoyThread.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      gameBoyThread = null;
+    }
+  }
+
 
   private boolean isActionDownMotionEvent(MotionEvent event) {
     return event.getAction() == MotionEvent.ACTION_DOWN;

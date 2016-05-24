@@ -99,6 +99,7 @@ public class GameBoy {
     }
     incrementTickCounter();
     checkInterruptions();
+    //System.out.println((byte)mmu.readByte(0xFF00)+ " INPUTTTTTTT");
   }
 
   public void frame() {
@@ -175,11 +176,13 @@ public class GameBoy {
   }
 
   private void handleKeypadInterrupt(byte interruptFlag) {
+ /*
     z80.disableInterruptMasterFlag();
     pushTwice(z80.getProgramCounter());
     interruptFlag &= 0xEF;
     mmu.writeByte(INTERRUPT_FLAG, interruptFlag);
     z80.setProgramCounter(KEYPAD_INTERRUPT_PC);
+    */
   }
 
   private void handleSerialInterrupt(byte interruptFlag) {
@@ -213,6 +216,7 @@ public class GameBoy {
     mmu.writeByte(INTERRUPT_FLAG, interruptFlag);
     z80.setProgramCounter(VBLANK_INTERRUPT_PC);
   }
+
 
   private boolean isVBlankInterrupt(byte interruptFlag, byte interruptEnabled) {
     return ((interruptEnabled & VBLANK_INTERRUPT) == VBLANK_INTERRUPT) && (

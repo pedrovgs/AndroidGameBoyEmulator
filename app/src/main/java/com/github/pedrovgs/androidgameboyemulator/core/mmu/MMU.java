@@ -16,6 +16,8 @@
 
 package com.github.pedrovgs.androidgameboyemulator.core.mmu;
 
+import com.github.pedrovgs.androidgameboyemulator.core.keypad.Keypad;
+
 public class MMU {
 
   private static final int BIOS_TOP_LIMIT_ADDRESS = 0x100;
@@ -31,13 +33,18 @@ public class MMU {
 
   public byte readByte(int address) {
     byte value;
-    if (!systemReady && address < BIOS_TOP_LIMIT_ADDRESS) {
-      int biosValue = BIOS.ROM[address];
-      value = (byte) biosValue;
-    } else {
-      value = memory[address];
+
+    if(address==0xFF00){
+      return Keypad.readInput();
     }
-    return value;
+        if (!systemReady && address < BIOS_TOP_LIMIT_ADDRESS) {
+          int biosValue = BIOS.ROM[address];
+          value = (byte) biosValue;
+        } else {
+          value = memory[address];
+        }
+        return value;
+
   }
 
   public int readWord(int address) {
@@ -49,6 +56,12 @@ public class MMU {
   }
 
   public void writeByte(int address, byte value) {
+
+    if(address==0xFF00){
+      Keypad.activecolumn = value&0x30;
+     // System.out.println("UPDATECOLUM" + Keypad.activecolumn);
+    }
+
     memory[address] = value;
   }
 
