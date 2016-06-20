@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 repositories {
   jcenter()
@@ -16,20 +17,16 @@ android {
     versionName "1.0"
   }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_6
-    targetCompatibility JavaVersion.VERSION_1_6
-  }
-
   testOptions {
     unitTests.returnDefaultValues = true
   }
 }
 
 dependencies {
+  apt 'com.jakewharton:butterknife-compiler:8.1.0'
   compile 'com.android.support:appcompat-v7:24.0.0'
   compile 'com.google.guava:guava:19.0'
-  compile 'com.jakewharton:butterknife:7.0.1'
+  compile 'com.jakewharton:butterknife:8.1.0'
   testCompile 'org.mockito:mockito-all:1.10.19'
   testCompile 'junit:junit:4.12'
 }
@@ -43,7 +40,6 @@ task copyResDirectoryToReleaseClasses(type: Copy) {
   from "${projectDir}/src/test/res"
   into "${buildDir}/intermediates/classes/test/release/res"
 }
-
 
 assembleDebug.dependsOn(copyResDirectoryToDebugClasses)
 assembleRelease.dependsOn(copyResDirectoryToReleaseClasses)
