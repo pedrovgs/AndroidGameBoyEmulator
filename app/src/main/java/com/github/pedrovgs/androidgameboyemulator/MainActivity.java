@@ -25,7 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTouch;
 import com.github.pedrovgs.androidgameboyemulator.core.GameBoy;
@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
   private static final float LCD_HEIGHT = 144;
   private static final float LCD_ASPECT_RATIO = LCD_WIDTH / LCD_HEIGHT;
 
-  @Bind(R.id.lcd) LCD lcd;
+  @BindView(R.id.lcd) LCD lcd;
 
   private GameBoy gameBoy;
 
